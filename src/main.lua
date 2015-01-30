@@ -19,6 +19,87 @@ function __G__TRACKBACK__(msg)
     return msg
 end
 
+local math = math
+local Direction = {S=0, WS=1, W=2, NW=3, N=4, NE=5, E=6, ES=7}
+
+local function calDegree(p1, p2)
+    local h = p2.y - p1.y
+    local w = p2.x - p1.x
+    if w == 0 then
+        if h ~= 0 then
+            return h/math.abs(h) * 90
+        else
+            return nil
+        end
+    end
+
+    local deg = math.deg(math.atan(math.abs(h/w)))
+
+    if w >= 0 and h >= 0 then
+        deg = 270 - deg
+    elseif w <= 0 and h >= 0 then
+        deg = 90 + deg
+    elseif w <= 0 and h <= 0 then
+        deg = 90 - deg
+    else
+        deg = 270 + deg
+    end
+    return (deg + 360) % 360
+end
+
+local function getDirectionByDegree(deg)
+    local dir = nil
+
+    if deg >= 22.5 and deg < 67.5 then
+        dir = Direction.WS
+    elseif deg >= 67.5 and deg < 112.5 then
+        dir = Direction.W
+    elseif deg >= 112.5 and deg < 157.5 then
+        dir = Direction.NW
+    elseif deg >= 157.5 and deg < 202.5 then
+        dir = Direction.N
+    elseif deg >= 202.5 and deg < 247.5 then
+        dir = Direction.NE
+    elseif deg >= 247.5 and deg < 292.5 then
+        dir = Direction.E
+    elseif deg >= 292.5 and deg < 337.5 then
+        dir = Direction.ES
+    else
+        dir = Direction.S
+    end
+
+    return dir
+end
+
+local function _getDirection(p1, p2)
+    local deg = calDegree(p1, p2)
+    return getDirectionByDegree(deg)
+end
+
+local function createPlayerAnims(spriteFrameCache)
+    runAnimates = {}
+    for k, v in pairs(Direction) do
+        local frames = {}
+        for i = 0, 7 do
+            -- print(string.format("bgj-run-%d%d.tga", v, i))
+            table.insert(frames, spriteFrameCache:getSpriteFrame(string.format("bgj-run-%d%d.tga", v, i)))
+        end
+        local runAnimation = cc.Animation:createWithSpriteFrames(frames, 0.1)
+        local runAnimate = cc.Animate:create(runAnimation)
+        runAnimates[v] = runAnimate
+    end
+
+    return runAnimates
+end
+
+local function createStandFrames(spriteFrameCache)
+    local frames = {}
+    for k, v in pairs(Direction) do
+        frames[v] = spriteFrameCache:getSpriteFrame(string.format("bgj-stand-%d0.tga", v))
+    end
+    return frames
+end
+
 local function main()
     collectgarbage("collect")
     -- avoid memory leak
@@ -60,18 +141,14 @@ local function main()
     local origin = cc.Director:getInstance():getVisibleOrigin()
 
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-    spriteFrameCache:addSpriteFrames("bgj-run.plist")
-    local spriteSheet = cc.SpriteBatchNode:create("bgj-run.png")
-    
-    -- local function createBGJ()
-    --     local bgjFrames = {}
-    --     for i = 0, 3 do
-    --         table.insert(bgjFrames, xxx)
-    --     end
-    -- end
-    
+    spriteFrameCache:addSpriteFrames("bgj.plist")
+    local spriteSheet = cc.SpriteBatchNode:create("bgj.png")
+    local runAnimates = createPlayerAnims(spriteFrameCache)
+    local standFrames = createStandFrames(spriteFrameCache)
     local function createPlayer()
-        local sprite = cc.Sprite:createWithSpriteFrame(spriteFrameCache:getSpriteFrame("bgj-run-00.tga"))
+        print('dsdsa', standFrames[Direction.S])
+        local sprite = cc.Sprite:createWithSpriteFrame(standFrames[Direction.S])
+        sprite:runAction(cc.RepeatForever:create(runAnimates[Direction.E]))
         return sprite
     end    
 
@@ -178,13 +255,16 @@ local function main()
 
         local lastx = 0
         local lasty = 0
+        local last_dir = Direction.S
         local function tick()
             local px, py = player:getPosition()
             local tx, ty = convertToTiledSpace(px, py, tilemap)
             local gid = blockLayer:getTileGIDAt(cc.p(tx, ty))
             if(gid ~= 0) then
+                print('stop')
                 player:stopAllActions()
                 player:setPosition(lastx, lasty)
+                player:setSpriteFrame(standFrames[last_dir])
             else
                 lastx = px
                 lasty = py
@@ -223,13 +303,22 @@ local function main()
             -- end
         end
 
-        local function setPlayerPosition(x, y)
+        local function setPlayerPosition(x, y, dir)
             -- player:setPosition(x, y)
             local distance = cc.pDistanceSQ(cc.p(player:getPosition()), cc.p(x,y)) ^ 0.5
             local speed = 250.0
             local moveTo = cc.MoveTo:create(distance/speed, cc.p(x, y))
+            local f = function ()
+                player:stopAllActions()
+                player:setSpriteFrame(standFrames[dir])
+            end
+            local cb = cc.CallFunc:create(f)
+            local seq = cc.Sequence:create(moveTo, cb, nil)
             player:stopAllActions()
-            player:runAction(moveTo)
+            local runAnimates = createPlayerAnims(spriteFrameCache)
+            player:runAction(cc.RepeatForever:create(runAnimates[dir]))
+            player:runAction(seq)
+            last_dir = dir
         end
 
         local function onTouchEnded(touch, event)
@@ -256,7 +345,9 @@ local function main()
             py = math.max(tilemap:getTileSize().height / 2, 
                 math.min(py, mapSize.height * tileSize.height - tileSize.height / 2))
 
-            setPlayerPosition(px, py)
+            local dir = _getDirection(cc.p(player:getPosition()), cc.p(location.x, location.y))
+
+            setPlayerPosition(px, py, dir)
         end
 
         local listener = cc.EventListenerTouchOneByOne:create()

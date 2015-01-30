@@ -134,6 +134,16 @@ local function main()
         scenelayer:setPosition(viewx, viewy)
     end
 
+    local function convertToTiledSpace(x, y, tilemap)
+        -- print('origin', x, y)
+        local tileSize = tilemap:getTileSize()
+        local tx = math.floor(x / tileSize.width)
+        local mapHeight = tilemap:getMapSize().height * tileSize.height
+        local ty = math.ceil((mapHeight - y) / tileSize.height)
+        -- print('convert to', tx, ty)
+        return tx, ty
+    end
+
     -- create farm
     local function createLayerFarm()
         local layerFarm = cc.LayerColor:create(cc.c4b(255, 255, 255, 255))
@@ -147,6 +157,9 @@ local function main()
         tilemap:setPosition(origin.x, origin.y)
         layerFarm:addChild(tilemap)
 
+        local blockLayer = tilemap:getLayer("block")
+        -- blocks:setVisible(false)
+
         local objects = tilemap:getObjectGroup("object")
         local spawnPoint = objects:getObject("bornPoint")
         local x, y = spawnPoint["x"], spawnPoint["y"]
@@ -155,17 +168,30 @@ local function main()
         spriteSheet:addChild(player)
         layerFarm:addChild(spriteSheet)
 
-       
- -- local player = cc.Sprite:create("Player.png")
+        -- local player = cc.Sprite:create("Player.png")
         -- layerFarm:addChild(player)
         player:setPosition(x, y)
         local map_w = tilemap:getMapSize().width * tilemap:getTileSize().width
         local map_h = tilemap:getMapSize().height * tilemap:getTileSize().height
         setViewPointCenter(x, y, map_w, map_h, layerFarm)
 
+        local lastx = 0
+        local lasty = 0
         local function tick()
             local px, py = player:getPosition()
-            setViewPointCenter(px, py, map_w, map_h, layerFarm)
+            local tx, ty = convertToTiledSpace(px, py, tilemap)
+            local gid = blockLayer:getTileGIDAt(cc.p(tx, ty))
+            if(gid ~= 0) then
+                player:stopAllActions()
+                player:setPosition(lastx, lasty)
+            else
+                lastx = px
+                lasty = py
+                setViewPointCenter(px, py, map_w, map_h, layerFarm)
+            end
+            -- local properties = tilemap:getPropertiesForGID(gid) 
+            -- print(tostring(properties.collidable))  
+            
         end
 
         schedulerID = cc.Director:getInstance():getScheduler():scheduleScriptFunc(tick, 0, false)
@@ -215,7 +241,6 @@ local function main()
             location = layerFarm:convertToNodeSpace(location)
             local px, py = player:getPosition()
             local diff = cc.p(location.x - px, location.y - py)
-
             local mapSize = tilemap:getMapSize()
             local tileSize = tilemap:getTileSize()
 

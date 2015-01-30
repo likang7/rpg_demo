@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="56" height="26" tilewidth="32" tileheight="32" nextobjectid="22">
+ <tileset firstgid="1" name="block" tilewidth="32" tileheight="32">
+  <image source="block.jpg" width="32" height="32"/>
+ </tileset>
+ <layer name="block" width="56" height="26" opacity="0.39">
+  <properties>
+   <property name="Collidable" value="True"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztVlsOgDAIm/e/hEf1yx8CG7DKY7HJYpyoLbBuY8TgEsYJoFpO1jaY+87gtJ2i7+/L2uB8UPJGa+0yvVbyeomHVxudi4CFqyf3iNqTd29hbPuDVFdu3tLrSND/c881PDRaufivYVlXqHxn+Qk3T2M09UR6EQIznu9V21/SmsvYB1aw1qEa/xVWPcjFakZHePZMhNbKuUPz6qAT0ddVdc7g4dtt7e9y7KAVxTGitrvfR3JCnz0RZ9uInGs47cRWOCtk8ngA8qsEwA==
+  </data>
+ </layer>
+ <objectgroup name="object">
+  <object id="6" name="bornPoint" type="0" x="64" y="416" width="32" height="32" rotation="0.829228">
+   <ellipse/>
+  </object>
+  <object id="7" name="endPoint" type="1" x="1696" y="704" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object id="8" name="monsterPoint" type="2" x="640" y="544" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="12" name="monsterPoint" type="2" x="672" y="576" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="13" name="monsterPoint" type="2" x="640" y="608" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="14" name="monsterPoint" type="2" x="960" y="608" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="15" name="monsterPoint" type="2" x="1024" y="576" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="16" name="monsterPoint" type="2" x="1024" y="640" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="17" name="monsterPoint" type="2" x="960" y="672" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="18" name="monsterPoint" type="2" x="960" y="544" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="19" name="monsterPoint" type="2" x="1472" y="672" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="20" name="monsterPoint" type="2" x="1504" y="640" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="21" name="monsterPoint" type="2" x="1504" y="704" width="32" height="32">
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>

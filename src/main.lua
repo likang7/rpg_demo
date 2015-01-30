@@ -158,13 +158,14 @@ local function main()
         layerFarm:addChild(tilemap)
 
         local blockLayer = tilemap:getLayer("block")
-        -- blocks:setVisible(false)
+        blockLayer:setVisible(false)
 
         local objects = tilemap:getObjectGroup("object")
         local spawnPoint = objects:getObject("bornPoint")
         local x, y = spawnPoint["x"], spawnPoint["y"]
         
         local player = createPlayer()--cc.Sprite:create("Player.png")
+        player:setAnchorPoint(cc.p(0.5, 0))
         spriteSheet:addChild(player)
         layerFarm:addChild(spriteSheet)
 

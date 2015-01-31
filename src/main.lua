@@ -303,6 +303,8 @@ local function main()
             -- end
         end
 
+        local moveToTag = 100
+        local runingTag = 200
         local function setPlayerPosition(x, y, dir)
             -- player:setPosition(x, y)
             local distance = cc.pDistanceSQ(cc.p(player:getPosition()), cc.p(x,y)) ^ 0.5
@@ -314,9 +316,18 @@ local function main()
             end
             local cb = cc.CallFunc:create(f)
             local seq = cc.Sequence:create(moveTo, cb, nil)
-            player:stopAllActions()
-            local runAnimates = createPlayerAnims(spriteFrameCache)
-            player:runAction(cc.RepeatForever:create(runAnimates[dir]))
+            seq:setTag(moveToTag)
+            -- 平滑处理一下，避免走同一个方向时有卡住的感觉
+            if dir ~= last_dir or player:getActionByTag(runingTag) == nil then
+                player:stopAllActions()
+                local runAnimates = createPlayerAnims(spriteFrameCache)
+                local repeatForever = cc.RepeatForever:create(runAnimates[dir])
+                repeatForever:setTag(runingTag)
+                player:runAction(repeatForever)
+            else
+                player:stopActionByTag(moveToTag)
+            end
+            
             player:runAction(seq)
             last_dir = dir
         end

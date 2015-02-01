@@ -1,0 +1,1 @@
+Direction = {S=0, WS=1, W=2, NW=3, N=4, NE=5, E=6, ES=7}

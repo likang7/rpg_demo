@@ -2,6 +2,7 @@ require "const"
 require "entity"
 
 local Direction = Direction
+local math = math
 
 GameLayer = class("GameLayer",
     function()
@@ -41,11 +42,27 @@ function GameLayer:initTileMap(tilemapPath)
     tilemap:setPosition(origin.x, origin.y)
     self:addChild(tilemap)
 
-    self.map_w = tilemap:getMapSize().width * tilemap:getTileSize().width
-    self.map_h = tilemap:getMapSize().height * tilemap:getTileSize().height
-
+    self.mapSize = tilemap:getMapSize()
+    self.tileSize = tilemap:getTileSize()
+    
     self.blockLayer = tilemap:getLayer("block")
     -- blockLayer:setVisible(false)
+    local block = {}
+    for x = 0, self.mapSize.width - 1 do
+    	block[x] = {}
+    	for y = 0, self.mapSize.height - 1 do
+    		local gid = self.blockLayer:getTileGIDAt(cc.p(x, y))
+    		block[x][y] = gid
+    	end
+    end
+
+    require "model.gamemap"
+    self.gameMap = GameMap:create(block, self.mapSize.width, self.mapSize.height)
+
+    self.map_w = self.mapSize.width * self.tileSize.width
+    self.map_h = self.mapSize.height * self.tileSize.height
+
+    
 
     local objects = tilemap:getObjectGroup("object")
     self:initEntity(objects)
@@ -68,23 +85,10 @@ function GameLayer:init()
     bg:setPosition(origin.x, origin.y + self.map_h - bg:getTextureRect().height)
     self:addChild(bg, -1)
 
-    local lastx = 0
-    local lasty = 0
     local last_dir = Direction.S
     local function tick()
         local px, py = player:getPosition()
-        local tx, ty = self:convertToTiledSpace(px, py)
-        local gid = self.blockLayer:getTileGIDAt(cc.p(tx, ty))
-        if(gid ~= 0) then
-            print('stop')
-            player:stopRuning()
-            player:setPosition(lastx, lasty)
-            player:setStandDirection(player.dir)
-        else
-            lastx = px
-            lasty = py
-            self:setViewPointCenter(px, py)
-        end        
+        self:setViewPointCenter(px, py)      
     end
 
     local schedulerID = cc.Director:getInstance():getScheduler():scheduleScriptFunc(tick, 0, false)
@@ -101,15 +105,22 @@ function GameLayer:init()
         local location = touch:getLocation()
         -- cclog("onTouchEnded: %0.2f, %0.2f", location.x, location.y)
         location = self:convertToNodeSpace(location)
-        local mapSize = self.tilemap:getMapSize()
-        local tileSize = self.tilemap:getTileSize()
 
-        local px = math.max(self.tilemap:getTileSize().width / 2, 
-            math.min(location.x, mapSize.width * tileSize.width - tileSize.width / 2))
-        local py = math.max(self.tilemap:getTileSize().height / 2, 
-            math.min(location.y, mapSize.height * tileSize.height - tileSize.height / 2))
+        local px = math.max(self.tileSize.width / 2, 
+            math.min(location.x, self.mapSize.width * self.tileSize.width - self.tileSize.width / 2))
+        local py = math.max(self.tileSize.height / 2, 
+            math.min(location.y, self.mapSize.height * self.tileSize.height - self.tileSize.height / 2))
 
-        player:runTo(cc.p(px, py))
+        -- player:runTo(cc.p(px, py))
+
+        x, y = player:getPosition()
+        local path = self.gameMap:pathTo(cc.p(self:convertToTiledSpace(x, y)), cc.p(self:convertToTiledSpace(px, py)))
+        for i, step in ipairs(path) do
+        	step.x = (step.x + 0.5) * self.tileSize.width
+        	local mapHeight = self.tilemap:getMapSize().height * self.tileSize.height
+        	step.y = mapHeight - step.y * self.tileSize.height
+        end
+        player:runPath(path)
     end
 
     local listener = cc.EventListenerTouchOneByOne:create()
@@ -143,10 +154,9 @@ end
 
 function GameLayer:convertToTiledSpace(x, y)
     -- print('origin', x, y)
-    local tileSize = self.tilemap:getTileSize()
-    local tx = math.floor(x / tileSize.width)
-    local mapHeight = self.tilemap:getMapSize().height * tileSize.height
-    local ty = math.ceil((mapHeight - y) / tileSize.height)
+    local tx = math.floor(x / self.tileSize.width)
+    local mapHeight = self.tilemap:getMapSize().height * self.tileSize.height
+    local ty = math.ceil((mapHeight - y) / self.tileSize.height)
     -- print('convert to', tx, ty)
     return tx, ty
 end

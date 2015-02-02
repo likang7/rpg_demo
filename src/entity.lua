@@ -148,6 +148,43 @@ function Entity:runTo(dest)
     self.dir = dir
 end
 
+function Entity:runPath(path)
+	self.runningPath = path
+	self:stopActionByTag(self.runActionTag)
+
+	local function run(path, idx)
+		if path[idx] == nil then
+			self:stopRuning()
+			self:setStandDirection(self.dir)
+			return
+		end
+		local playerPos = cc.p(self:getPosition())
+		local distance = cc.pDistanceSQ(playerPos, path[idx]) ^ 0.5
+		print('t = ', distance/self.speed)
+		local moveTo = cc.MoveTo:create(distance/self.speed, path[idx])
+		local cb = cc.CallFunc:create(
+			function() 
+				run(path, idx + 1)
+			end
+		)
+		local seq = cc.Sequence:create(moveTo, cb)
+    	seq:setTag(self.runActionTag)
+    	self:runAction(seq)
+
+    	local dir = getDirection(playerPos, path[idx])
+    	if dir ~= self.dir or self:getActionByTag(self.runAnimateTag) == nil then
+    		self:stopActionByTag(self.runAnimateTag)
+    		local repeatForever = cc.RepeatForever:create(
+        	cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[dir], self.runAnimDelay)))
+	        repeatForever:setTag(self.runAnimateTag)
+	        self:runAction(repeatForever)
+    	end
+    	self.dir = dir
+	end
+
+	run(path, 1)
+end
+
 function Entity:releaseCache()
 	-- local spriteFrameCache = cc.SpriteFrameCache:getInstance()
 	-- spriteFrameCache:removeSpriteFramesFromFile(self.texturePlist)
@@ -166,6 +203,7 @@ function Entity:init(name)
 	self.runActionTag = 10
 	self.runAnimateTag = 11
 	self.texturePlist = self.name .. ".plist"
+	self.runningPath = {}
 
 	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
 	spriteFrameCache:addSpriteFrames(self.texturePlist)

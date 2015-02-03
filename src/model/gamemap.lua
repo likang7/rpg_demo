@@ -36,6 +36,11 @@ function GameMap:popOpenList(openList)
     return step
 end
 
+function GameMap:isAvailable(tx, ty)
+    return not(tx < 0 or tx >= self.width or ty < 0 or 
+            ty >= self.height or self.map[tx][ty] ~= 0)
+end
+
 local function reverse(t)
     local len = #t+1
     for i=1, (len-1)/2 do
@@ -117,9 +122,7 @@ function GameMap:pathTo(from, to, maxd)
         for _, dir in ipairs(directions) do
             local tx = step.x + dir[1]
             local ty = step.y + dir[2]
-            if tx < 0 or tx >= self.width or ty < 0 or ty >= self.height or 
-                self.map[tx][ty] ~= 0 or 
-                closeList[hashCoord(tx, ty)] == true then
+            if self:isAvailable(tx, ty) == false or closeList[hashCoord(tx, ty)] == true then
                 -- continue
             else
                 local new_step = Node(tx, ty, step)

@@ -102,10 +102,10 @@ local function main()
     end
 
     -- play background music, preload effect
-    local bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("background.mp3")
-    cc.SimpleAudioEngine:getInstance():playMusic(bgMusicPath, true)
-    local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
-    cc.SimpleAudioEngine:getInstance():preloadEffect(effectPath)
+    -- local bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("background.mp3")
+    -- cc.SimpleAudioEngine:getInstance():playMusic(bgMusicPath, true)
+    -- local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
+    -- cc.SimpleAudioEngine:getInstance():preloadEffect(effectPath)
 
     -- run
     -- gameScene:addChild(createLayerMenu())

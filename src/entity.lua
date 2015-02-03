@@ -59,7 +59,7 @@ function Entity:setStandDirection(dir)
 	self:setSpriteFrame(frame)
 end
 
-local function calDegree(p1, p2)
+function Entity:calDegree(p1, p2)
     local h = p2.y - p1.y
     local w = p2.x - p1.x
     if w == 0 then
@@ -84,7 +84,7 @@ local function calDegree(p1, p2)
     return (deg + 360) % 360
 end
 
-local function getDirectionByDegree(deg)
+function Entity:getDirectionByDegree(deg)
     local dir = nil
 
     if deg >= 22.5 and deg < 67.5 then
@@ -108,28 +108,25 @@ local function getDirectionByDegree(deg)
     return dir
 end
 
-local function getDirection(p1, p2)
-    local deg = calDegree(p1, p2)
-    return getDirectionByDegree(deg)
+function Entity:getDirection(p1, p2)
+    local deg = self:calDegree(p1, p2)
+    return self:getDirectionByDegree(deg)
 end
 
 function Entity:stopRuning()
 	self:stopActionByTag(self.runActionTag)
 	self:stopActionByTag(self.runAnimateTag)
+    self:setStandDirection(self.dir)
 end
 
 function Entity:runTo(dest)
 	local playerPos = cc.p(self:getPosition())
-	local dir = getDirection(playerPos, dest)
+	local dir = self:getDirection(playerPos, dest)
 
 	local distance = cc.pDistanceSQ(playerPos, dest) ^ 0.5
 	local moveTo = cc.MoveTo:create(distance/self.speed, dest)
 
-    local f = function ()
-	    self:stopRuning()
-	    self:setStandDirection(dir)
-    end
-    local cb = cc.CallFunc:create(f)
+    local cb = cc.CallFunc:create(function () self:stopRuning() end)
     local seq = cc.Sequence:create(moveTo, cb)
     seq:setTag(self.runActionTag)
 
@@ -148,20 +145,26 @@ function Entity:runTo(dest)
     self.dir = dir
 end
 
-function Entity:_run(path, idx)
+function Entity:_run(path, idx, cb_end, dir)
     if path[idx] == nil then
-        self:stopRuning()
-        self:setStandDirection(self.dir)
+        if cb_end ~= nil then
+            cb_end()
+        else
+            self:stopRuning()
+        end
         return
     end
 
     local playerPos = cc.p(self:getPosition())
-    local dir = getDirection(playerPos, path[idx])
+
+    if dir == nil then
+        dir = self:getDirection(playerPos, path[idx])
+    end
 
     -- 同一方向的弄在同一个action里走
     local end_idx = idx + 1
     while path[end_idx] ~= nil do
-        local next_dir = getDirection(path[end_idx - 1], path[end_idx])
+        local next_dir = self:getDirection(path[end_idx - 1], path[end_idx])
         if next_dir ~= dir then
             break
         end
@@ -171,11 +174,11 @@ function Entity:_run(path, idx)
 
     -- 移动精灵，并递归走剩下的路径
     local distance = cc.pDistanceSQ(playerPos, path[idx]) ^ 0.5
-    print('t = ', distance/self.speed)
+    -- print('t = ', distance/self.speed)
     local moveTo = cc.MoveTo:create(distance/self.speed, path[idx])
     local cb = cc.CallFunc:create(
         function() 
-            self:_run(path, idx + 1)
+            self:_run(path, idx + 1, cb_end)
         end
     )
     local seq = cc.Sequence:create(moveTo, cb)
@@ -193,11 +196,25 @@ function Entity:_run(path, idx)
     self.dir = dir
 end
 
-function Entity:runPath(path)
-	self.runningPath = path
+function Entity:runPath(path, cb_end, dir)
 	self:stopActionByTag(self.runActionTag)	
 
-	self:_run(path, 1)
+	self:_run(path, 1, cb_end, dir)
+end
+
+function Entity:runOneStep(p, cb, dir)
+    if self.oneStepLock == true then
+        return 
+    end
+
+    local cb_end = function ()
+        if cb ~= nil then
+            cb()
+        end
+        self.oneStepLock = false
+    end
+    
+    self:runPath({p}, cb_end, dir)
 end
 
 function Entity:releaseCache()
@@ -218,7 +235,7 @@ function Entity:init(name)
 	self.runActionTag = 10
 	self.runAnimateTag = 11
 	self.texturePlist = self.name .. ".plist"
-	self.runningPath = {}
+    self.oneStepLock = false
 
 	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
 	spriteFrameCache:addSpriteFrames(self.texturePlist)

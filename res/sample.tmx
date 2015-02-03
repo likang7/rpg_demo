@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="56" height="26" tilewidth="32" tileheight="32" nextobjectid="22">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="58" height="32" tilewidth="32" tileheight="32" nextobjectid="22">
  <tileset firstgid="1" name="block" tilewidth="32" tileheight="32">
   <image source="block.jpg" width="32" height="32"/>
  </tileset>
- <layer name="block" width="56" height="26" opacity="0.39">
+ <tileset firstgid="2" name="scene" tilewidth="32" tileheight="32">
+  <image source="../../../../Desktop/sample/scene.jpg" width="1868" height="1056"/>
+ </tileset>
+ <layer name="block" width="58" height="32">
   <properties>
    <property name="Collidable" value="True"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztVlsOgDAIm/e/hEf1yx8CG7DKY7HJYpyoLbBuY8TgEsYJoFpO1jaY+87gtJ2i7+/L2uB8UPJGa+0yvVbyeomHVxudi4CFqyf3iNqTd29hbPuDVFdu3tLrSND/c881PDRaufivYVlXqHxn+Qk3T2M09UR6EQIznu9V21/SmsvYB1aw1qEa/xVWPcjFakZHePZMhNbKuUPz6qAT0ddVdc7g4dtt7e9y7KAVxTGitrvfR3JCnz0RZ9uInGs47cRWOCtk8ngA8qsEwA==
+   eJztl0kOhTAMQ8v9L8FRWbGJYjLQKWmeVKFfKmTjNOW3NocLjExQTyd4bMzvDHAes/mseo0F1zdRL7VmuUNvRmcE0uP1SOdmYtHsyaJHLYDn3mD87iMoZ27esgdGQHVw9zV6NJ659bOw7Lte73913+Hm6RpNvj17Vk++9L5Xbd2hPbny/JCw5rKrDwmpNrVrMyF9W0Sp4RGc7NebfZZ68WiO6NWbV0SvFK3+6F49/zkiYtXtPft2GEVRFEUxgge0awS4
   </data>
  </layer>
  <objectgroup name="object">
@@ -52,4 +55,9 @@
    <ellipse/>
   </object>
  </objectgroup>
+ <layer name="sky" width="58" height="32" opacity="0.57">
+  <data encoding="base64" compression="zlib">
+   eJzt0sdOAkEYwPGJgooN28nF3p7DXtCjhQXsd8ub2Dh600RFX0SNusYDnpRi5SH4m3BSFDUrm4zfP/mFZJbMzLdZpSRJkiRJkqTfNln0cc3MsaZzkTzz7mr2Pqw889xqNu9b3mKnbyDp2B7f1f4/+bbumPMecSSQRErD2RtdShnwoQnNaEGry+mb/U1TzDWNGQRgIogQwjbNvMI+q1jDuoPvcYOzN7GFbewgYuN9DtjrEEeI4hgnDsx7yplnOM+efcHvJa5g4Tq7fvPubrFv3DXOfxJIIoUHPOIJz3jBK9IFmrvErVQpyuBBOSpQiSpUw4sa1KIO9Whwf76nwTNfjudtrLWjA53oQjd6vtjLzno5pw/9GMAghjCMEYxiDH6MY+KH9wrwfxNBhBDGLOYwjwUsYgnLBZpZkiRJkiSlMuBENQs=
+  </data>
+ </layer>
 </map>

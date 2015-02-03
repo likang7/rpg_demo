@@ -148,41 +148,56 @@ function Entity:runTo(dest)
     self.dir = dir
 end
 
+function Entity:_run(path, idx)
+    if path[idx] == nil then
+        self:stopRuning()
+        self:setStandDirection(self.dir)
+        return
+    end
+
+    local playerPos = cc.p(self:getPosition())
+    local dir = getDirection(playerPos, path[idx])
+
+    -- 同一方向的弄在同一个action里走
+    local end_idx = idx + 1
+    while path[end_idx] ~= nil do
+        local next_dir = getDirection(path[end_idx - 1], path[end_idx])
+        if next_dir ~= dir then
+            break
+        end
+        end_idx = end_idx + 1
+    end
+    idx = end_idx - 1
+
+    -- 移动精灵，并递归走剩下的路径
+    local distance = cc.pDistanceSQ(playerPos, path[idx]) ^ 0.5
+    print('t = ', distance/self.speed)
+    local moveTo = cc.MoveTo:create(distance/self.speed, path[idx])
+    local cb = cc.CallFunc:create(
+        function() 
+            self:_run(path, idx + 1)
+        end
+    )
+    local seq = cc.Sequence:create(moveTo, cb)
+    seq:setTag(self.runActionTag)
+    self:runAction(seq)
+
+    -- 播放奔跑动画
+    if dir ~= self.dir or self:getActionByTag(self.runAnimateTag) == nil then
+        self:stopActionByTag(self.runAnimateTag)
+        local repeatForever = cc.RepeatForever:create(
+        cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[dir], self.runAnimDelay)))
+        repeatForever:setTag(self.runAnimateTag)
+        self:runAction(repeatForever)
+    end
+    self.dir = dir
+end
+
 function Entity:runPath(path)
 	self.runningPath = path
-	self:stopActionByTag(self.runActionTag)
+	self:stopActionByTag(self.runActionTag)	
 
-	local function run(path, idx)
-		if path[idx] == nil then
-			self:stopRuning()
-			self:setStandDirection(self.dir)
-			return
-		end
-		local playerPos = cc.p(self:getPosition())
-		local distance = cc.pDistanceSQ(playerPos, path[idx]) ^ 0.5
-		print('t = ', distance/self.speed)
-		local moveTo = cc.MoveTo:create(distance/self.speed, path[idx])
-		local cb = cc.CallFunc:create(
-			function() 
-				run(path, idx + 1)
-			end
-		)
-		local seq = cc.Sequence:create(moveTo, cb)
-    	seq:setTag(self.runActionTag)
-    	self:runAction(seq)
-
-    	local dir = getDirection(playerPos, path[idx])
-    	if dir ~= self.dir or self:getActionByTag(self.runAnimateTag) == nil then
-    		self:stopActionByTag(self.runAnimateTag)
-    		local repeatForever = cc.RepeatForever:create(
-        	cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[dir], self.runAnimDelay)))
-	        repeatForever:setTag(self.runAnimateTag)
-	        self:runAction(repeatForever)
-    	end
-    	self.dir = dir
-	end
-
-	run(path, 1)
+	self:_run(path, 1)
 end
 
 function Entity:releaseCache()

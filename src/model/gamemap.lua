@@ -3,6 +3,7 @@ GameMap = class("GameMap")
 
 local table = table
 local ipairs = ipairs
+local pairs = pairs
 local math = math
 
 function GameMap:create(map, width, height)
@@ -21,47 +22,50 @@ function GameMap:init(map, width, height)
     self.height = height
 end
 
-function GameMap:pushOpenList(openList, step)
-    local curScore = step.score
-    local idx = 0
-    for idx, node in ipairs(openList) do
-        if curScore >= node.score then
-            table.insert(openList, idx, step)
-            return
+function GameMap:popOpenList(openList)
+    local min_idx = 0
+    local min_score = 999999999
+    for idx, node in pairs(openList) do
+        if node.score < min_score then
+            min_idx = idx
+            min_score = node.score
         end
     end
-    table.insert(openList, step)
+    local step = openList[min_idx]
+    openList[min_idx] = nil
+    return step
 end
 
-function GameMap:indexOfList(list, x, y)
-    for idx, node in ipairs(list) do
-        if node.x == x and node.y == y then
-            return idx
-        end
+local function reverse(t)
+    local len = #t+1
+    for i=1, (len-1)/2 do
+        t[i], t[len-i] = t[len-i], t[i]
     end
-    return -1
 end
 
+local function gScore(x, y, parent)
+    if parent == nil then
+        return 0
+    else
+        x, y = parent.x - x, parent.y - y
+        local d = 10
+        if x ~= 0 and y ~= 0 then 
+            d = 14
+        end
+        return parent.gscore + d
+    end 
+end
+
+local function hScore(x, y, to)
+    local dx, dy = math.abs(to.x - x), math.abs(to.y - y)
+    return 10 * (dx + dy) + (14 - 2 * 10) * math.min(dx, dy)
+end
+
+-- A star
+-- TODO: 调用C++用优先队列来实现
 function GameMap:pathTo(from, to, maxd)
     if maxd == nil then
-        maxd = 10 * 26 * 17
-    end
-
-    local function gScore(x, y, parent)
-        if parent == nil then
-            return 0
-        else
-            x, y = parent.x - x, parent.y - y
-            local d = 10
-            if x ~= 0 and y ~= 0 then 
-                d = 14
-            end
-            return parent.gscore + d
-        end 
-    end
-
-    local function hScore(x, y, to)
-        return 10 * (math.abs(to.x - x) + math.abs(to.y - y))
+        maxd = 200
     end
 
     local function Node(x, y, parent)
@@ -72,21 +76,31 @@ function GameMap:pathTo(from, to, maxd)
                 ["hscore"]=hscore, ["score"]=score}
     end
 
+    local function hashCoord(x,  y)
+        return x * self.height + y
+    end
+
     local openList = {}
     local closeList = {}
     local flag = false
 
     local step = Node(from.x, from.y, nil)
-    self:pushOpenList(openList, step)
+    openList[hashCoord(step.x, step.y)] = step
 
     -- 存储以便不能到达时去最近的点
     local min_score = step.hscore
     local min_step = step
     local directions = {{-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1}}
-    while openList[1] ~= nil do
-        local step = table.remove(openList)
-        -- closeList[step.x * self.width + step.y] = true
-        table.insert(closeList, step)
+    local d = 0
+    while true do
+        local step = self:popOpenList(openList)
+
+        d = d + 1
+        if step == nil or d >= maxd then
+            break
+        end
+
+        closeList[hashCoord(step.x, step.y)] = true
 
         if step.x == to.x and step.y == to.y then
             min_step = step
@@ -105,24 +119,19 @@ function GameMap:pathTo(from, to, maxd)
             local ty = step.y + dir[2]
             if tx < 0 or tx >= self.width or ty < 0 or ty >= self.height or 
                 self.map[tx][ty] ~= 0 or 
-                -- closeList[tx * self.width + step.y] == true then
-                self:indexOfList(closeList, tx, ty) ~= -1 then
+                closeList[hashCoord(tx, ty)] == true then
                 -- continue
             else
                 local new_step = Node(tx, ty, step)
-                local idx = self:indexOfList(openList, tx, ty)
-                if new_step.score >= maxd then
-                    --continue
-                elseif idx == -1 then
-                    self:pushOpenList(openList, new_step)
-                elseif new_step.score < openList[idx].score then
-                    table.remove(openList, idx)
-                    self:pushOpenList(openList, new_step)
+                local idx = hashCoord(tx, ty)
+                if openList[idx] == nil or new_step.score < openList[idx].score then
+                    openList[idx] = new_step
                 end
             end
         end -- for end
     end -- while end
 
+    -- 找不到时返回一个最近的
     if flag == false then
         return self:pathTo(from, cc.p(min_step.x, min_step.y), maxd)
     end
@@ -132,13 +141,6 @@ function GameMap:pathTo(from, to, maxd)
     while not (step.x == from.x and step.y == from.y) do
         table.insert(paths, {x=step.x, y=step.y})
         step = step.parent
-    end
-
-    local function reverse(t)
-        local len = #t+1
-        for i=1, (len-1)/2 do
-            t[i], t[len-i] = t[len-i], t[i]
-        end
     end
 
     reverse(paths)

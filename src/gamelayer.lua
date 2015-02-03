@@ -3,6 +3,7 @@ require "entity"
 
 local Direction = Direction
 local math = math
+local ipairs = ipairs
 
 GameLayer = class("GameLayer",
     function()
@@ -40,18 +41,19 @@ function GameLayer:initTileMap(tilemapPath)
 	local tilemap = ccexp.TMXTiledMap:create(tilemapPath)
     self.tilemap = tilemap
     tilemap:setPosition(origin.x, origin.y)
-    self:addChild(tilemap)
+    -- self:addChild(tilemap)
 
     self.mapSize = tilemap:getMapSize()
     self.tileSize = tilemap:getTileSize()
     
-    self.blockLayer = tilemap:getLayer("block")
+    blockLayer = tilemap:getLayer("block")
     -- blockLayer:setVisible(false)
+
     local block = {}
     for x = 0, self.mapSize.width - 1 do
     	block[x] = {}
     	for y = 0, self.mapSize.height - 1 do
-    		local gid = self.blockLayer:getTileGIDAt(cc.p(x, y))
+    		local gid = blockLayer:getTileGIDAt(cc.p(x, y))
     		block[x][y] = gid
     	end
     end
@@ -61,8 +63,6 @@ function GameLayer:initTileMap(tilemapPath)
 
     self.map_w = self.mapSize.width * self.tileSize.width
     self.map_h = self.mapSize.height * self.tileSize.height
-
-    
 
     local objects = tilemap:getObjectGroup("object")
     self:initEntity(objects)
@@ -110,14 +110,12 @@ function GameLayer:init()
             math.min(location.x, self.mapSize.width * self.tileSize.width - self.tileSize.width / 2))
         local py = math.max(self.tileSize.height / 2, 
             math.min(location.y, self.mapSize.height * self.tileSize.height - self.tileSize.height / 2))
-
-        -- player:runTo(cc.p(px, py))
-
+        
         x, y = player:getPosition()
         local path = self.gameMap:pathTo(cc.p(self:convertToTiledSpace(x, y)), cc.p(self:convertToTiledSpace(px, py)))
         for i, step in ipairs(path) do
         	step.x = (step.x + 0.5) * self.tileSize.width
-        	local mapHeight = self.tilemap:getMapSize().height * self.tileSize.height
+        	local mapHeight = self.mapSize.height * self.tileSize.height
         	step.y = mapHeight - step.y * self.tileSize.height
         end
         player:runPath(path)
@@ -155,7 +153,7 @@ end
 function GameLayer:convertToTiledSpace(x, y)
     -- print('origin', x, y)
     local tx = math.floor(x / self.tileSize.width)
-    local mapHeight = self.tilemap:getMapSize().height * self.tileSize.height
+    local mapHeight = self.mapSize.height * self.tileSize.height
     local ty = math.ceil((mapHeight - y) / self.tileSize.height)
     -- print('convert to', tx, ty)
     return tx, ty

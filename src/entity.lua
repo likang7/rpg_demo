@@ -62,15 +62,12 @@ end
 function Entity:calDegree(p1, p2)
     local h = p2.y - p1.y
     local w = p2.x - p1.x
-    if w == 0 then
-        if h ~= 0 then
-            return h/math.abs(h) * 180
-        else
-            return 0
-        end
+
+    if w == 0 and h == 0 then
+        return 0
     end
 
-    local deg = math.deg(math.atan(math.abs(h/w)))
+    local deg = math.deg(math.atan2(math.abs(h), math.abs(w)))
 
     if w >= 0 and h >= 0 then
         deg = 270 - deg
@@ -81,6 +78,13 @@ function Entity:calDegree(p1, p2)
     else
         deg = 270 + deg
     end
+
+    -- the same but cannot avoid sqrt
+    -- local theta = math.deg(math.acos(-h / math.sqrt(h*h+w*w)))
+    -- if w > 0 then
+    --     theta = 360 - theta 
+    -- end
+
     return (deg + 360) % 360
 end
 

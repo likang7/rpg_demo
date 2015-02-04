@@ -14,31 +14,42 @@ GameLayer = class("GameLayer",
 GameLayer.__index = GameScene
 
 function GameLayer:createGameLayer()
-	
+    
 end
 
 function GameLayer:create()
-	local scene = GameLayer.new()
-	scene:init()
+    local scene = GameLayer.new()
+    scene:init()
 
-	return scene
+    return scene
 end
 
-function GameLayer:initEntity(objects)
-	local playerPoint = objects:getObject("bornPoint")
-	local x, y = playerPoint["x"], playerPoint["y"]
-	local player = Entity:create('bgj')
-	player:setPosition(x, y)
-	self.player = player
-	self:addChild(player)
+function GameLayer:initEntity(objectGroup)
+    local playerPoint = objectGroup:getObject("bornPoint")
+    local x, y = playerPoint.x, playerPoint.y
+    local player = Entity:create('bgj')
+    player:setPosition(x, y)
+    self.player = player
+    self:addChild(player, 5)
 
-	self:setViewPointCenter(x, y)
+    self.monsterEntity = {}
+    local objects = objectGroup:getObjects()
+    for _, object in pairs(objects) do
+        if object['name'] == 'monsterPoint' then
+            local monster = Entity:create('bgj')
+            monster:setPosition(object.x, object.y)
+            self:addChild(monster, 1)
+            table.insert(self.monsterEntity, monster)
+        end
+    end
+
+    self:setViewPointCenter(x, y)
 end
 
 function GameLayer:initTileMap(tilemapPath)
-	local origin = cc.Director:getInstance():getVisibleOrigin()
+    local origin = cc.Director:getInstance():getVisibleOrigin()
 
-	local tilemap = ccexp.TMXTiledMap:create(tilemapPath)
+    local tilemap = ccexp.TMXTiledMap:create(tilemapPath)
     self.tilemap = tilemap
     tilemap:setPosition(origin.x, origin.y)
     -- self:addChild(tilemap)
@@ -46,16 +57,24 @@ function GameLayer:initTileMap(tilemapPath)
     self.mapSize = tilemap:getMapSize()
     self.tileSize = tilemap:getTileSize()
     
-    blockLayer = tilemap:getLayer("block")
+    local blockLayer = tilemap:getLayer("block")
     -- blockLayer:setVisible(false)
+
+    local skyLayer = tilemap:getLayer("sky")
+    tilemap:removeChild(skyLayer)
+    self:addChild(skyLayer, 10)
+    -- skyLayer:setPosition(origin.x, origin.y)
+    skyLayer:setVisible(false)
+
+    self.skyLayer = skyLayer
 
     local block = {}
     for x = 0, self.mapSize.width - 1 do
-    	block[x] = {}
-    	for y = 0, self.mapSize.height - 1 do
-    		local gid = blockLayer:getTileGIDAt(cc.p(x, y))
-    		block[x][y] = gid
-    	end
+        block[x] = {}
+        for y = 0, self.mapSize.height - 1 do
+            local gid = blockLayer:getTileGIDAt(cc.p(x, y))
+            block[x][y] = gid
+        end
     end
 
     require "model.gamemap"
@@ -69,8 +88,8 @@ function GameLayer:initTileMap(tilemapPath)
 end
 
 function GameLayer:init()
-	self.sceneTexturePath = "scene.jpg"
-	self.tilemapPath = "sample.tmx"
+    self.sceneTexturePath = "scene.jpg"
+    self.tilemapPath = "sample.tmx"
 
     local origin = cc.Director:getInstance():getVisibleOrigin()
 
@@ -86,14 +105,26 @@ function GameLayer:init()
     local last_dir = Direction.S
     local function tick()
         local px, py = self.player:getPosition()
-        self:setViewPointCenter(px, py)      
+        self:setViewPointCenter(px, py)   
+        local gid = self.skyLayer:getTileGIDAt(cc.p(self:convertToTiledSpace(px, py)))
+        if gid ~= 0 then
+            self.player:setOpacity(150)
+        else
+            self.player:setOpacity(255)
+        end 
     end
 
-    local schedulerID = cc.Director:getInstance():getScheduler():scheduleScriptFunc(tick, 0, false)
+    local scheduler = cc.Director:getInstance():getScheduler()
+    local schedulerID = scheduler:scheduleScriptFunc(tick, 0, false)
+
+    self.tryMoveOneStepID = nil
     local function onNodeEvent(event)
-       if "exit" == event then
-           cc.Director:getInstance():getScheduler():unscheduleScriptEntry(schedulerID)
-       end
+        if "exit" == event then
+            scheduler:unscheduleScriptEntry(schedulerID)
+            if self.tryMoveOneStepID ~= nil then
+                scheduler:unscheduleScriptEntry(self.tryMoveOneStepID)
+            end
+        end
     end
     self:registerScriptHandler(onNodeEvent)
 
@@ -155,7 +186,7 @@ function GameLayer:initKeyboardEvent()
         end
     end
 
-    local function moveOneStep()
+    local function tryMoveOneStep()
         local dir = getDirection(self.pressSum)
         local d = {[Direction.S]={0, 1}, [Direction.WS]={-1, 1}, 
                     [Direction.W]={-1, 0}, [Direction.NW]={-1, -1}, 
@@ -172,16 +203,25 @@ function GameLayer:initKeyboardEvent()
             px, py = self:reverseTiledSpace(px, py)
             px, py = self:clampEntityPos(px, py)
         
-            self.player:runOneStep(cc.p(px, py), moveOneStep, dir)
+            self.player:runOneStep(cc.p(px, py), nil, dir)
+            if self.tryMoveOneStepID == nil then
+                local scheduler = cc.Director:getInstance():getScheduler()
+                self.tryMoveOneStepID = scheduler:scheduleScriptFunc(tryMoveOneStep, 0.1, false)
+            end
         else
             self.player:stopRuning()
+            if self.tryMoveOneStepID ~= nil then
+                local scheduler = cc.Director:getInstance():getScheduler()
+                scheduler:unscheduleScriptEntry(self.tryMoveOneStepID)
+                self.tryMoveOneStepID = nil
+            end
         end
     end
 
     local function onKeyPressed(keyCode, event)
         -- TOFIX: 这里要偏移3才对的上，Lua的Bug?
         keyCode = keyCode - 3
-        -- cclog(string.format("Key with keycode %d pressed", keyCode))
+        cclog(string.format("Key with keycode %d pressed", keyCode))
         if keyCode == cc.KeyCode.KEY_W or keyCode == cc.KeyCode.KEY_CAPITAL_W then
             self.pressSum = self.pressSum + KEYW
         elseif keyCode == cc.KeyCode.KEY_A or keyCode == cc.KeyCode.KEY_CAPITAL_A then
@@ -191,7 +231,11 @@ function GameLayer:initKeyboardEvent()
         elseif keyCode == cc.KeyCode.KEY_D or keyCode == cc.KeyCode.KEY_CAPITAL_D then
             self.pressSum = self.pressSum + KEYD
         end
-        moveOneStep()
+        tryMoveOneStep()
+
+        if keyCode == cc.KeyCode.KEY_I or keyCode == cc.KeyCode.KEY_CAPITAL_I then
+            self.player:attack()
+        end
     end
 
     local function onKeyReleased(keyCode, event)
@@ -206,7 +250,7 @@ function GameLayer:initKeyboardEvent()
         elseif keyCode == cc.KeyCode.KEY_D or keyCode == cc.KeyCode.KEY_CAPITAL_D then
             self.pressSum = self.pressSum - KEYD
         end
-        moveOneStep()
+        tryMoveOneStep()
     end
 
     self.pressSum = 0

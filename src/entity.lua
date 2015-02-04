@@ -207,7 +207,7 @@ function Entity:runPath(path, cb_end, dir)
 end
 
 function Entity:runOneStep(p, cb, dir)
-    if self.oneStepLock == true then
+    if self.opLock == true then
         return 
     end
 
@@ -215,7 +215,7 @@ function Entity:runOneStep(p, cb, dir)
         if cb ~= nil then
             cb()
         end
-        self.oneStepLock = false
+        self.opLock = false
     end
     
     self:runPath({p}, cb_end, dir)
@@ -230,8 +230,40 @@ function Entity:releaseCache()
  --    end
 end
 
+function Entity:createAttackAnimationFrames()
+	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+	-- local animationCache = cc.AnimationCache:getInstance()
+    attackAnimationFrames = {}
+    for _, dir in pairs(Direction) do
+        local frames = {}
+        for i = 0, 7 do
+            table.insert(frames, spriteFrameCache:getSpriteFrame(self.name .. string.format("-stand-%d%d.tga", dir, i)))
+        end
+        -- local runAnimation = cc.Animation:createWithSpriteFrames(frames, delay)
+        -- animationCache:addAnimation(runAnimation, self:getRunAnimationName(dir))
+        attackAnimationFrames[dir] = frames
+    end
+
+    return attackAnimationFrames
+end
+
+function Entity:attack()
+	if self.opLock == true then
+        return 
+    end
+
+	self.opLock = true
+	self:stopRuning()
+	local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.attackAnimationFrames[self.dir], self.runAnimDelay))
+	local cb = function ()
+		self.opLock = false
+	end
+	local callFunc = cc.CallFunc:create(cb)
+	local seq = cc.Sequence:create(animate, callFunc)
+	self:runAction(seq)
+end
+
 function Entity:init(name)
-	print('xx',self.name)
 	self.name = name
 	self.speed = 200
 	self.dir = Direction.S
@@ -239,12 +271,14 @@ function Entity:init(name)
 	self.runActionTag = 10
 	self.runAnimateTag = 11
 	self.texturePlist = self.name .. ".plist"
-    self.oneStepLock = false
+    self.opLock = false
 
 	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
 	spriteFrameCache:addSpriteFrames(self.texturePlist)
 
 	self.runAnimationFrames = self:createRunAnimationFrames()
+
+	self.attackAnimationFrames = self:createAttackAnimationFrames()
 
 	self:setStandDirection(Direction.S)
 

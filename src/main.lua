@@ -1,4 +1,4 @@
-
+local cc = cc
 cc.FileUtils:getInstance():addSearchPath("src")
 cc.FileUtils:getInstance():addSearchPath("res")
 -- CC_USE_DEPRECATED_API = true

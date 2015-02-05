@@ -1,30 +1,15 @@
-
-GameMap = class("GameMap")
-
 local table = table
 local ipairs = ipairs
 local pairs = pairs
 local math = math
 
-function GameMap:create(map, width, height)
-    local gameMap = GameMap.new()
-    gameMap:init(map, width, height)
+local _map
+local _width
+local _height
 
-    return gameMap
-end
-
-function GameMap:ctor()
-end
-
-function GameMap:init(map, width, height)
-    self.map = map
-    self.width = width
-    self.height = height
-end
-
-function GameMap:popOpenList(openList)
+local function popOpenList(openList)
     local min_idx = 0
-    local min_score = 999999999
+    local min_score = 0x1FFFFFFF
     for idx, node in pairs(openList) do
         if node.score < min_score then
             min_idx = idx
@@ -36,9 +21,9 @@ function GameMap:popOpenList(openList)
     return step
 end
 
-function GameMap:isAvailable(tx, ty)
-    return not(tx < 0 or tx >= self.width or ty < 0 or 
-            ty >= self.height or self.map[tx][ty] ~= 0)
+local function isAvailable(tx, ty)
+    return not(tx < 0 or tx >= _width or ty < 0 or 
+            ty >= _height or _map[tx][ty] ~= 0)
 end
 
 local function reverse(t)
@@ -68,7 +53,11 @@ end
 
 -- A star
 -- TODO: 调用C++用优先队列来实现
-function GameMap:pathTo(from, to, maxd)
+local function pathTo(from, to, maxd, map, width, height)
+    _map = map
+    _width = width
+    _height = height
+    
     if maxd == nil then
         maxd = 200
     end
@@ -82,7 +71,7 @@ function GameMap:pathTo(from, to, maxd)
     end
 
     local function hashCoord(x,  y)
-        return x * self.height + y
+        return x * height + y
     end
 
     local openList = {}
@@ -98,7 +87,7 @@ function GameMap:pathTo(from, to, maxd)
     local directions = {{-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1}}
     local d = 0
     while true do
-        local step = self:popOpenList(openList)
+        local step = popOpenList(openList)
 
         d = d + 1
         if step == nil or d >= maxd then
@@ -122,7 +111,7 @@ function GameMap:pathTo(from, to, maxd)
         for _, dir in ipairs(directions) do
             local tx = step.x + dir[1]
             local ty = step.y + dir[2]
-            if self:isAvailable(tx, ty) == false or closeList[hashCoord(tx, ty)] == true then
+            if isAvailable(tx, ty) == false or closeList[hashCoord(tx, ty)] == true then
                 -- continue
             else
                 local new_step = Node(tx, ty, step)
@@ -136,7 +125,7 @@ function GameMap:pathTo(from, to, maxd)
 
     -- 找不到时返回一个最近的
     if flag == false then
-        return self:pathTo(from, cc.p(min_step.x, min_step.y), maxd)
+        return pathTo(from, cc.p(min_step.x, min_step.y), maxd, map, width, height)
     end
 
     local paths = {}
@@ -148,12 +137,10 @@ function GameMap:pathTo(from, to, maxd)
 
     reverse(paths)
 
-    --debug
-    -- print(from.x, from.y)
-    -- for _, node in ipairs(paths) do
-    --     print(node.x, node.y)
-    -- end
-
     return paths, flag
 end
+
+return {
+    pathTo = pathTo
+}
 

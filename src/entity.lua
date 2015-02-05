@@ -205,6 +205,7 @@ function Entity:tryAttack()
     self.status = Status.attack
 	local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.attackAnimationFrames[FullToDiagDir[self.dir]], self.runAnimDelay / 2))
 	local cb = function ()
+        self:setStandDirection(self.dir)
         self.status = Status.idle
 	end
 	local callFunc = cc.CallFunc:create(cb)

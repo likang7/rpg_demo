@@ -18,8 +18,6 @@ function __G__TRACKBACK__(msg)
     return msg
 end
 
-require("entity")
-
 local function main()
     collectgarbage("collect")
     -- avoid memory leak
@@ -42,18 +40,15 @@ local function main()
     --set FPS. the default value is 1.0/60 if you don't call this
     director:setAnimationInterval(1.0 / 60)
 
-    local schedulerID = 0
     --support debug
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
     if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or
        (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or
        (cc.PLATFORM_OS_MAC == targetPlatform) then
-        cclog("result is ")
+        cclog(string.format("result is %s", targetPlatform))
         --require('debugger')()
 
     end
-    require "hello2"
-    cclog("result is " .. myadd(1, 1))
 
     ---------------
 

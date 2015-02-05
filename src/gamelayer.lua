@@ -4,6 +4,7 @@ require "entity"
 local Direction = Direction
 local math = math
 local ipairs = ipairs
+local helper = require "utils.helper"
 
 GameLayer = class("GameLayer",
     function()
@@ -11,23 +12,23 @@ GameLayer = class("GameLayer",
     end
 )
 
-GameLayer.__index = GameScene
+GameLayer.__index = GameLayer
 
 function GameLayer:createGameLayer()
     
 end
 
 function GameLayer:create()
-    local scene = GameLayer.new()
-    scene:init()
+    local layer = GameLayer.new()
+    layer:init()
 
-    return scene
+    return layer
 end
 
 function GameLayer:initEntity(objectGroup)
     local playerPoint = objectGroup:getObject("bornPoint")
     local x, y = playerPoint.x, playerPoint.y
-    local player = Entity:create('bgj')
+    local player = Entity:create('bgj', 1)
     player:setPosition(x, y)
     self.player = player
     self:addChild(player, 5)
@@ -36,7 +37,7 @@ function GameLayer:initEntity(objectGroup)
     local objects = objectGroup:getObjects()
     for _, object in pairs(objects) do
         if object['name'] == 'monsterPoint' then
-            local monster = Entity:create('bgj')
+            local monster = Entity:create('bgj', 2)
             monster:setPosition(object.x, object.y)
             self:addChild(monster, 1)
             table.insert(self.monsterEntity, monster)
@@ -52,17 +53,17 @@ function GameLayer:initTileMap(tilemapPath)
     local tilemap = ccexp.TMXTiledMap:create(tilemapPath)
     self.tilemap = tilemap
     tilemap:setPosition(origin.x, origin.y)
-    -- self:addChild(tilemap)
+    self:addChild(tilemap)
 
     self.mapSize = tilemap:getMapSize()
     self.tileSize = tilemap:getTileSize()
     
     local blockLayer = tilemap:getLayer("block")
-    -- blockLayer:setVisible(false)
+    blockLayer:setVisible(false)
 
     local skyLayer = tilemap:getLayer("sky")
-    tilemap:removeChild(skyLayer)
-    self:addChild(skyLayer, 10)
+    -- tilemap:removeChild(skyLayer)
+    -- self:addChild(skyLayer, 10)
     -- skyLayer:setPosition(origin.x, origin.y)
     skyLayer:setVisible(false)
 
@@ -108,7 +109,7 @@ function GameLayer:init()
         self:setViewPointCenter(px, py)   
         local gid = self.skyLayer:getTileGIDAt(cc.p(self:convertToTiledSpace(px, py)))
         if gid ~= 0 then
-            self.player:setOpacity(150)
+            self.player:setOpacity(200)
         else
             self.player:setOpacity(255)
         end 
@@ -188,15 +189,12 @@ function GameLayer:initKeyboardEvent()
 
     local function tryMoveOneStep()
         local dir = getDirection(self.pressSum)
-        local d = {[Direction.S]={0, 1}, [Direction.WS]={-1, 1}, 
-                    [Direction.W]={-1, 0}, [Direction.NW]={-1, -1}, 
-                    [Direction.N]={0, -1}, [Direction.NE]={1, -1}, 
-                    [Direction.E]={1, 0}, [Direction.ES]={1, 1}}
+        local d = DirectionToVec
         if dir ~= nil and d[dir] ~= nil then
             local px, py = self.player:getPosition()
             px, py = self:convertToTiledSpace(px, py)
             local delta = d[dir]
-            local new_x, new_y = px + delta[1], py + delta[2]
+            local new_x, new_y = px + delta[1], py - delta[2]
             if self.gameMap:isAvailable(new_x, new_y) then
                 px, py = new_x, new_y
             end
@@ -206,7 +204,7 @@ function GameLayer:initKeyboardEvent()
             self.player:runOneStep(cc.p(px, py), nil, dir)
             if self.tryMoveOneStepID == nil then
                 local scheduler = cc.Director:getInstance():getScheduler()
-                self.tryMoveOneStepID = scheduler:scheduleScriptFunc(tryMoveOneStep, 0.1, false)
+                self.tryMoveOneStepID = scheduler:scheduleScriptFunc(tryMoveOneStep, 0, false)
             end
         else
             self.player:stopRuning()
@@ -234,7 +232,10 @@ function GameLayer:initKeyboardEvent()
         tryMoveOneStep()
 
         if keyCode == cc.KeyCode.KEY_I or keyCode == cc.KeyCode.KEY_CAPITAL_I then
-            self.player:attack()
+            local can_attack = self.player:tryAttack()
+            if can_attack == true then
+                self:attack(self.player)
+            end
         end
     end
 
@@ -262,17 +263,37 @@ function GameLayer:initKeyboardEvent()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
 end
 
+function GameLayer:attack(entity)
+    local theta = 90 / 2
+    local r = 64
+    local rSQ = r * r
+    local cosTheta = math.cos(theta)
+    local ex, ey = entity:getPosition()
+    local rmIdx = {}
+    for idx, monster in pairs(self.monsterEntity) do
+        local mx, my = monster:getPosition()
+        local u = DirectionToVec[entity.dir]
+        if helper.isPointInCircularSector(ex, ey, u[1], u[2], mx, my, rSQ, cosTheta) then
+            monster:onHurt(entity.atk)
+            if monster.hp == nil or monster.hp <= 0 then
+                table.insert(rmIdx, idx)
+            end
+        end
+    end
+
+    for _, idx in ipairs(rmIdx) do
+        self.monsterEntity[idx] = nil
+    end
+end
+
 function GameLayer:setViewPointCenter(x, y)
     local win_size = cc.Director:getInstance():getWinSize()
 
-    local x = math.max(x, win_size.width / 2)
-    local y = math.max(y, win_size.height / 2)
-
-    newx = math.min(x, self.map_w - win_size.width / 2)
-    newy = math.min(y, self.map_h - win_size.height / 2)
+    x = cc.clampf(x, win_size.width / 2, self.map_w - win_size.width / 2)
+    y = cc.clampf(y, win_size.height / 2, self.map_h - win_size.height / 2)
     
-    viewx = win_size.width / 2 - newx
-    viewy = win_size.height / 2 - newy
+    viewx = win_size.width / 2 - x
+    viewy = win_size.height / 2 - y
 
     self:setPosition(viewx, viewy)
 end
@@ -280,23 +301,22 @@ end
 function GameLayer:convertToTiledSpace(x, y)
     -- print('origin', x, y)
     local tx = math.floor(x / self.tileSize.width)
-    local mapHeight = self.mapSize.height * self.tileSize.height
-    local ty = math.ceil((mapHeight - y) / self.tileSize.height)
+    local ty = math.ceil((self.map_h - y) / self.tileSize.height)
     -- print('convert to', tx, ty)
     return tx, ty
 end
 
 function GameLayer:reverseTiledSpace(x, y)
     x = (x + 0.5) * self.tileSize.width
-    local mapHeight = self.mapSize.height * self.tileSize.height
-    y = mapHeight - y * self.tileSize.height
+    y = self.map_h - y * self.tileSize.height
     return x, y
 end
 
 function GameLayer:clampEntityPos(x, y)
-    local px = math.max(self.tileSize.width / 2, 
-            math.min(x, self.mapSize.width * self.tileSize.width - self.tileSize.width / 2))
-    local py = math.max(self.tileSize.height / 2, 
-            math.min(y, self.mapSize.height * self.tileSize.height - self.tileSize.height / 2))
+    local px = cc.clampf(x, self.tileSize.width / 2, 
+        self.map_w - self.tileSize.width / 2)
+    local py = cc.clampf(y, self.tileSize.height / 2, 
+        self.map_h - self.tileSize.height / 2)
+
     return px, py
 end

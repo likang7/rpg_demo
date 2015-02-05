@@ -1,7 +1,9 @@
 require "const"
+local helper = require "utils.helper"
 
 local Direction = Direction
 local math = math
+local Status = Status
 
 Entity = class("Entity",
     function()
@@ -22,9 +24,6 @@ function Entity:create(name)
 	local sprite = Entity.new()
 	sprite:init(name)
 
-	
-	print('self.runAnimationFrames', sprite.runAnimations)
-	print('self.standFrames', sprite.standFrames)
 	print('self.name', sprite.name)
 	return sprite
 end
@@ -59,94 +58,14 @@ function Entity:setStandDirection(dir)
 	self:setSpriteFrame(frame)
 end
 
-function Entity:calDegree(p1, p2)
-    local h = p2.y - p1.y
-    local w = p2.x - p1.x
-
-    if w == 0 and h == 0 then
-        return 0
-    end
-
-    local deg = math.deg(math.atan2(math.abs(h), math.abs(w)))
-
-    if w >= 0 and h >= 0 then
-        deg = 270 - deg
-    elseif w <= 0 and h >= 0 then
-        deg = 90 + deg
-    elseif w <= 0 and h <= 0 then
-        deg = 90 - deg
-    else
-        deg = 270 + deg
-    end
-
-    -- the same but cannot avoid sqrt
-    -- local theta = math.deg(math.acos(-h / math.sqrt(h*h+w*w)))
-    -- if w > 0 then
-    --     theta = 360 - theta 
-    -- end
-
-    return (deg + 360) % 360
-end
-
-function Entity:getDirectionByDegree(deg)
-    local dir = nil
-
-    if deg >= 22.5 and deg < 67.5 then
-        dir = Direction.WS
-    elseif deg >= 67.5 and deg < 112.5 then
-        dir = Direction.W
-    elseif deg >= 112.5 and deg < 157.5 then
-        dir = Direction.NW
-    elseif deg >= 157.5 and deg < 202.5 then
-        dir = Direction.N
-    elseif deg >= 202.5 and deg < 247.5 then
-        dir = Direction.NE
-    elseif deg >= 247.5 and deg < 292.5 then
-        dir = Direction.E
-    elseif deg >= 292.5 and deg < 337.5 then
-        dir = Direction.ES
-    else
-        dir = Direction.S
-    end
-
-    return dir
-end
-
-function Entity:getDirection(p1, p2)
-    local deg = self:calDegree(p1, p2)
-    return self:getDirectionByDegree(deg)
-end
-
 function Entity:stopRuning()
+    if self.status ~= Status.run then
+        return
+    end
 	self:stopActionByTag(self.runActionTag)
 	self:stopActionByTag(self.runAnimateTag)
     self:setStandDirection(self.dir)
-end
-
-function Entity:runTo(dest)
-	local playerPos = cc.p(self:getPosition())
-	local dir = self:getDirection(playerPos, dest)
-
-	local distance = cc.pDistanceSQ(playerPos, dest) ^ 0.5
-	local moveTo = cc.MoveTo:create(distance/self.speed, dest)
-
-    local cb = cc.CallFunc:create(function () self:stopRuning() end)
-    local seq = cc.Sequence:create(moveTo, cb)
-    seq:setTag(self.runActionTag)
-
-    -- 平滑处理一下，避免走同一个方向时有卡住的感觉
-    if dir ~= self.dir or self:getActionByTag(self.runAnimateTag) == nil then
-        self:stopRuning()
-        local repeatForever = cc.RepeatForever:create(
-        	cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[dir], self.runAnimDelay)))
-        repeatForever:setTag(self.runAnimateTag)
-        self:runAction(repeatForever)
-    else
-        self:stopActionByTag(self.runActionTag)
-    end
-    
-    self:runAction(seq)
-    self.dir = dir
+    self.status = Status.idle
 end
 
 function Entity:_run(path, idx, cb_end, dir)
@@ -162,13 +81,13 @@ function Entity:_run(path, idx, cb_end, dir)
     local playerPos = cc.p(self:getPosition())
 
     if dir == nil then
-        dir = self:getDirection(playerPos, path[idx])
+        dir = helper.getDirection(playerPos, path[idx])
     end
 
     -- 同一方向的弄在同一个action里走
     local end_idx = idx + 1
     while path[end_idx] ~= nil do
-        local next_dir = self:getDirection(path[end_idx - 1], path[end_idx])
+        local next_dir = helper.getDirection(path[end_idx - 1], path[end_idx])
         if next_dir ~= dir then
             break
         end
@@ -177,7 +96,7 @@ function Entity:_run(path, idx, cb_end, dir)
     idx = end_idx - 1
 
     -- 移动精灵，并递归走剩下的路径
-    local distance = cc.pDistanceSQ(playerPos, path[idx]) ^ 0.5
+    local distance = cc.pGetDistance(playerPos, path[idx])
     -- print('t = ', distance/self.speed)
     local moveTo = cc.MoveTo:create(distance/self.speed, path[idx])
     local cb = cc.CallFunc:create(
@@ -203,19 +122,20 @@ end
 function Entity:runPath(path, cb_end, dir)
 	self:stopActionByTag(self.runActionTag)	
 
+    self.status = Status.run
 	self:_run(path, 1, cb_end, dir)
 end
 
 function Entity:runOneStep(p, cb, dir)
-    if self.opLock == true then
-        return 
+    if self.status ~= Status.idle then
+        return
     end
 
     local cb_end = function ()
         if cb ~= nil then
             cb()
         end
-        self.opLock = false
+        self.status = Status.idle
     end
     
     self:runPath({p}, cb_end, dir)
@@ -247,23 +167,51 @@ function Entity:createAttackAnimationFrames()
     return attackAnimationFrames
 end
 
-function Entity:attack()
-	if self.opLock == true then
-        return 
+function Entity:tryAttack()
+    if self.status == Status.attack then
+        return false
     end
 
-	self.opLock = true
 	self:stopRuning()
-	local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.attackAnimationFrames[self.dir], self.runAnimDelay))
+    self.status = Status.attack
+	local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.attackAnimationFrames[self.dir], self.runAnimDelay / 2))
 	local cb = function ()
-		self.opLock = false
+        self.status = Status.idle
 	end
 	local callFunc = cc.CallFunc:create(cb)
 	local seq = cc.Sequence:create(animate, callFunc)
 	self:runAction(seq)
+
+    return true
 end
 
-function Entity:init(name)
+function Entity:onHurt(atk)
+    -- self:stopRuning()
+    self.status = Status.attack
+    local nhurt = atk - self.def
+    self.hp = self.hp - nhurt
+    
+    -- 飘血
+    local bloodLabel = cc.Label:createWithSystemFont(tostring(nhurt), "fonts/Marker Felt.ttf", 24)
+    self:getParent():addChild(bloodLabel, 10)
+    local rect = self:getTextureRect()
+    bloodLabel:setPosition(self:getPositionX(), self:getPositionY() + rect.height)
+    bloodLabel:setColor(cc.c3b(255, 0, 0))
+    local moveup = cc.MoveBy:create(1, cc.p(0, 100))
+    local callFunc = cc.CallFunc:create(function ()
+        bloodLabel:removeFromParent(true)
+    end)
+    local seq = cc.Sequence:create(moveup, callFunc)
+    bloodLabel:runAction(seq)
+
+    -- 死亡
+    if self.hp <= 0 then
+        self:removeFromParent(true)
+    end
+    self.status = Status.idle
+end
+
+function Entity:init(name, camp)
 	self.name = name
 	self.speed = 200
 	self.dir = Direction.S
@@ -271,7 +219,12 @@ function Entity:init(name)
 	self.runActionTag = 10
 	self.runAnimateTag = 11
 	self.texturePlist = self.name .. ".plist"
-    self.opLock = false
+    self.status = Status.idle
+    self.camp = camp
+    self.atk = 100
+    self.def = 10
+    self.hp = 300
+    print('atk', self.atk)
 
 	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
 	spriteFrameCache:addSpriteFrames(self.texturePlist)

@@ -76,7 +76,7 @@ function Entity:createHitAnimationFrames()
     for _, dir in pairs(DiagDirection) do
         frames[dir] = {}
         for i = 0, 1 do 
-            table.insert(frames[dir], spriteFrameCache:getSpriteFrame("baigujing" .. string.format("-hit-%d%d.tga", dir, i)))
+            table.insert(frames[dir], spriteFrameCache:getSpriteFrame("bgj" .. string.format("-hit-%d%d.tga", dir, i)))
         end
     end
     return frames
@@ -86,7 +86,15 @@ function Entity:createHitEffectAnimationFrames()
 end
 
 function Entity:createDyingAnimationFrames()
-    
+    local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+    local frames = {}
+    for _, dir in pairs(Direction) do
+        frames[dir] = {}
+        for i = 0, 9 do 
+            table.insert(frames[dir], spriteFrameCache:getSpriteFrame("bgj" .. string.format("-die-%d%d.tga", dir, i)))
+        end
+    end
+    return frames
 end
 
 
@@ -228,12 +236,11 @@ function Entity:onHurt(atk)
     -- 死亡
     if self.hp <= 0 then
         self:removeFromParent(true)
+        -- dyingAnimationFrames
     else
-        print('hit 1')
         local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.hitAnimationFrames[FullToDiagDir[self.dir]], self.runAnimDelay * 2))
         -- local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.attackAnimationFrames[self.dir], self.runAnimDelay))
         local cb = function ()
-            print('hit 2')
             self.status = Status.idle
             self:setStandDirection(self.dir)
         end
@@ -267,6 +274,8 @@ function Entity:init(name, camp)
 	self.attackAnimationFrames = self:createAttackAnimationFrames()
 
     self.hitAnimationFrames = self:createHitAnimationFrames()
+
+    self.dyingAnimationFrames = self:createDyingAnimationFrames()
 
 	self:setStandDirection(Direction.S)
 

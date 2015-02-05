@@ -35,7 +35,7 @@ function Entity:getRunAnimationName(dir)
 	return self.name .. string.format('-run-%d', dir)
 end
 
-function Entity:createRunAnimationFrames(delay)
+function Entity:createRunAnimationFrames()
 	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
 	local animationCache = cc.AnimationCache:getInstance()
     runAnimationFrames = {}
@@ -51,6 +51,34 @@ function Entity:createRunAnimationFrames(delay)
 
     return runAnimationFrames
 end
+
+function Entity:createAttackAnimationFrames()
+    local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+    -- local animationCache = cc.AnimationCache:getInstance()
+    attackAnimationFrames = {}
+    for _, dir in pairs(Direction) do
+        local frames = {}
+        for i = 0, 7 do
+            table.insert(frames, spriteFrameCache:getSpriteFrame(self.name .. string.format("-stand-%d%d.tga", dir, i)))
+        end
+        -- local runAnimation = cc.Animation:createWithSpriteFrames(frames, delay)
+        -- animationCache:addAnimation(runAnimation, self:getRunAnimationName(dir))
+        attackAnimationFrames[dir] = frames
+    end
+
+    return attackAnimationFrames
+end
+
+function Entity:createHitAnimationFrames()
+end
+
+function Entity:createHitEffectAnimationFrames()
+end
+
+function Entity:createDyingAnimationFrames()
+    
+end
+
 
 function Entity:setStandDirection(dir)
 	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
@@ -148,23 +176,6 @@ function Entity:releaseCache()
 	-- for _, dir in pairs(Direction) do
  --        animationCache:removeAnimation(self:getRunAnimationName(dir))
  --    end
-end
-
-function Entity:createAttackAnimationFrames()
-	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-	-- local animationCache = cc.AnimationCache:getInstance()
-    attackAnimationFrames = {}
-    for _, dir in pairs(Direction) do
-        local frames = {}
-        for i = 0, 7 do
-            table.insert(frames, spriteFrameCache:getSpriteFrame(self.name .. string.format("-stand-%d%d.tga", dir, i)))
-        end
-        -- local runAnimation = cc.Animation:createWithSpriteFrames(frames, delay)
-        -- animationCache:addAnimation(runAnimation, self:getRunAnimationName(dir))
-        attackAnimationFrames[dir] = frames
-    end
-
-    return attackAnimationFrames
 end
 
 function Entity:tryAttack()

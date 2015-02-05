@@ -88,7 +88,7 @@ end
 function Entity:createDyingAnimationFrames()
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     local frames = {}
-    for _, dir in pairs(Direction) do
+    for _, dir in pairs(DiagDirection) do
         frames[dir] = {}
         for i = 0, 9 do 
             table.insert(frames[dir], spriteFrameCache:getSpriteFrame("bgj" .. string.format("-die-%d%d.tga", dir, i)))
@@ -235,8 +235,15 @@ function Entity:onHurt(atk)
 
     -- 死亡
     if self.hp <= 0 then
-        self:removeFromParent(true)
-        -- dyingAnimationFrames
+        local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.dyingAnimationFrames[FullToDiagDir[self.dir]], self.runAnimDelay))
+        -- local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.attackAnimationFrames[self.dir], self.runAnimDelay))
+        local cb = function ()
+            self.status = Status.die
+            self:removeFromParent(true)
+        end
+        local callFunc = cc.CallFunc:create(cb)
+        local seq = cc.Sequence:create(animate, callFunc)
+        self:runAction(seq)
     else
         local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.hitAnimationFrames[FullToDiagDir[self.dir]], self.runAnimDelay * 2))
         -- local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.attackAnimationFrames[self.dir], self.runAnimDelay))
@@ -248,7 +255,6 @@ function Entity:onHurt(atk)
         local seq = cc.Sequence:create(animate, callFunc)
         self:runAction(seq)
     end
-    -- self.status = Status.idle
 end
 
 function Entity:init(name, camp)

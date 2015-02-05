@@ -11,4 +11,4 @@ DirectionToVec = {  [Direction.S]={0, -1}, [Direction.WS]={-1, -1},
                     [Direction.N]={0, 1}, [Direction.NE]={1, 1}, 
                     [Direction.E]={1, 0}, [Direction.ES]={1, -1}}
 
-Status = {idle=0, run=1, attack=2, hurt=3}
+Status = {idle=0, run=1, attack=2, hurt=3, die=4}

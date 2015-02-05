@@ -2,6 +2,7 @@ require "const"
 local helper = require "utils.helper"
 
 local Direction = Direction
+local DiagDirection = DiagDirection
 local math = math
 local Status = Status
 
@@ -37,7 +38,7 @@ end
 
 function Entity:createRunAnimationFrames()
 	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-	local animationCache = cc.AnimationCache:getInstance()
+	-- local animationCache = cc.AnimationCache:getInstance()
     runAnimationFrames = {}
     for _, dir in pairs(Direction) do
         local frames = {}
@@ -55,7 +56,7 @@ end
 function Entity:createAttackAnimationFrames()
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     -- local animationCache = cc.AnimationCache:getInstance()
-    attackAnimationFrames = {}
+    local attackAnimationFrames = {}
     for _, dir in pairs(Direction) do
         local frames = {}
         for i = 0, 7 do
@@ -70,6 +71,15 @@ function Entity:createAttackAnimationFrames()
 end
 
 function Entity:createHitAnimationFrames()
+    local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+    local frames = {}
+    for _, dir in pairs(DiagDirection) do
+        frames[dir] = {}
+        for i = 0, 1 do 
+            table.insert(frames[dir], spriteFrameCache:getSpriteFrame("baigujing" .. string.format("-hit-%d%d.tga", dir, i)))
+        end
+    end
+    return frames
 end
 
 function Entity:createHitEffectAnimationFrames()
@@ -208,7 +218,7 @@ function Entity:onHurt(atk)
     local rect = self:getTextureRect()
     bloodLabel:setPosition(self:getPositionX(), self:getPositionY() + rect.height)
     bloodLabel:setColor(cc.c3b(255, 0, 0))
-    local moveup = cc.MoveBy:create(1, cc.p(0, 100))
+    local moveup = cc.MoveBy:create(0.8, cc.p(0, 100))
     local callFunc = cc.CallFunc:create(function ()
         bloodLabel:removeFromParent(true)
     end)
@@ -218,8 +228,20 @@ function Entity:onHurt(atk)
     -- 死亡
     if self.hp <= 0 then
         self:removeFromParent(true)
+    else
+        print('hit 1')
+        local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.hitAnimationFrames[FullToDiagDir[self.dir]], self.runAnimDelay * 2))
+        -- local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.attackAnimationFrames[self.dir], self.runAnimDelay))
+        local cb = function ()
+            print('hit 2')
+            self.status = Status.idle
+            self:setStandDirection(self.dir)
+        end
+        local callFunc = cc.CallFunc:create(cb)
+        local seq = cc.Sequence:create(animate, callFunc)
+        self:runAction(seq)
     end
-    self.status = Status.idle
+    -- self.status = Status.idle
 end
 
 function Entity:init(name, camp)
@@ -243,6 +265,8 @@ function Entity:init(name, camp)
 	self.runAnimationFrames = self:createRunAnimationFrames()
 
 	self.attackAnimationFrames = self:createAttackAnimationFrames()
+
+    self.hitAnimationFrames = self:createHitAnimationFrames()
 
 	self:setStandDirection(Direction.S)
 

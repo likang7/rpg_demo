@@ -57,10 +57,10 @@ function Entity:createAttackAnimationFrames()
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     -- local animationCache = cc.AnimationCache:getInstance()
     local attackAnimationFrames = {}
-    for _, dir in pairs(Direction) do
+    for _, dir in pairs(DiagDirection) do
         local frames = {}
-        for i = 0, 7 do
-            table.insert(frames, spriteFrameCache:getSpriteFrame(self.name .. string.format("-stand-%d%d.tga", dir, i)))
+        for i = 0, 15 do
+            table.insert(frames, spriteFrameCache:getSpriteFrame(self.name .. string.format("-skill1-%d%d.tga", dir, i)))
         end
         -- local runAnimation = cc.Animation:createWithSpriteFrames(frames, delay)
         -- animationCache:addAnimation(runAnimation, self:getRunAnimationName(dir))
@@ -203,7 +203,7 @@ function Entity:tryAttack()
 
 	self:stopRuning()
     self.status = Status.attack
-	local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.attackAnimationFrames[self.dir], self.runAnimDelay / 2))
+	local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(self.attackAnimationFrames[FullToDiagDir[self.dir]], self.runAnimDelay / 2))
 	local cb = function ()
         self.status = Status.idle
 	end

@@ -1,14 +1,21 @@
-Direction = {S=0, WS=1, W=2, NW=3, N=4, NE=5, E=6, ES=7}
-DiagDirection = {WS=1, NW=3, NE=5, ES=7}
+const = {}
 
-FullToDiagDir = {	[Direction.S]=7, [Direction.WS]=1, 
-					[Direction.W]=1, [Direction.NW]=3, 
-					[Direction.N]=3, [Direction.NE]=5,
-					[Direction.E]=5, [Direction.ES]=7}
+const.Direction = {S=0, WS=1, W=2, NW=3, N=4, NE=5, E=6, ES=7}
 
-DirectionToVec = {  [Direction.S]={0, -1}, [Direction.WS]={-1, -1}, 
-                    [Direction.W]={-1, 0}, [Direction.NW]={-1, 1}, 
-                    [Direction.N]={0, 1}, [Direction.NE]={1, 1}, 
-                    [Direction.E]={1, 0}, [Direction.ES]={1, -1}}
+local d = const.Direction
 
-Status = {idle=0, run=1, attack=2, hurt=3, die=4}
+const.DiagDirection = {WS=1, NW=3, NE=5, ES=7}
+
+const.FullToDiagDir = {	[d.S]=7, [d.WS]=1, 
+					[d.W]=1, [d.NW]=3, 
+					[d.N]=3, [d.NE]=5,
+					[d.E]=5, [d.ES]=7}
+
+const.DirectionToVec = {  [d.S]={0, -1}, [d.WS]={-1, -1}, 
+                    [d.W]={-1, 0}, [d.NW]={-1, 1}, 
+                    [d.N]={0, 1}, [d.NE]={1, 1}, 
+                    [d.E]={1, 0}, [d.ES]={1, -1}}
+
+const.Status = {idle=0, run=1, attack=2, hurt=3, die=4}
+
+return const

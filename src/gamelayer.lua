@@ -1,7 +1,8 @@
-require "const"
+local const = require "const"
 require "entity"
+require "aicomp"
 
-local Direction = Direction
+local Direction = const.Direction
 local math = math
 local ipairs = ipairs
 local helper = require "utils.helper"
@@ -44,6 +45,19 @@ function GameLayer:initEntity(objectGroup)
             monster:setPosition(object.x, object.y)
             self:addChild(monster, 1)
             table.insert(self.monsterEntity, monster)
+
+            --ai
+            local dict = {
+                ['entity'] = monster,
+                ['gameMap'] = self.gameMap,
+                ['bornPoint'] = cc.p(object.x, object.y),
+                ['enemyEntity'] = {self.player},
+                ['atkRange'] = 32,
+                ['detectRange'] = 100,
+                ['catchRange'] = 200,
+            }
+            local aiComp = AIComp:create(dict, true)
+            monster:setAIComp(aiComp)
         end
     end
 
@@ -100,14 +114,16 @@ function GameLayer:init()
 
     local last_dir = Direction.S
     local function tick()
-        local px, py = self.player:getPosition()
-        self:setViewPointCenter(px, py)   
-        local gid = self.gameMap.skyLayer:getTileGIDAt(cc.p(self.gameMap:convertToTiledSpace(px, py)))
-        if gid ~= 0 then
-            self.player:setOpacity(200)
-        else
-            self.player:setOpacity(255)
-        end 
+        if self.player ~= nil and self.player.status ~= const.Status.die then
+            local px, py = self.player:getPosition()
+            self:setViewPointCenter(px, py)   
+            local gid = self.gameMap.skyLayer:getTileGIDAt(cc.p(self.gameMap:convertToTiledSpace(px, py)))
+            if gid ~= 0 then
+                self.player:setOpacity(200)
+            else
+                self.player:setOpacity(255)
+            end 
+        end
     end
 
     local scheduler = cc.Director:getInstance():getScheduler()
@@ -139,10 +155,8 @@ function GameLayer:initTouchEvent()
 
         local px, py = self.player:getPosition()
 
-        local path = self.gameMap:pathTo(cc.p(self.gameMap:convertToTiledSpace(px, py)), cc.p(self.gameMap:convertToTiledSpace(tox, toy)))
-        for i, step in ipairs(path) do
-            step.x, step.y = self.gameMap:reverseTiledSpace(step.x, step.y)
-        end
+        local path = self.gameMap:pathTo(cc.p(px, py), cc.p(tox, toy))
+        
         self.player:runPath(path)
     end
 
@@ -180,7 +194,7 @@ function GameLayer:initKeyboardEvent()
 
     local function tryMoveOneStep()
         local dir = getDirection(self.pressSum)
-        local d = DirectionToVec
+        local d = const.DirectionToVec
         if dir ~= nil and d[dir] ~= nil then
             local px, py = self.player:getPosition()
             px, py = self.gameMap:convertToTiledSpace(px, py)
@@ -261,7 +275,7 @@ function GameLayer:attack(entity)
     local rmIdx = {}
     for idx, monster in pairs(self.monsterEntity) do
         local mx, my = monster:getPosition()
-        local u = DirectionToVec[entity.dir]
+        local u = const.DirectionToVec[entity.dir]
         if helper.isPointInCircularSector(ex, ey, u[1], u[2], mx, my, rSQ, cosTheta) then
             monster:onHurt(entity.atk)
             if monster.hp == nil or monster.hp <= 0 then

@@ -1,6 +1,6 @@
 local math = math
-require "const"
-local Direction = Direction
+local const = require "const"
+local Direction = const.Direction
 
 local function isPointInCircularSector(cx, cy, ux, uy, px, py, rSQ, cosTheta)
     local dx, dy = px - cx, py - cy

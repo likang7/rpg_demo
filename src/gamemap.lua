@@ -72,6 +72,12 @@ end
 -- A star
 -- TODO: 调用C++用优先队列来实现
 function GameMap:pathTo(from, to, maxd)
-    return pf.pathTo(from, to, maxd, self.map, self.mapSize.width, self.mapSize.height)
+    from.x, from.y = self:convertToTiledSpace(from.x, from.y)
+    to = cc.p(self:convertToTiledSpace(to.x, to.y))
+    path = pf.pathTo(from, to, maxd, self.map, self.mapSize.width, self.mapSize.height)
+    for i, step in ipairs(path) do
+        step.x, step.y = self:reverseTiledSpace(step.x, step.y)
+    end
+    return path
 end
 

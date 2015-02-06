@@ -1,11 +1,11 @@
-require "const"
+local const = require "const"
 local helper = require "utils.helper"
 
-local Direction = Direction
-local DiagDirection = DiagDirection
-local DirectionToVec = DirectionToVec
+local Direction = const.Direction
+local DiagDirection = const.DiagDirection
+local DirectionToVec = const.DirectionToVec
 local math = math
-local Status = Status
+local Status = const.Status
 
 Entity = class("Entity",
     function()
@@ -28,7 +28,6 @@ function Entity:create(name)
 	local sprite = Entity.new()
 	sprite:init(name)
 
-	print('self.name', sprite.name)
 	return sprite
 end
 
@@ -72,7 +71,7 @@ function Entity:playAnimation(frames, callback, isFullDir, dt, target)
     if isFullDir then
         dir = self.dir
     else
-        dir = FullToDiagDir[self.dir]
+        dir = const.FullToDiagDir[self.dir]
     end
 
     local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(frames[dir], dt))
@@ -95,6 +94,7 @@ function Entity:stopRuning()
     if self.status ~= Status.run then
         return
     end
+    
 	self:stopActionByTag(self.runActionTag)
 	self:stopActionByTag(self.runAnimateTag)
     self:setStandDirection(self.dir)
@@ -102,6 +102,7 @@ function Entity:stopRuning()
 end
 
 function Entity:_run(path, idx, cb_end, dir)
+    self:setStatus(Status.run)
     if path[idx] == nil then
         if cb_end ~= nil then
             cb_end()
@@ -276,7 +277,15 @@ function Entity:onHurt(atk)
     -- 死亡
     if self.hp <= 0 then
         local cb = function ()
-            self:removeFromParent(true)
+            -- self:removeFromParent(true)
+            self:setVisible(false)
+            local scheduler = cc.Director:getInstance():getScheduler()
+            if self.idleScheduleID ~= nil then
+                scheduler:unscheduleScriptEntry(self.idleScheduleID)
+            end
+            if self.sechedulerAIID ~= nil then
+                scheduler:unscheduleScriptEntry(self.sechedulerAIID)
+            end
         end
         self:setStatus(Status.die)
         self:playAnimation(self.dyingAnimationFrames, cb, false, self.runAnimDelay)
@@ -288,6 +297,16 @@ function Entity:onHurt(atk)
             end
         end
         self:playAnimation(self.hitAnimationFrames, cb, false, self.runAnimDelay)
+    end
+end
+
+function Entity:setAIComp(comp)
+    self.aiComp = comp
+end
+
+function Entity:step()
+    if self.aiComp ~= nil then
+        self.aiComp:step()
     end
 end
 
@@ -306,7 +325,7 @@ function Entity:init(name, camp)
     self.atk = 100
     self.def = 10
     self.hp = 300
-    print('atk', self.atk)
+    self.aiComp = nil
 
 	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
 	spriteFrameCache:addSpriteFrames(self.texturePlist)
@@ -332,6 +351,12 @@ function Entity:init(name, camp)
 	self:setAnchorPoint(cc.p(0.5, 0))
 
 	self:registerScriptHandler(onNodeEvent)
+
+    local cb = function()
+        self:step()
+    end
+    local scheduler = cc.Director:getInstance():getScheduler()
+    self.sechedulerAIID = scheduler:scheduleScriptFunc(cb, 0, false)
 end
 
 return Entity

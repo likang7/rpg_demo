@@ -3,6 +3,7 @@ local helper = require "utils.helper"
 
 local Direction = Direction
 local DiagDirection = DiagDirection
+local DirectionToVec = DirectionToVec
 local math = math
 local Status = Status
 
@@ -41,7 +42,7 @@ end
 function Entity:createHitEffectAnimationFrames()
 end
 
-function Entity:createAnimationFrames(isFullDir, prefix, num)
+function Entity:createAnimationFrames(isFullDir, pname, prefix, num)
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     local frames = {}
 
@@ -55,14 +56,18 @@ function Entity:createAnimationFrames(isFullDir, prefix, num)
     for _, dir in pairs(directions) do
         frames[dir] = {}
         for i = 0, num-1 do 
-            local name = string.format("%s-%s-%d%d.tga", self.name, prefix, dir, i)
+            local name = string.format("%s-%s-%d%d.tga", pname, prefix, dir, i)
             table.insert(frames[dir], spriteFrameCache:getSpriteFrame(name))
         end
     end
     return frames
 end
 
-function Entity:playAnimation(frames, callback, isFullDir, dt)
+function Entity:playAnimation(frames, callback, isFullDir, dt, target)
+    if target == nil then
+        target = self
+    end
+
     local dir
     if isFullDir then
         dir = self.dir
@@ -74,9 +79,9 @@ function Entity:playAnimation(frames, callback, isFullDir, dt)
     if callback ~= nil then
         local callFunc = cc.CallFunc:create(callback)
         local seq = cc.Sequence:create(animate, callFunc)
-        self:runAction(seq)
+        target:runAction(seq)
     else
-        self:runAction(animate)
+        target:runAction(animate)
     end
 end
 
@@ -186,6 +191,20 @@ function Entity:tryAttack()
 
     self:playAnimation(self.attackAnimationFrames, cb, false, self.runAnimDelay * 0.5)
 
+    --技能特效
+    local rect = self:getTextureRect()
+    local effect = cc.Sprite:create()
+    local cb = function ()
+        effect:removeFromParent(true)
+    end
+    self:playAnimation(self.atkEffectAnimationFrames, cb, true, self.runAnimDelay * 0.5, effect)
+    local v = DirectionToVec[self.dir]
+    local r = 32
+    local dx, dy = v[1] * r, v[2] * r
+    local moveBy = cc.MoveBy:create(0.3, cc.p(dx, dy))
+    effect:runAction(moveBy)
+    self:addChild(effect,-1)
+    effect:setPosition(rect.width * 0.8 + 0.5 * r * v[1], rect.height * 0.5 + 0.5 * r * v[2])
     return true
 end
 
@@ -236,6 +255,24 @@ function Entity:onHurt(atk)
     local seq = cc.Sequence:create(moveup, callFunc)
     bloodLabel:runAction(seq)
 
+    -- 击中特效
+    local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+    local frames = {}
+    for i = 0, 4 do 
+        local name = string.format("%s-%s-%03d.tga", 'effect', 'hit', i)
+        table.insert(frames, spriteFrameCache:getSpriteFrame(name))
+    end 
+    local effect = cc.Sprite:create()
+    local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(frames, self.runAnimDelay))
+    local callFunc = cc.CallFunc:create(function ()
+        effect:removeFromParent()
+    end)
+    local seq = cc.Sequence:create(animate, callFunc)
+    effect:setScale(0.2)
+    effect:runAction(seq)
+    effect:setPosition(rect.width * 0.8, rect.height * 0.67)
+    self:addChild(effect)
+
     -- 死亡
     if self.hp <= 0 then
         local cb = function ()
@@ -273,16 +310,20 @@ function Entity:init(name, camp)
 
 	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
 	spriteFrameCache:addSpriteFrames(self.texturePlist)
+    local effectPath = 'effect.plist'
+    spriteFrameCache:addSpriteFrames(effectPath)
 
-	self.runAnimationFrames = self:createAnimationFrames(true, 'run', 8)
+	self.runAnimationFrames = self:createAnimationFrames(true, self.name, 'run', 8)
 
-	self.attackAnimationFrames = self:createAnimationFrames(false, 'skill1', 16)
+	self.attackAnimationFrames = self:createAnimationFrames(false, self.name, 'skill1', 16)
 
-    self.hitAnimationFrames = self:createAnimationFrames(false, 'hit', 2)
+    self.hitAnimationFrames = self:createAnimationFrames(false, self.name, 'hit', 2)
 
-    self.dyingAnimationFrames = self:createAnimationFrames(false, 'die', 10)
+    self.dyingAnimationFrames = self:createAnimationFrames(false, self.name, 'die', 10)
 
-    self.idleAnimationFrames = self:createAnimationFrames(true, 'stand', 8)
+    self.idleAnimationFrames = self:createAnimationFrames(true, self.name, 'stand', 8)
+
+    self.atkEffectAnimationFrames = self:createAnimationFrames(true, 'effect', 'skill1', 8)
 
 	self:setStandDirection(Direction.S)
 

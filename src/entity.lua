@@ -15,7 +15,7 @@ Entity = class("Entity",
 Entity.__index = Entity
 
 local ANIMATE_TYPE = {idle=0, run=1, attack=2, hurt=3, die=4}
-
+local IDLE_DELAYTIME = 1
 local function onNodeEvent(tag)
 	if tag == "exit" then
 		print("xxx")
@@ -191,16 +191,28 @@ end
 
 function Entity:setStatus(status)
     if status == Status.idle then
-        if self:getActionByTag(self.idleActionTag) == nil then
-            local delayTime = cc.DelayTime:create(3)
-            local repeatForever = cc.RepeatForever:create(cc.Animate:create(
-                cc.Animation:createWithSpriteFrames(self.idleAnimationFrames[self.dir], self.runAnimDelay)))
-            local seq = cc.Sequence:create(delayTime, repeatForever)
-            seq:setTag(self.idleActionTag)
-            self:runAction(seq)
+        if self:getActionByTag(self.idleActionTag) == nil and self.idleScheduleID == nil then
+            local cb = function ()
+                if self.status == Status.idle and self:getActionByTag(self.idleActionTag) == nil then
+                    local repeatForever = cc.RepeatForever:create(cc.Animate:create(
+                        cc.Animation:createWithSpriteFrames(self.idleAnimationFrames[self.dir], self.runAnimDelay)))
+                    repeatForever:setTag(self.idleActionTag)
+                    self:runAction(repeatForever)
+                    local scheduler = cc.Director:getInstance():getScheduler()
+                    scheduler:unscheduleScriptEntry(self.idleScheduleID)
+                    self.idleScheduleID = nil
+                end
+            end
+            local scheduler = cc.Director:getInstance():getScheduler()
+            self.idleScheduleID = scheduler:scheduleScriptFunc(cb, IDLE_DELAYTIME, false)
         end
     else
         self:stopActionByTag(self.idleActionTag)
+        if self.idleScheduleID ~= nil then
+            local scheduler = cc.Director:getInstance():getScheduler()
+            scheduler:unscheduleScriptEntry(self.idleScheduleID)
+            self.idleScheduleID = nil
+        end
     end
     self.status = status
 end
@@ -238,7 +250,7 @@ function Entity:onHurt(atk)
                 self:setStandDirection(self.dir)
             end
         end
-        self:playAnimation(self.hitAnimationFrames, cb, false, self.runAnimDelay*2)
+        self:playAnimation(self.hitAnimationFrames, cb, false, self.runAnimDelay)
     end
 end
 
@@ -250,6 +262,7 @@ function Entity:init(name, camp)
 	self.runActionTag = 10
 	self.runAnimateTag = 11
     self.idleActionTag = 12
+    self.idleScheduleID = nil
 	self.texturePlist = self.name .. ".plist"
     self.status = Status.idle
     self.camp = camp

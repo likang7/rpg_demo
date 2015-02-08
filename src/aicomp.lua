@@ -31,17 +31,23 @@ function AIComp:init(dict, enabled)
 	self.enabled = enabled
 	self.target = nil
 	self.status = AIStatus.idle
+	self.i = 0
 end
 
 function AIComp:step()
 	if self.enabled == false then
 		return
 	end
+	self.i = self.i + 1
+	if self.i % 60 ~= 0 then
+		return
+	end
 	local entity = self.entity
 	if self.status == AIStatus.idle then
 		self.target = self:findTarget()
 		if self.target ~= nil then
-			local path = self.gameMap:pathTo(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
+			--TODO: 实现pathToArround，最多走到前一个格子
+			local path = self.gameMap:pathToArround(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
 			entity:runPath(path)
 			self.status = AIStatus.running
 		end
@@ -50,15 +56,14 @@ function AIComp:step()
 		self:returnToBornPoint()
 		self.status = AIStatus.backing
 	elseif self.status == AIStatus.running then
-		if self:canAttack(self.target) then
-			self.status = AIStatus.attacking
-		end
+		self.status = AIStatus.attacking
 	elseif self.status == AIStatus.attacking then
 		local dis = self:getDistance(entity, self.target)
+		local disToBornPoint = cc.pGetDistance(cc.p(entity:getPosition()), self.bornPoint)
 		if dis < self.atkRange then
 			local dir = helper.getDirection(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
 			entity:setStandDirection(dir)
-			-- 这里是否需要判断敌人在扇形范围内？
+			-- 这里需要判断敌人在扇形范围内？
 			if entity:tryAttack() then
 				self.target:onHurt(entity.atk)
 				if self.target.status == const.Status.die then
@@ -67,11 +72,13 @@ function AIComp:step()
 					self.status = AIStatus.backing
 				end
 			end
-		elseif dis < self.catchRange then
+		elseif disToBornPoint < self.catchRange then
 			-- 在追击范围，追杀
-			local path = self.gameMap:pathTo(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
-			entity:runPath(path)
-		elseif dis >= self.catchRange then
+			if entity.status ~= const.Status.run then
+				local path = self.gameMap:pathToArround(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
+				entity:runPath(path)
+			end
+		elseif disToBornPoint >= self.catchRange then
 			-- 超出
 			self:returnToBornPoint()
 			self.status = AIStatus.backing 

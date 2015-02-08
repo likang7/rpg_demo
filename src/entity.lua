@@ -24,9 +24,9 @@ local function onNodeEvent(tag)
 	end
 end
 
-function Entity:create(name)
+function Entity:create(data)
 	local sprite = Entity.new()
-	sprite:init(name)
+	sprite:init(data)
 
 	return sprite
 end
@@ -296,7 +296,11 @@ function Entity:onHurt(atk)
                 self:setStandDirection(self.dir)
             end
         end
-        self:playAnimation(self.hitAnimationFrames, cb, false, self.runAnimDelay)
+        if self.status == Status.hurt then
+            --TODO:这里最好还是取消上一次的击中回调吧
+            -- 避免受伤到一半状态就被取消了
+            self:playAnimation(self.hitAnimationFrames, cb, false, self.runAnimDelay * 0.5)
+        end
     end
 end
 
@@ -310,26 +314,31 @@ function Entity:step()
     end
 end
 
-function Entity:init(name, camp)
-	self.name = name
-	self.speed = 200
-	self.dir = Direction.S
+function Entity:init(data)
+    self._data = data
+	self.name = data.name
+	self.speed = data.speed
+	self.dir = data.dir
+    self.camp = camp
+    self.atk = data.atk
+    self.def = data.def
+    self.hp = data.hp
+    self.texturePlist = data.texturePath
+    print('ff', data.name)
+    local effectPath = data.effectPath
+
 	self.runAnimDelay = 0.1
 	self.runActionTag = 10
 	self.runAnimateTag = 11
     self.idleActionTag = 12
     self.idleScheduleID = nil
-	self.texturePlist = self.name .. ".plist"
+	
     self.status = Status.idle
-    self.camp = camp
-    self.atk = 100
-    self.def = 10
-    self.hp = 300
     self.aiComp = nil
 
 	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
 	spriteFrameCache:addSpriteFrames(self.texturePlist)
-    local effectPath = 'effect.plist'
+    
     spriteFrameCache:addSpriteFrames(effectPath)
 
 	self.runAnimationFrames = self:createAnimationFrames(true, self.name, 'run', 8)

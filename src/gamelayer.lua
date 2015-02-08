@@ -1,5 +1,6 @@
 local const = require "const"
 require "entity"
+require "model.entityData"
 require "aicomp"
 
 local Direction = const.Direction
@@ -32,7 +33,8 @@ end
 function GameLayer:initEntity(objectGroup)
     local playerPoint = objectGroup:getObject("bornPoint")
     local x, y = playerPoint.x, playerPoint.y
-    local player = Entity:create('bgj', 1)
+    local entityData = EntityData:create(1)
+    local player = Entity:create(entityData)
     player:setPosition(x, y)
     self.player = player
     self:addChild(player, 5)
@@ -41,7 +43,8 @@ function GameLayer:initEntity(objectGroup)
     local objects = objectGroup:getObjects()
     for _, object in pairs(objects) do
         if object['name'] == 'monsterPoint' then
-            local monster = Entity:create('bgj', 2)
+            local entityData = EntityData:create(2)
+            local monster = Entity:create(entityData)
             monster:setPosition(object.x, object.y)
             self:addChild(monster, 1)
             table.insert(self.monsterEntity, monster)
@@ -52,12 +55,13 @@ function GameLayer:initEntity(objectGroup)
                 ['gameMap'] = self.gameMap,
                 ['bornPoint'] = cc.p(object.x, object.y),
                 ['enemyEntity'] = {self.player},
-                ['atkRange'] = 32,
+                ['atkRange'] = 64,
                 ['detectRange'] = 100,
-                ['catchRange'] = 200,
+                ['catchRange'] = 300,
             }
             local aiComp = AIComp:create(dict, true)
             monster:setAIComp(aiComp)
+            monster.hp = 200
         end
     end
 

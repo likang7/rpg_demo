@@ -81,3 +81,14 @@ function GameMap:pathTo(from, to, maxd)
     return path
 end
 
+function GameMap:pathToArround(from, to, maxd)
+    from.x, from.y = self:convertToTiledSpace(from.x, from.y)
+    to = cc.p(self:convertToTiledSpace(to.x, to.y))
+    path = pf.pathTo(from, to, maxd, self.map, self.mapSize.width, self.mapSize.height)
+    table.remove(path)
+    for i, step in ipairs(path) do
+        step.x, step.y = self:reverseTiledSpace(step.x, step.y)
+    end
+    return path
+end
+

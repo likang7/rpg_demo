@@ -33,9 +33,10 @@ end
 function GameLayer:initEntity(objectGroup)
     local playerPoint = objectGroup:getObject("bornPoint")
     local x, y = playerPoint.x, playerPoint.y
-    local entityData = EntityData:create(1)
+    local entityData = EntityData:create(1, self.gameMap)
+    entityData.pos = cc.p(x, y)
     local player = Entity:create(entityData)
-    player:setPosition(x, y)
+    -- player:setPosition(x, y)
     self.player = player
     self:addChild(player, 5)
 
@@ -43,9 +44,10 @@ function GameLayer:initEntity(objectGroup)
     local objects = objectGroup:getObjects()
     for _, object in pairs(objects) do
         if object['name'] == 'monsterPoint' then
-            local entityData = EntityData:create(2)
+            local entityData = EntityData:create(2, self.gameMap)
+            entityData.pos = cc.p(object.x, object.y)
             local monster = Entity:create(entityData)
-            monster:setPosition(object.x, object.y)
+            -- monster:setPosition(object.x, object.y)
             self:addChild(monster, 1)
             table.insert(self.monsterEntity, monster)
 

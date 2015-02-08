@@ -99,6 +99,7 @@ function Entity:stopRuning()
 	self:stopActionByTag(self.runAnimateTag)
     self:setStandDirection(self.dir)
     self:setStatus(Status.idle)
+    self.keyRunning = false
 end
 
 function Entity:_run(path, idx, cb_end, dir)
@@ -158,10 +159,11 @@ function Entity:runPath(path, cb_end, dir)
 
     self:setStatus(Status.run)
 	self:_run(path, 1, cb_end, dir)
+    self._model:setPath(path)
 end
 
 function Entity:runOneStep(p, cb, dir)
-    if self.status ~= Status.idle then
+    if self.status ~= Status.idle --[[and self.status ~= Status.run--]] then
         return
     end
 
@@ -171,7 +173,7 @@ function Entity:runOneStep(p, cb, dir)
         end
         self:setStatus(Status.idle)
     end
-    
+    self.keyRunning = true
     self:runPath({p}, cb_end, dir)
 end
 
@@ -225,6 +227,7 @@ function Entity:setStatus(status)
             end
             local scheduler = cc.Director:getInstance():getScheduler()
             self.idleScheduleID = scheduler:scheduleScriptFunc(cb, IDLE_DELAYTIME, false)
+            -- self:setStandDirection(self.dir)
         end
     else
         self:stopActionByTag(self.idleActionTag)
@@ -308,14 +311,32 @@ function Entity:setAIComp(comp)
     self.aiComp = comp
 end
 
-function Entity:step()
+function Entity:step(dt)
     if self.aiComp ~= nil then
         self.aiComp:step()
     end
+    self._model:step(dt)
+    -- local p = self._model.pos
+    -- self:setPosition(p.x, p.y)
+    -- if self._model.runFlag == true or self.keyRunning then
+    --     self:setStatus(Status.run)
+    --     -- 播放奔跑动画
+    --     if self._model.dir ~= self.dir or self:getActionByTag(self.runAnimateTag) == nil then
+    --         self.dir = self._model.dir
+    --         self:stopActionByTag(self.runAnimateTag)
+    --         local repeatForever = cc.RepeatForever:create(
+    --         cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[self.dir], self.runAnimDelay)))
+    --         repeatForever:setTag(self.runAnimateTag)
+    --         self:runAction(repeatForever)
+    --     end
+    -- else
+    --     self:setStatus(Status.idle)
+    --     self:stopActionByTag(self.runAnimateTag)
+    -- end
 end
 
 function Entity:init(data)
-    self._data = data
+    self._model = data
 	self.name = data.name
 	self.speed = data.speed
 	self.dir = data.dir
@@ -325,6 +346,9 @@ function Entity:init(data)
     self.hp = data.hp
     self.texturePlist = data.texturePath
     print('ff', data.name)
+    local pos = self._model.pos
+    self:setPosition(pos.x, pos.y)
+    self.keyRunning = false
     local effectPath = data.effectPath
 
 	self.runAnimDelay = 0.1
@@ -361,8 +385,8 @@ function Entity:init(data)
 
 	self:registerScriptHandler(onNodeEvent)
 
-    local cb = function()
-        self:step()
+    local cb = function(dt)
+        self:step(dt)
     end
     local scheduler = cc.Director:getInstance():getScheduler()
     self.sechedulerAIID = scheduler:scheduleScriptFunc(cb, 0, false)

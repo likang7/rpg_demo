@@ -46,6 +46,11 @@ function GameMap:isAvailable(tx, ty)
             ty >= self.mapSize.height or self.map[tx][ty] ~= 0)
 end
 
+function GameMap:isValidViewPoint(vx, vy)
+    local tx, ty = self:convertToTiledSpace(vx, vy)
+    return self:isAvailable(tx, ty)
+end
+
 function GameMap:convertToTiledSpace(x, y)
     -- print('origin', x, y)
     local tx = math.floor(x / self.tileSize.width)
@@ -82,12 +87,9 @@ function GameMap:pathTo(from, to, maxd)
 end
 
 function GameMap:pathToArround(from, to, maxd)
-    from.x, from.y = self:convertToTiledSpace(from.x, from.y)
-    to = cc.p(self:convertToTiledSpace(to.x, to.y))
-    path = pf.pathTo(from, to, maxd, self.map, self.mapSize.width, self.mapSize.height)
-    table.remove(path)
-    for i, step in ipairs(path) do
-        step.x, step.y = self:reverseTiledSpace(step.x, step.y)
+    local path = self:pathTo(from, to, maxd)
+    if #path >= 1 then
+        table.remove(path)
     end
     return path
 end

@@ -8,7 +8,7 @@ GameScene = class("GameScene",
 GameScene.__index = GameScene
 
 function GameScene:createGameLayer()
-	require "gamelayer"
+	require "GameLayer"
 	local gameLayer = GameLayer:create()
 	return gameLayer
 end

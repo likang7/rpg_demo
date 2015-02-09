@@ -1,7 +1,7 @@
 local const = require "const"
-require "entity"
-require "model.entityData"
-require "aicomp"
+require "Entity"
+require "model.EntityData"
+require "AIComp"
 
 local Direction = const.Direction
 local math = math
@@ -201,24 +201,13 @@ function GameLayer:initKeyboardEvent()
     local function tryMoveOneStep()
         local dir = getDirection(self.pressSum)
         local d = const.DirectionToVec
+        self.player:runOneStep(dir)
         if dir ~= nil and d[dir] ~= nil then
-            local px, py = self.player:getPosition()
-            px, py = self.gameMap:convertToTiledSpace(px, py)
-            local delta = d[dir]
-            local new_x, new_y = px + delta[1], py - delta[2]
-            if self.gameMap:isAvailable(new_x, new_y) then
-                px, py = new_x, new_y
-            end
-            px, py = self.gameMap:reverseTiledSpace(px, py)
-            px, py = self.gameMap:clampEntityPos(px, py)
-        
-            self.player:runOneStep(cc.p(px, py), nil, dir)
             if self.tryMoveOneStepID == nil then
                 local scheduler = cc.Director:getInstance():getScheduler()
                 self.tryMoveOneStepID = scheduler:scheduleScriptFunc(tryMoveOneStep, 0, false)
             end
         else
-            self.player:stopRuning()
             if self.tryMoveOneStepID ~= nil then
                 local scheduler = cc.Director:getInstance():getScheduler()
                 scheduler:unscheduleScriptEntry(self.tryMoveOneStepID)

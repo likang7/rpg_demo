@@ -39,14 +39,13 @@ function AIComp:step()
 		return
 	end
 	self.i = self.i + 1
-	if self.i % 60 ~= 0 then
+	if self.i % 20 ~= 0 then
 		return
 	end
 	local entity = self.entity
 	if self.status == AIStatus.idle then
 		self.target = self:findTarget()
 		if self.target ~= nil then
-			--TODO: 实现pathToArround，最多走到前一个格子
 			local path = self.gameMap:pathToArround(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
 			entity:runPath(path)
 			self.status = AIStatus.running

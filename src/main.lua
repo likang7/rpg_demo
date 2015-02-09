@@ -104,7 +104,7 @@ local function main()
 
     -- run
     -- gameScene:addChild(createLayerMenu())
-    require "gamescene"
+    require "GameScene"
     local gameScene = GameScene:create()
 
     if cc.Director:getInstance():getRunningScene() then

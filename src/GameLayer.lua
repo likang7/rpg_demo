@@ -1,7 +1,7 @@
 local const = require "const"
-require "entity"
-require "model.entityData"
-require "aicomp"
+require "Entity"
+require "model.EntityData"
+require "AIComp"
 
 local Direction = const.Direction
 local math = math

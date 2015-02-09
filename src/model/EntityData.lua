@@ -54,6 +54,7 @@ function EntityData:setKeyboardMoveDir(flag, dir)
     self.controlType = const.ControlType.Keyboard
 end
 
+-- 更新用户点击屏幕行走时的位置
 function EntityData:updatePositionClick(dt)
     local dst = self.path[self.pathIdx]
     if dst ~= nil and self.speed > 0 then
@@ -86,6 +87,7 @@ function EntityData:updatePositionClick(dt)
     end
 end
 
+-- 更新用户键盘控制行走时的位置
 function EntityData:updatePositionKeyboard(dt)
     local vec = DirectionToVec[self.dir]
     local dx, dy = dt * self.speed * vec[1], dt * self.speed * vec[2]
@@ -101,6 +103,7 @@ end
 
 function EntityData:step(dt)
     if self.runFlag == true then
+        -- 更新角色位置
         if self.controlType == const.ControlType.Click then
             self:updatePositionClick(dt)
         elseif self.controlType == const.ControlType.Keyboard then
@@ -123,17 +126,19 @@ function EntityData:init(dict, gameMap)
     self.hp = dict.hp
     self.texturePath = self.name .. '.plist'
     self.effectPath = 'effect.plist'
-    self.controlType = dict.controlType
+    
     if dict.controlType == nil then
         self.controlType = const.ControlType.Click
     end
 
+    -- 角色移动相关的变量
+    self.runFlag = false
+    self.controlType = dict.controlType
     self.pos = dict.pos
     self.path = {}
     self.pathIdx = 1
     self.runTimeUsed = 0
     self.runTimeTotal = 0
-    self.runFlag = false
     self.startPos = cc.p(0, 0)
     self.deltaPos = cc.p(0, 0)
 

@@ -34,13 +34,6 @@ end
 function Entity:ctor()
 end
 
-function Entity:getRunAnimationName(dir)
-	return self.name .. string.format('-run-%d', dir)
-end
-
-function Entity:createHitEffectAnimationFrames()
-end
-
 function Entity:createAnimationFrames(isFullDir, pname, prefix, num)
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     local frames = {}
@@ -330,8 +323,10 @@ function Entity:step(dt)
     if self.aiComp ~= nil then
         self.aiComp:step()
     end
+
     self._model:step(dt)
 
+    -- 更新角色位置，以及跑的动画
     self:updatePosition()
 end
 

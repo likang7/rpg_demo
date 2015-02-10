@@ -86,7 +86,7 @@ function AIComp:step()
 	elseif self.status == AIStatus.backing then
 		local t= cc.p(entity:getPosition())
 		local dis = cc.pGetDistance(cc.p(entity:getPosition()), self.bornPoint)
-		if dis < self.gameMap.tileSize.width then
+		if dis <= self.gameMap.tileSize.width then
 			self.status = AIStatus.idle
 		end
 	end

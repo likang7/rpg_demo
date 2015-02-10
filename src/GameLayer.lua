@@ -32,22 +32,22 @@ end
 
 function GameLayer:initEntity(objectGroup)
     local playerPoint = objectGroup:getObject("bornPoint")
-    local x, y = playerPoint.x, playerPoint.y
+    local xx = objectGroup:getObject("transfer")
+    local x, y = playerPoint.x , playerPoint.y
     local entityData = EntityData:create(1, self.gameMap)
-    entityData.pos = cc.p(x, y)
+    entityData.pos = cc.p(x+16, y)
     local player = Entity:create(entityData)
-    -- player:setPosition(x, y)
     self.player = player
     self:addChild(player, 5)
 
     self.monsterEntity = {}
     local objects = objectGroup:getObjects()
     for _, object in pairs(objects) do
-        if object['name'] == 'monsterPoint' then
+        -- if object['name'] == 'monsterPoint' then
+        if object['type'] == '3' then
             local entityData = EntityData:create(2, self.gameMap)
-            entityData.pos = cc.p(object.x, object.y)
+            entityData.pos = cc.p(object.x+16, object.y)
             local monster = Entity:create(entityData)
-            -- monster:setPosition(object.x, object.y)
             self:addChild(monster, 1)
             table.insert(self.monsterEntity, monster)
 
@@ -55,15 +55,18 @@ function GameLayer:initEntity(objectGroup)
             local dict = {
                 ['entity'] = monster,
                 ['gameMap'] = self.gameMap,
-                ['bornPoint'] = cc.p(object.x, object.y),
+                ['bornPoint'] = cc.p(object.x+16, object.y),
                 ['enemyEntity'] = {self.player},
                 ['atkRange'] = 64,
-                ['detectRange'] = 100,
-                ['catchRange'] = 300,
+                ['detectRange'] = 64,
+                ['catchRange'] = 64,
             }
-            local aiComp = AIComp:create(dict, true)
+            local aiComp = AIComp:create(dict, false)
             monster:setAIComp(aiComp)
             monster.hp = 200
+        elseif object['type'] == '1' then
+            -- 初始化传送点
+            print('transfer')
         end
     end
 
@@ -96,7 +99,7 @@ function GameLayer:initTileMap(tilemapPath)
     self.gameMap = GameMap:create(tilemapPath)
 
     local tilemap = self.gameMap.tilemap
-    tilemap:setPosition(origin.x, origin.y)
+    -- tilemap:setPosition(origin.x, origin.y)
     self:addChild(tilemap)
 
     local objects = tilemap:getObjectGroup("object")
@@ -105,30 +108,34 @@ end
 
 function GameLayer:init()
     local sceneTexturePath = "scene.jpg"
-    local tilemapPath = "sample.tmx"
+    local tilemapPath = "map/map-1.tmx"
 
     local origin = cc.Director:getInstance():getVisibleOrigin()
 
     self:initTileMap(tilemapPath)
 
     -- add bg
-    local bg = cc.Sprite:create(sceneTexturePath)
-    bg:setAnchorPoint(0, 0)
-    -- 高度补偿
-    bg:setPosition(origin.x, origin.y + self.gameMap.map_h - bg:getTextureRect().height)
-    self:addChild(bg, -1)
+    -- local bg = cc.Sprite:create(sceneTexturePath)
+    -- bg:setAnchorPoint(0, 0)
+    -- -- -- 高度补偿
+    -- bg:setPosition(origin.x, origin.y + self.gameMap.map_h - bg:getTextureRect().height)
+    -- self:addChild(bg, -1)
 
     local last_dir = Direction.S
     local function tick()
         if self.player ~= nil and self.player.status ~= const.Status.die then
             local px, py = self.player:getPosition()
             self:setViewPointCenter(px, py)   
-            local gid = self.gameMap.skyLayer:getTileGIDAt(cc.p(self.gameMap:convertToTiledSpace(px, py)))
-            if gid ~= 0 then
-                self.player:setOpacity(200)
-            else
-                self.player:setOpacity(255)
-            end 
+            if self.gameMap.skyLayer ~= nil then
+                local gid = self.gameMap.skyLayer:getTileGIDAt(cc.p(self.gameMap:convertToTiledSpace(px, py)))
+                local tx, ty = self.gameMap:convertToTiledSpace(px, py)
+                -- print('tile', tx, ty)
+                if gid ~= 0 then
+                    self.player:setOpacity(200)
+                else
+                    self.player:setOpacity(255)
+                end 
+            end
         end
     end
 
@@ -285,7 +292,7 @@ function GameLayer:setViewPointCenter(x, y)
     viewx = win_size.width / 2 - x
     viewy = win_size.height / 2 - y
 
-    self:setPosition(viewx, viewy)
+    -- self:setPosition(viewx, viewy)
 end
 
 

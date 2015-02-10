@@ -14,29 +14,43 @@ function GameMap:ctor()
 end
 
 function GameMap:init(tilemapPath)
-    self.tilemap = ccexp.TMXTiledMap:create(tilemapPath)
+    self.tilemap = cc.TMXTiledMap:create(tilemapPath)
     self.mapSize = self.tilemap:getMapSize()
     self.tileSize = self.tilemap:getTileSize()
-
-    local blockLayer = self.tilemap:getLayer("block")
-    blockLayer:setVisible(false)
-
-    local skyLayer = self.tilemap:getLayer("sky")
-    -- tilemap:removeChild(skyLayer)
-    -- self:addChild(skyLayer, 10)
-    -- skyLayer:setPosition(origin.x, origin.y)
-    skyLayer:setVisible(false)
-
-    self.skyLayer = skyLayer
 
     self.map = {}
     for x = 0, self.mapSize.width - 1 do
         self.map[x] = {}
         for y = 0, self.mapSize.height - 1 do
-            local gid = blockLayer:getTileGIDAt(cc.p(x, y))
-            self.map[x][y] = gid
+            self.map[x][y] = 0
         end
     end
+
+    -- 有可能有多个block层，全部读取
+    local idx = 1
+    while true do
+        local blockLayer = self.tilemap:getLayer("block-" .. idx)
+        if blockLayer == nil then
+            break
+        end
+        idx = idx + 1
+        for x = 0, self.mapSize.width - 1 do
+            for y = 0, self.mapSize.height - 1 do
+                local gid = blockLayer:getTileGIDAt(cc.p(x, y))
+                if gid ~= 0 then
+                    self.map[x][y] = gid
+                end
+            end
+        end
+    end
+
+    local skyLayer = self.tilemap:getLayer("sky")
+    -- tilemap:removeChild(skyLayer)
+    -- self:addChild(skyLayer, 10)
+    -- skyLayer:setPosition(origin.x, origin.y)
+    -- skyLayer:setVisible(false)
+
+    self.skyLayer = skyLayer
 
     self.map_w = self.mapSize.width * self.tileSize.width
     self.map_h = self.mapSize.height * self.tileSize.height
@@ -55,14 +69,14 @@ end
 function GameMap:convertToTiledSpace(x, y)
     -- print('origin', x, y)
     local tx = math.floor(x / self.tileSize.width)
-    local ty = math.ceil((self.map_h - y) / self.tileSize.height)
+    local ty = math.floor((self.map_h - y) / self.tileSize.height)
     -- print('convert to', tx, ty)
     return tx, ty
 end
 
 function GameMap:reverseTiledSpace(x, y)
     x = (x + 0.5) * self.tileSize.width
-    y = self.map_h - y * self.tileSize.height
+    y = self.map_h - (y+1) * self.tileSize.height
     return x, y
 end
 

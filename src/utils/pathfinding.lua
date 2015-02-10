@@ -134,7 +134,7 @@ local function pathTo(from, to, maxd, map, width, height)
         table.insert(paths, {x=step.x, y=step.y})
         step = step.parent
     end
-    table.insert(paths, {x=from.x, y=from.y})
+    -- table.insert(paths, {x=from.x, y=from.y})
     reverse(paths)
 
     return paths, flag

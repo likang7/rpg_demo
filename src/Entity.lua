@@ -19,8 +19,8 @@ local ANIMATE_TYPE = {idle=0, run=1, attack=2, hurt=3, die=4}
 local IDLE_DELAYTIME = 1
 local function onNodeEvent(tag)
     if tag == "exit" then
-        print("xxx")
-        -- self.runAnimationFrames:release()
+        print("xxxxxxxxxxxxxxxxxxxxxx")
+        -- self.runAnimationFrames:release()        
     end
 end
 
@@ -396,11 +396,11 @@ function Entity:init(data)
 
     self:registerScriptHandler(onNodeEvent)
 
-    local cb = function(dt)
-        self:step(dt)
-    end
-    local scheduler = cc.Director:getInstance():getScheduler()
-    self.sechedulerAIID = scheduler:scheduleScriptFunc(cb, 0, false)
+    -- local cb = function(dt)
+    --     self:step(dt)
+    -- end
+    -- local scheduler = cc.Director:getInstance():getScheduler()
+    -- self.sechedulerAIID = scheduler:scheduleScriptFunc(cb, 0, false)
 end
 
 return Entity

@@ -9,7 +9,8 @@ GameScene.__index = GameScene
 
 function GameScene:createGameLayer()
     require "GameLayer"
-    local gameLayer = GameLayer:create()
+    local dict = {stageId = 1}
+    local gameLayer = GameLayer:create(dict)
     return gameLayer
 end
 

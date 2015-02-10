@@ -2,6 +2,7 @@ local const = require "const"
 require "Entity"
 require "model.EntityData"
 require "AIComp"
+require "Transfer"
 
 local Direction = const.Direction
 local math = math
@@ -20,12 +21,10 @@ function GameLayer:createGameLayer()
     
 end
 
-function GameLayer:create()
+function GameLayer:create(dict)
     local layer = GameLayer.new()
 
-    layer:clearAll()
-
-    layer:init()
+    layer:init(dict)
 
     return layer
 end
@@ -33,7 +32,15 @@ end
 function GameLayer:initEntity(objectGroup)
     self.monsterEntity = {}
     self.transfers = {}
+
     self.player = nil
+    --先初始化玩家
+    local object = objectGroup:getObject("bornPoint")
+    local entityData = EntityData:create(1, self.gameMap)
+    entityData.pos = cc.p(object.x+16, object.y)
+    local player = Entity:create(entityData)
+    self.player = player
+    self:addChild(player, 5)
 
     local objects = objectGroup:getObjects()
     for _, object in pairs(objects) do
@@ -41,20 +48,16 @@ function GameLayer:initEntity(objectGroup)
         if otype == '1' then
             -- 初始化传送点
             local x, y, w, h = object.x, object.y, object.width, object.height
-            print('transfer')
-        elseif otype == '2' then
-            local entityData = EntityData:create(1, self.gameMap)
-            entityData.pos = cc.p(object.x+16, object.y)
-            local player = Entity:create(entityData)
-            self.player = player
-            self:addChild(player, 5)
+            local dict = {rect = cc.rect(x, y, w, h), dir = object.direction}
+            local transfer = Transfer:create(dict)
+            table.insert(self.transfers, transfer) 
         elseif otype == '3' then
             -- 初始化NPC
             local entityData = EntityData:create(2, self.gameMap)
             entityData.pos = cc.p(object.x+16, object.y)
             local monster = Entity:create(entityData)
             self:addChild(monster, 1)
-            table.insert(self.monsterEntity, monster)
+            -- table.insert(self.monsterEntity, monster)
         elseif otype == '4' then
             -- 初始化道具
         elseif otype == '5' then
@@ -82,6 +85,7 @@ function GameLayer:initEntity(objectGroup)
 end
 
 function GameLayer:clearAll()
+    local scheduler = cc.Director:getInstance():getScheduler()
     if self.tryMoveOneStepID ~= nil then
         scheduler:unscheduleScriptEntry(self.tryMoveOneStepID)
         self.tryMoveOneStepID = nil
@@ -96,9 +100,15 @@ function GameLayer:clearAll()
     self.monsterEntity = {}
     self.transfers = {}
     self.gameMap = nil
-    self.pressSum = 0
+    if self.pressSum == nil then
+        self.pressSum = 0
+    end
 
     self:removeAllChildren()
+
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:removeAllEventListeners()
+
 end
 
 function GameLayer:initTileMap(tilemapPath)
@@ -115,11 +125,13 @@ function GameLayer:initTileMap(tilemapPath)
     self:initEntity(objects)
 end
 
-function GameLayer:init()
-    local sceneTexturePath = "scene.jpg"
-    local tilemapPath = "map/map-1.tmx"
+function GameLayer:init(dict)
+    self:clearAll()
 
-    local origin = cc.Director:getInstance():getVisibleOrigin()
+    local sceneTexturePath = "scene.jpg"
+    local tilemapPath = string.format("map/map-%d.tmx", dict.stageId)
+
+    self.stageId = dict.stageId
 
     self:initTileMap(tilemapPath)
 
@@ -131,10 +143,11 @@ function GameLayer:init()
     -- self:addChild(bg, -1)
 
     local last_dir = Direction.S
-    local function tick()
+    local function tick(dt)
         if self.player ~= nil and self.player.status ~= const.Status.die then
+            self.player:step(dt)
             local px, py = self.player:getPosition()
-            self:setViewPointCenter(px, py)   
+            -- self:setViewPointCenter(px, py)   
             if self.gameMap.skyLayer ~= nil then
                 local gid = self.gameMap.skyLayer:getTileGIDAt(cc.p(self.gameMap:convertToTiledSpace(px, py)))
                 local tx, ty = self.gameMap:convertToTiledSpace(px, py)
@@ -145,6 +158,9 @@ function GameLayer:init()
                     self.player:setOpacity(255)
                 end 
             end
+        end
+        for _, monster in pairs(self.monsterEntity) do
+            monster:step(dt)
         end
     end
 
@@ -161,6 +177,27 @@ function GameLayer:init()
     self:initTouchEvent()
 
     self:initKeyboardEvent()
+end
+
+function GameLayer:saveRecord()
+    
+end
+
+function GameLayer:onNextStage()
+    --1. 保存当前关卡记录
+    self:saveRecord()
+    --2. 切换到下一关
+    local nextStageId = self.stageId + 1
+    local dict = {stageId=nextStageId}
+    self:init(dict)
+    print('xxx')
+end
+
+function GameLayer:onPrevStage()
+    self:saveRecord()
+    local prevStageId = self.stageId - 1
+    local dict = {stageId=prevStageId}
+    self:init(dict)
 end
 
 function GameLayer:initTouchEvent()
@@ -276,6 +313,22 @@ end
 
 function GameLayer:OnAttackPressed()
     -- 1. 检查是否碰到传送阵
+    local pRect = self.player:getTextureRect()
+    local px, py = self.player:getPosition()
+    pRect.x, pRect.y = px, py
+    for _, transfer in ipairs(self.transfers) do
+        local tRect = transfer.rect
+        if cc.rectIntersectsRect(pRect, tRect) then
+            -- 跳到下一个地图
+            local dir = tonumber(transfer.dir)
+            if dir == 0 then
+                self:onNextStage()
+            elseif dir == 1 then
+                self:onPrevStage()
+            end
+            return
+        end
+    end
     -- 2. 检查NPC是否在前面
     -- 3. 攻击打怪
     local can_attack = self.player:tryAttack()
@@ -293,7 +346,7 @@ function GameLayer:setViewPointCenter(x, y)
     viewx = win_size.width / 2 - x
     viewy = win_size.height / 2 - y
 
-    -- self:setPosition(viewx, viewy)
+    self:setPosition(viewx, viewy)
 end
 
 

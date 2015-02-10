@@ -32,25 +32,25 @@
     <property name="direction" value="0"/>
    </properties>
   </object>
-  <object id="7" name="3000" type="5" x="32" y="96" width="64" height="64">
+  <object id="7" name="3000" type="5" x="32" y="64" width="128" height="128">
    <properties>
     <property name="rangeID" value="1"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="9" name="3006" type="5" x="384" y="96" width="96" height="96">
+  <object id="9" name="3006" type="5" x="384" y="64" width="128" height="128">
    <properties>
     <property name="rangeID" value="7"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="10" name="3009" type="5" x="448" y="256" width="64" height="64">
+  <object id="10" name="3009" type="5" x="416" y="256" width="96" height="96">
    <properties>
     <property name="rangeID" value="8"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="11" name="3001" type="5" x="64" y="288" width="64" height="64">
+  <object id="11" name="3001" type="5" x="32" y="256" width="96" height="96">
    <properties>
     <property name="rangeID" value="4"/>
    </properties>
@@ -74,7 +74,7 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="15" name="3004" type="5" x="96" y="448" width="64" height="64">
+  <object id="15" name="3004" type="5" x="96" y="448" width="96" height="64">
    <properties>
     <property name="rangeID" value="6"/>
    </properties>
@@ -282,13 +282,13 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="61" name="3001" type="5" x="192" y="64" width="64" height="64">
+  <object id="61" name="3001" type="5" x="192" y="64" width="96" height="96">
    <properties>
     <property name="rangeID" value="2"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="62" name="3001" type="5" x="256" y="0" width="96" height="96">
+  <object id="62" name="3001" type="5" x="224" y="0" width="160" height="96">
    <properties>
     <property name="rangeID" value="3"/>
    </properties>

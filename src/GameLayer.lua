@@ -262,26 +262,18 @@ function GameLayer:initKeyboardEvent()
 end
 
 function GameLayer:attack(entity)
-    local theta = 90 / 2
-    local r = 64
-    local rSQ = r * r
-    local cosTheta = math.cos(theta)
-    local ex, ey = entity:getPosition()
-    local rmIdx = {}
-    for idx, monster in pairs(self.monsterEntity) do
-        local mx, my = monster:getPosition()
-        local u = const.DirectionToVec[entity.dir]
-        if helper.isPointInCircularSector(ex, ey, u[1], u[2], mx, my, rSQ, cosTheta) then
-            monster:onHurt(entity.atk)
-            if monster.hp == nil or monster.hp <= 0 then
-                table.insert(rmIdx, idx)
-            end
-        end
-    end
-
-    for _, idx in ipairs(rmIdx) do
-        self.monsterEntity[idx] = nil
-    end
+    -- local r = 64
+    -- local theta = 90
+    -- local x, y = entity:getPosition()
+    -- local targets = self.gameMap:searchTargetsInFan(x, y, entity.dir, r, theta, self.monsterEntity)
+    -- local rmIdx = {}
+    -- for idx, monster in pairs(targets) do
+    --     monster:onHurt(entity.atk)
+    --     if monster.hp == nil or monster.hp <= 0 then
+    --         self.monsterEntity[idx] = nil
+    --     end
+    -- end
+    entity:attack(self.monsterEntity)
 end
 
 function GameLayer:setViewPointCenter(x, y)

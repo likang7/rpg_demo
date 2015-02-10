@@ -35,7 +35,7 @@ function AIComp:init(dict, enabled)
 end
 
 function AIComp:step()
-	if self.enabled == false then
+	if self.enabled == false or self.entity:getLifeState() == const.LifeState.Die then
 		return
 	end
 	self.i = self.i + 1
@@ -61,11 +61,10 @@ function AIComp:step()
 		local disToBornPoint = cc.pGetDistance(cc.p(entity:getPosition()), self.bornPoint)
 		if dis < self.atkRange then
 			local dir = helper.getDirection(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
-			entity:setStandDirection(dir)
-			-- 这里需要判断敌人在扇形范围内？
+			entity:updateDir(dir)
 			if entity:tryAttack() then
-				self.target:onHurt(entity.atk)
-				if self.target.status == const.Status.die then
+				entity:attack(self.enemyEntity)
+				if self.target:getLifeState() == const.LifeState.Die then
 					self.target = nil
 					self:returnToBornPoint()
 					self.status = AIStatus.backing
@@ -88,7 +87,6 @@ function AIComp:step()
 		local t= cc.p(entity:getPosition())
 		local dis = cc.pGetDistance(cc.p(entity:getPosition()), self.bornPoint)
 		if dis < self.gameMap.tileSize.width then
-			-- TODO: 恢复HP
 			self.status = AIStatus.idle
 		end
 	end
@@ -96,6 +94,7 @@ end
 
 function AIComp:returnToBornPoint()
 	-- TODO：设置为无敌状态
+	self.entity._model.hp = self.entity._model.maxhp
 	local path = self.gameMap:pathTo(cc.p(self.entity:getPosition()), self.bornPoint)
 	self.entity:runPath(path)
 end
@@ -119,7 +118,7 @@ function AIComp:findTarget()
 		if enemy.status ~= const.Status.die then
 			ex, ey = enemy:getPosition()
 			local dis = cc.pGetDistance(cc.p(ex, ey), pos)
-			if dis < self.detectRange and enemy.hp > 0 then
+			if dis < self.detectRange and enemy:getLifeState() ~= const.LifeState.Die then
 				table.insert(targets, {["target"]=enemy, ["dis"]=dis})
 			end
 		end

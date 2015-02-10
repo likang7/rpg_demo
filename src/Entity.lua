@@ -18,17 +18,17 @@ Entity.__index = Entity
 local ANIMATE_TYPE = {idle=0, run=1, attack=2, hurt=3, die=4}
 local IDLE_DELAYTIME = 1
 local function onNodeEvent(tag)
-	if tag == "exit" then
-		print("xxx")
-		-- self.runAnimationFrames:release()
-	end
+    if tag == "exit" then
+        print("xxx")
+        -- self.runAnimationFrames:release()
+    end
 end
 
 function Entity:create(data)
-	local sprite = Entity.new()
-	sprite:init(data)
+    local sprite = Entity.new()
+    sprite:init(data)
 
-	return sprite
+    return sprite
 end
 
 function Entity:ctor()
@@ -78,9 +78,9 @@ function Entity:playAnimation(frames, callback, isFullDir, dt, target)
 end
 
 function Entity:setStandDirection(dir)
-	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-	local frame = spriteFrameCache:getSpriteFrame(string.format("bgj-stand-%d0.tga", dir))
-	self:setSpriteFrame(frame)
+    local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+    local frame = spriteFrameCache:getSpriteFrame(string.format("bgj-stand-%d0.tga", dir))
+    self:setSpriteFrame(frame)
 end
 
 function Entity:stopRuning()
@@ -88,8 +88,8 @@ function Entity:stopRuning()
         return
     end
     
-	self:stopActionByTag(self.runActionTag)
-	self:stopActionByTag(self.runAnimateTag)
+    self:stopActionByTag(self.runActionTag)
+    self:stopActionByTag(self.runAnimateTag)
     self:setStandDirection(self.dir)
     self:setStatus(Status.idle)
 end
@@ -166,17 +166,17 @@ function Entity:releaseCache()
 end
 
 function Entity:tryAttack()
-    if self.status == Status.attack then
+    if self.status == Status.attack or self.status == Status.die then
         return false
     end
 
-	self:stopRuning()
+    self:stopRuning()
     self._model.runFlag = false
     self:setStatus(Status.attack)
-	local cb = function ()
+    local cb = function ()
         self:setStandDirection(self.dir)
         self:setStatus(Status.idle)
-	end
+    end
 
     self:playAnimation(self.attackAnimationFrames, cb, false, self.runAnimDelay * 0.5)
 
@@ -228,14 +228,19 @@ function Entity:setStatus(status)
     self.status = status
 end
 
-function Entity:onHurt(atk)
+function Entity:showHurt(deltaHp, isCritial)
+    if isCritial == nil then
+        isCritial = false
+    end
     -- self:stopRuning()
     self:setStatus(Status.hurt)
-    local nhurt = atk - self.def
-    self.hp = self.hp - nhurt
     
     -- 飘血
-    local bloodLabel = cc.Label:createWithSystemFont(tostring(nhurt), "fonts/Marker Felt.ttf", 24)
+    local fontSize = 22
+    if isCritial == true then
+        fontSize = 26
+    end
+    local bloodLabel = cc.Label:createWithSystemFont(tostring(deltaHp), "fonts/Marker Felt.ttf", fontSize)
     self:getParent():addChild(bloodLabel, 10)
     local rect = self:getTextureRect()
     bloodLabel:setPosition(self:getPositionX(), self:getPositionY() + rect.height)
@@ -266,7 +271,7 @@ function Entity:onHurt(atk)
     self:addChild(effect)
 
     -- 死亡
-    if self.hp <= 0 then
+    if self:getLifeState() == const.LifeState.Die then
         local cb = function ()
             -- self:removeFromParent(true)
             self:setVisible(false)
@@ -278,6 +283,7 @@ function Entity:onHurt(atk)
                 scheduler:unscheduleScriptEntry(self.sechedulerAIID)
             end
         end
+        print('gua le')
         self:setStatus(Status.die)
         self:playAnimation(self.dyingAnimationFrames, cb, false, self.runAnimDelay)
     else
@@ -330,37 +336,49 @@ function Entity:step(dt)
     self:updatePosition()
 end
 
+function Entity:updateDir(dir)
+    self.dir = dir
+    self._model.dir = dir
+end
+
+-- skillId 暂时用不上
+function Entity:attack(enemys, skillId)
+    -- 1. 尝试播放攻击动画(如果不能，返回)
+    self._model:attack(enemys, skillId)
+end
+
+function Entity:getLifeState()
+    return self._model.lifeState
+end
+
 function Entity:init(data)
     self._model = data
-	self.name = data.name
-	self.speed = data.speed
-	self.dir = data.dir
+    self.name = data.name
+    self.dir = data.dir
     self.camp = camp
-    self.atk = data.atk
-    self.def = data.def
-    self.hp = data.hp
+
     self.texturePlist = data.texturePath
     local pos = self._model.pos
     self:setPosition(pos.x, pos.y)
     local effectPath = data.effectPath
 
-	self.runAnimDelay = 0.1
-	self.runActionTag = 10
-	self.runAnimateTag = 11
+    self.runAnimDelay = 0.1
+    self.runActionTag = 10
+    self.runAnimateTag = 11
     self.idleActionTag = 12
     self.idleScheduleID = nil
-	
+    
     self.status = Status.idle
     self.aiComp = nil
 
-	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-	spriteFrameCache:addSpriteFrames(self.texturePlist)
+    local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+    spriteFrameCache:addSpriteFrames(self.texturePlist)
     
     spriteFrameCache:addSpriteFrames(effectPath)
 
-	self.runAnimationFrames = self:createAnimationFrames(true, self.name, 'run', 8)
+    self.runAnimationFrames = self:createAnimationFrames(true, self.name, 'run', 8)
 
-	self.attackAnimationFrames = self:createAnimationFrames(false, self.name, 'skill1', 16)
+    self.attackAnimationFrames = self:createAnimationFrames(false, self.name, 'skill1', 16)
 
     self.hitAnimationFrames = self:createAnimationFrames(false, self.name, 'hit', 2)
 
@@ -370,13 +388,13 @@ function Entity:init(data)
 
     self.atkEffectAnimationFrames = self:createAnimationFrames(true, 'effect', 'skill1', 8)
 
-	self:setStandDirection(Direction.S)
+    self:setStandDirection(Direction.S)
 
     self:setStatus(Status.idle)
 
-	self:setAnchorPoint(cc.p(0.5, 0))
+    self:setAnchorPoint(cc.p(0.5, 0))
 
-	self:registerScriptHandler(onNodeEvent)
+    self:registerScriptHandler(onNodeEvent)
 
     local cb = function(dt)
         self:step(dt)

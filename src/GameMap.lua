@@ -1,5 +1,6 @@
 local pf = require("utils.pathfinding")
-
+local const = require("const")
+local helper = require("utils.helper")
 GameMap = class("GameMap")
 
 function GameMap:create(tilemapPath)
@@ -92,5 +93,22 @@ function GameMap:pathToArround(from, to, maxd)
         table.remove(path)
     end
     return path
+end
+
+function GameMap:searchTargetsInFan(x, y, dir, r, theta, enemys)
+    theta = theta / 2
+    local rSQ = r * r
+    local cosTheta = math.cos(theta)
+    local u = const.DirectionToVec[dir]
+    targets = {}
+    for _, target in pairs(enemys) do
+        if target.status ~= const.Status.die then
+            tx, ty = target:getPosition()
+            if helper.isPointInCircularSector(x, y, u[1], u[2], tx, ty, rSQ, cosTheta) then
+                table.insert(targets, target)
+            end
+        end
+    end
+    return targets
 end
 

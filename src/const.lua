@@ -20,4 +20,6 @@ const.Status = {idle=0, run=1, attack=2, hurt=3, die=4}
 
 const.ControlType = {Keyboard=0, Click=1}
 
+const.LifeState = {Alive=0, Protected=1, Die=3}
+
 return const

@@ -23,10 +23,10 @@ end
 function EntityData:create(eid, gameMap)
     local dict
     if eid == 1 then
-        dict = {name='bgj', speed=200, dir=Direction.S,
-                camp=1, atk=100, def=10, hp=2000, controlType=const.ControlType.Keyboard}
+        dict = {name='bgj', speed=200, dir=Direction.S, criRate=0.5, antiCriRate=0.5,
+                camp=0, atk=100, def=10, hp=2000, controlType=const.ControlType.Keyboard}
     else
-        dict = {name='bgj', speed=100, dir=Direction.S,
+        dict = {name='bgj', speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,
                 camp=1, atk=80, def=10, hp=200}
     end
 
@@ -116,6 +116,38 @@ function EntityData:setPosition(x, y)
     self.pos.x, self.pos.y = x, y
 end
 
+function EntityData:calHurt(target, skillData)
+    if skillData == nil then
+        skillData = {rate=1, additional=0}
+    end
+    local base = self.atk - target.def
+    local hurt = base * skillData.rate + skillData.additional
+
+    local criProb = self.criRate - target.antiCriRate
+    local isCritial = math.random() < criProb
+    if isCritial == true then
+        hurt = 2 * hurt
+    end
+
+    return hurt, isCritial
+end
+
+function EntityData:attack(enemys, skillId)
+    --TODO: 应该根据skillId来初始化
+    skillData = {theta=90, r=64, rate=1, additional=0}
+    local targets = self.gameMap:searchTargetsInFan(self.pos.x, self.pos.y, self.dir, skillData.r, skillData.theta, enemys)
+    for _, target in pairs(targets) do
+        if target._model.lifeState == const.LifeState.Alive then
+            local hurt, isCritial = self:calHurt(target._model, skillData)
+            target._model.hp = target._model.hp - hurt
+            if target._model.hp <= 0 then
+                target._model.lifeState = const.LifeState.Die
+            end
+            target:showHurt(hurt, isCritial)
+        end
+    end
+end
+
 function EntityData:init(dict, gameMap)
     self.name = dict.name
     self.speed = dict.speed
@@ -124,9 +156,13 @@ function EntityData:init(dict, gameMap)
     self.atk = dict.atk
     self.def = dict.def
     self.hp = dict.hp
+    self.criRate = dict.criRate
+    self.antiCriRate = dict.antiCriRate
+    self.maxhp = dict.hp
     self.texturePath = self.name .. '.plist'
     self.effectPath = 'effect.plist'
-    
+    self.lifeState = const.LifeState.Alive
+
     if dict.controlType == nil then
         self.controlType = const.ControlType.Click
     end

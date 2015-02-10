@@ -8,20 +8,20 @@ GameScene = class("GameScene",
 GameScene.__index = GameScene
 
 function GameScene:createGameLayer()
-	require "GameLayer"
-	local gameLayer = GameLayer:create()
-	return gameLayer
+    require "GameLayer"
+    local gameLayer = GameLayer:create()
+    return gameLayer
 end
 
 
 function GameScene:create()
-	local scene = GameScene.new()
-	scene:init()
+    local scene = GameScene.new()
+    scene:init()
 
-	return scene
+    return scene
 end
 
 function GameScene:init()
-	local gameLayer = self:createGameLayer()
-	self:addChild(gameLayer)
+    local gameLayer = self:createGameLayer()
+    self:addChild(gameLayer)
 end

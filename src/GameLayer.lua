@@ -31,20 +31,34 @@ function GameLayer:create()
 end
 
 function GameLayer:initEntity(objectGroup)
-    local playerPoint = objectGroup:getObject("bornPoint")
-    local xx = objectGroup:getObject("transfer")
-    local x, y = playerPoint.x , playerPoint.y
-    local entityData = EntityData:create(1, self.gameMap)
-    entityData.pos = cc.p(x+16, y)
-    local player = Entity:create(entityData)
-    self.player = player
-    self:addChild(player, 5)
-
     self.monsterEntity = {}
+    self.transfers = {}
+    self.player = nil
+
     local objects = objectGroup:getObjects()
     for _, object in pairs(objects) do
-        -- if object['name'] == 'monsterPoint' then
-        if object['type'] == '3' then
+        local otype = object['type']
+        if otype == '1' then
+            -- 初始化传送点
+            local x, y, w, h = object.x, object.y, object.width, object.height
+            print('transfer')
+        elseif otype == '2' then
+            local entityData = EntityData:create(1, self.gameMap)
+            entityData.pos = cc.p(object.x+16, object.y)
+            local player = Entity:create(entityData)
+            self.player = player
+            self:addChild(player, 5)
+        elseif otype == '3' then
+            -- 初始化NPC
+            local entityData = EntityData:create(2, self.gameMap)
+            entityData.pos = cc.p(object.x+16, object.y)
+            local monster = Entity:create(entityData)
+            self:addChild(monster, 1)
+            table.insert(self.monsterEntity, monster)
+        elseif otype == '4' then
+            -- 初始化道具
+        elseif otype == '5' then
+            -- 初始化monster
             local entityData = EntityData:create(2, self.gameMap)
             entityData.pos = cc.p(object.x+16, object.y)
             local monster = Entity:create(entityData)
@@ -61,16 +75,10 @@ function GameLayer:initEntity(objectGroup)
                 ['detectRange'] = 64,
                 ['catchRange'] = 64,
             }
-            local aiComp = AIComp:create(dict, false)
+            local aiComp = AIComp:create(dict, true)
             monster:setAIComp(aiComp)
-            monster.hp = 200
-        elseif object['type'] == '1' then
-            -- 初始化传送点
-            print('transfer')
         end
     end
-
-    self:setViewPointCenter(x, y)
 end
 
 function GameLayer:clearAll()
@@ -86,6 +94,7 @@ function GameLayer:clearAll()
 
     self.player = nil
     self.monsterEntity = {}
+    self.transfers = {}
     self.gameMap = nil
     self.pressSum = 0
 
@@ -239,10 +248,7 @@ function GameLayer:initKeyboardEvent()
         tryMoveOneStep()
 
         if keyCode == cc.KeyCode.KEY_I or keyCode == cc.KeyCode.KEY_CAPITAL_I then
-            local can_attack = self.player:tryAttack()
-            if can_attack == true then
-                self:attack(self.player)
-            end
+            self:OnAttackPressed()
         end
     end
 
@@ -268,19 +274,14 @@ function GameLayer:initKeyboardEvent()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
 end
 
-function GameLayer:attack(entity)
-    -- local r = 64
-    -- local theta = 90
-    -- local x, y = entity:getPosition()
-    -- local targets = self.gameMap:searchTargetsInFan(x, y, entity.dir, r, theta, self.monsterEntity)
-    -- local rmIdx = {}
-    -- for idx, monster in pairs(targets) do
-    --     monster:onHurt(entity.atk)
-    --     if monster.hp == nil or monster.hp <= 0 then
-    --         self.monsterEntity[idx] = nil
-    --     end
-    -- end
-    entity:attack(self.monsterEntity)
+function GameLayer:OnAttackPressed()
+    -- 1. 检查是否碰到传送阵
+    -- 2. 检查NPC是否在前面
+    -- 3. 攻击打怪
+    local can_attack = self.player:tryAttack()
+    if can_attack == true then
+        self.player:attack(self.monsterEntity)
+    end
 end
 
 function GameLayer:setViewPointCenter(x, y)

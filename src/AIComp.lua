@@ -46,7 +46,7 @@ function AIComp:step()
 	if self.status == AIStatus.idle then
 		self.target = self:findTarget()
 		if self.target ~= nil then
-			local path = self.gameMap:pathToArround(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
+			local path = self.gameMap:pathTo(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
 			entity:runPath(path)
 			self.status = AIStatus.running
 		end
@@ -73,7 +73,7 @@ function AIComp:step()
 		elseif disToBornPoint < self.catchRange then
 			-- 在追击范围，追杀
 			if entity.status ~= const.Status.run then
-				local path = self.gameMap:pathToArround(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
+				local path = self.gameMap:pathTo(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
 				entity:runPath(path)
 			end
 		elseif disToBornPoint >= self.catchRange then

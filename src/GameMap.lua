@@ -69,14 +69,14 @@ end
 function GameMap:convertToTiledSpace(x, y)
     -- print('origin', x, y)
     local tx = math.floor(x / self.tileSize.width)
-    local ty = math.floor((self.map_h - y) / self.tileSize.height)
+    local ty = self.mapSize.height - 1 - math.floor(y / self.tileSize.height)
     -- print('convert to', tx, ty)
     return tx, ty
 end
 
 function GameMap:reverseTiledSpace(x, y)
     x = (x + 0.5) * self.tileSize.width
-    y = self.map_h - (y+1) * self.tileSize.height
+    y = self.map_h - (y+0.5) * self.tileSize.height
     return x, y
 end
 
@@ -116,7 +116,7 @@ function GameMap:searchTargetsInFan(x, y, dir, r, theta, enemys)
     local u = const.DirectionToVec[dir]
     targets = {}
     for _, target in pairs(enemys) do
-        if target.status ~= const.Status.die then
+        if target:getLifeState() ~= const.LifeState.Die then
             tx, ty = target:getPosition()
             if helper.isPointInCircularSector(x, y, u[1], u[2], tx, ty, rSQ, cosTheta) then
                 table.insert(targets, target)

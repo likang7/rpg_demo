@@ -115,7 +115,7 @@ function AIComp:findTarget()
 	local pos = cc.p(self.entity:getPosition())
 	local targets = {}
 	for _, enemy in pairs(self.enemyEntity) do
-		if enemy.status ~= const.Status.die then
+		if enemy:getLifeState() ~= const.LifeState.Die then
 			ex, ey = enemy:getPosition()
 			local dis = cc.pGetDistance(cc.p(ex, ey), pos)
 			if dis < self.detectRange and enemy:getLifeState() ~= const.LifeState.Die then

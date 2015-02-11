@@ -88,7 +88,6 @@ function Entity:stopRuning()
         return
     end
     
-    self:stopActionByTag(self.runActionTag)
     self:stopActionByTag(self.runAnimateTag)
     self:setStandDirection(self.dir)
     self:setStatus(Status.idle)
@@ -166,7 +165,7 @@ function Entity:releaseCache()
 end
 
 function Entity:tryAttack()
-    if self.status == Status.attack or self.status == Status.die then
+    if self.status == Status.attack then
         return false
     end
 
@@ -200,6 +199,7 @@ end
 function Entity:setStatus(status)
     if status == Status.idle then
         if self.status == Status.run then
+            self:stopActionByTag(self.runAnimateTag)
             self:setStandDirection(self.dir)
         end
         if self:getActionByTag(self.idleActionTag) == nil and self.idleScheduleID == nil then
@@ -273,8 +273,6 @@ function Entity:showHurt(deltaHp, isCritial)
     -- 死亡
     if self:getLifeState() == const.LifeState.Die then
         local cb = function ()
-            -- self:removeFromParent(true)
-            self:setVisible(false)
             local scheduler = cc.Director:getInstance():getScheduler()
             if self.idleScheduleID ~= nil then
                 scheduler:unscheduleScriptEntry(self.idleScheduleID)
@@ -282,9 +280,12 @@ function Entity:showHurt(deltaHp, isCritial)
             if self.sechedulerAIID ~= nil then
                 scheduler:unscheduleScriptEntry(self.sechedulerAIID)
             end
+            self:setVisible(false)
+            self:setStatus(Status.die)
         end
         print('gua le')
-        self:setStatus(Status.die)
+        self:setStatus(Status.dying)
+        self:stopActionByTag(self.runAnimateTag)
         self:playAnimation(self.dyingAnimationFrames, cb, false, self.runAnimDelay)
     else
         local cb = function ()
@@ -351,11 +352,16 @@ function Entity:getLifeState()
     return self._model.lifeState
 end
 
+function Entity:getRangeId()
+    return self._model.rangeId
+end
+
 function Entity:init(data)
     self._model = data
     self.name = data.name
     self.dir = data.dir
     self.camp = camp
+    self:setScale(0.8)
 
     self.texturePlist = data.texturePath
     local pos = self._model.pos
@@ -392,15 +398,9 @@ function Entity:init(data)
 
     self:setStatus(Status.idle)
 
-    self:setAnchorPoint(cc.p(0.5, 0))
+    self:setAnchorPoint(cc.p(0.5, 0.25))
 
     self:registerScriptHandler(onNodeEvent)
-
-    -- local cb = function(dt)
-    --     self:step(dt)
-    -- end
-    -- local scheduler = cc.Director:getInstance():getScheduler()
-    -- self.sechedulerAIID = scheduler:scheduleScriptFunc(cb, 0, false)
 end
 
 return Entity

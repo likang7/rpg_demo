@@ -1,5 +1,7 @@
 const = {}
 
+const.TILESIZE = 32
+
 const.Direction = {S=0, WS=1, W=2, NW=3, N=4, NE=5, E=6, ES=7}
 
 local d = const.Direction
@@ -16,7 +18,7 @@ const.DirectionToVec = {  [d.S]={0, -1}, [d.WS]={-1, -1},
                     [d.N]={0, 1}, [d.NE]={1, 1}, 
                     [d.E]={1, 0}, [d.ES]={1, -1}}
 
-const.Status = {idle=0, run=1, attack=2, hurt=3, die=4}
+const.Status = {idle=0, run=1, attack=2, hurt=3, dying=4, die=5}
 
 const.ControlType = {Keyboard=0, Click=1}
 

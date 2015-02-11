@@ -3,6 +3,7 @@ require "Entity"
 require "model.EntityData"
 require "AIComp"
 require "Transfer"
+require "Item"
 
 local Direction = const.Direction
 local math = math
@@ -32,47 +33,59 @@ end
 function GameLayer:initEntity(objectGroup)
     self.monsterEntity = {}
     self.transfers = {}
+    self.items = {}
+    -- key:rangeId, value:boolean. 为true时可以捡取道具
+    self.rangeFlags = {}
+    self.npcs = {}
 
     self.player = nil
     --先初始化玩家
     local object = objectGroup:getObject("bornPoint")
     local entityData = EntityData:create(1, self.gameMap)
-    entityData.pos = cc.p(object.x+16, object.y)
+    entityData.pos = cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2)
     local player = Entity:create(entityData)
     self.player = player
     self:addChild(player, 5)
 
     local objects = objectGroup:getObjects()
     for _, object in pairs(objects) do
-        local otype = object['type']
-        if otype == '1' then
+        local otype = tonumber(object['type'])
+        if otype == 1 then
             -- 初始化传送点
             local x, y, w, h = object.x, object.y, object.width, object.height
             local dict = {rect = cc.rect(x, y, w, h), dir = object.direction}
             local transfer = Transfer:create(dict)
             table.insert(self.transfers, transfer) 
-        elseif otype == '3' then
+        elseif otype == 3 then
             -- 初始化NPC
             local entityData = EntityData:create(2, self.gameMap)
-            entityData.pos = cc.p(object.x+16, object.y)
-            local monster = Entity:create(entityData)
-            self:addChild(monster, 1)
-            -- table.insert(self.monsterEntity, monster)
-        elseif otype == '4' then
+            entityData.pos = cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2)
+            local npc = Entity:create(entityData)
+            self:addChild(npc, 2)
+            table.insert(self.npcs, npc)
+        elseif otype == 4 then
             -- 初始化道具
-        elseif otype == '5' then
+            local fakeDict = {itemId=tonumber(object.name), rangeId=tonumber(object.rangeID),icon="block.jpg",x=object.x, y=object.y}
+            local item = Item:create(fakeDict)
+            self:addChild(item, 1)
+            table.insert(self.items, item)
+        elseif otype == 5 then
             -- 初始化monster
             local entityData = EntityData:create(2, self.gameMap)
-            entityData.pos = cc.p(object.x+16, object.y)
+            entityData.pos = cc.p(object.x+object.width/2, object.y+object.height/2)
+            entityData.rangeId = tonumber(object.rangeID)
+            if entityData.rangeId ~= nil then
+                self.rangeFlags[object.rangeID] = false
+            end
             local monster = Entity:create(entityData)
-            self:addChild(monster, 1)
+            self:addChild(monster, 3)
             table.insert(self.monsterEntity, monster)
 
             --ai
             local dict = {
                 ['entity'] = monster,
                 ['gameMap'] = self.gameMap,
-                ['bornPoint'] = cc.p(object.x+16, object.y),
+                ['bornPoint'] = cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2),
                 ['enemyEntity'] = {self.player},
                 ['atkRange'] = 64,
                 ['detectRange'] = 64,
@@ -144,14 +157,13 @@ function GameLayer:init(dict)
 
     local last_dir = Direction.S
     local function tick(dt)
-        if self.player ~= nil and self.player.status ~= const.Status.die then
+        -- 更新玩家
+        if self.player ~= nil and self.player:getLifeState() ~= const.LifeState.Die then
             self.player:step(dt)
             local px, py = self.player:getPosition()
             -- self:setViewPointCenter(px, py)   
             if self.gameMap.skyLayer ~= nil then
                 local gid = self.gameMap.skyLayer:getTileGIDAt(cc.p(self.gameMap:convertToTiledSpace(px, py)))
-                local tx, ty = self.gameMap:convertToTiledSpace(px, py)
-                -- print('tile', tx, ty)
                 if gid ~= 0 then
                     self.player:setOpacity(200)
                 else
@@ -159,8 +171,18 @@ function GameLayer:init(dict)
                 end 
             end
         end
-        for _, monster in pairs(self.monsterEntity) do
-            monster:step(dt)
+        -- 更新monster
+        for k, monster in pairs(self.monsterEntity) do
+            if monster.status == const.Status.die then
+                local rangeId = monster:getRangeId()
+                if rangeId ~= nil then
+                    self.rangeFlags[rangeId] = true
+                end
+                self.monsterEntity[k] = nil
+                self:removeChild(monster, true)
+            else
+                monster:step(dt)
+            end
         end
     end
 
@@ -312,10 +334,13 @@ function GameLayer:initKeyboardEvent()
 end
 
 function GameLayer:OnAttackPressed()
+    if self.player:getLifeState() == const.LifeState.Die then
+        return
+    end
+
     -- 1. 检查是否碰到传送阵
-    local pRect = self.player:getTextureRect()
     local px, py = self.player:getPosition()
-    pRect.x, pRect.y = px, py
+    local pRect = cc.rect(px, py, 1, 1)
     for _, transfer in ipairs(self.transfers) do
         local tRect = transfer.rect
         if cc.rectIntersectsRect(pRect, tRect) then
@@ -330,7 +355,21 @@ function GameLayer:OnAttackPressed()
         end
     end
     -- 2. 检查NPC是否在前面
-    -- 3. 攻击打怪
+    -- 3. 检查是否有道具 TODO: 可以优化，检查下脚下坐标里的是不是道具就可以了
+    for k, item in pairs(self.items) do
+        local rangeId = item.rangeId
+        if rangeId == nil or self.rangeFlags[rangeId] == true then
+            local tRect = item:getTextureRect()
+            tRect.x, tRect.y = item:getPosition()
+            if cc.rectIntersectsRect(pRect, tRect) then
+                item:onObtain(self.player)
+                self.items[k] = nil
+                self:removeChild(item, true)  
+                return
+            end
+        end
+    end
+    -- 4. 攻击打怪
     local can_attack = self.player:tryAttack()
     if can_attack == true then
         self.player:attack(self.monsterEntity)

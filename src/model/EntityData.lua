@@ -163,6 +163,8 @@ function EntityData:init(dict, gameMap)
     self.effectPath = 'effect.plist'
     self.lifeState = const.LifeState.Alive
 
+    self.rangeId = dict.rangeId
+
     if dict.controlType == nil then
         self.controlType = const.ControlType.Click
     end

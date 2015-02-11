@@ -25,7 +25,7 @@ function AIComp:init(dict, enabled)
 	self.gameMap = dict.gameMap
 	self.bornPoint = dict.bornPoint
 	self.enemyEntity = dict.enemyEntity
-	self.atkRange = dict.atkRange
+	self.atkRange = dict.entity:getAtkRange()
 	self.detectRange = dict.detectRange
 	self.catchRange = dict.catchRange
 	self.enabled = enabled
@@ -39,7 +39,7 @@ function AIComp:step()
 		return
 	end
 	self.i = self.i + 1
-	if self.i % 20 ~= 0 then
+	if self.i % 6 ~= 0 then
 		return
 	end
 	local entity = self.entity
@@ -118,7 +118,7 @@ function AIComp:findTarget()
 		if enemy:getLifeState() ~= const.LifeState.Die then
 			ex, ey = enemy:getPosition()
 			local dis = cc.pGetDistance(cc.p(ex, ey), pos)
-			if dis < self.detectRange and enemy:getLifeState() ~= const.LifeState.Die then
+			if dis < math.max(self.atkRange, self.detectRange) and enemy:getLifeState() ~= const.LifeState.Die then
 				table.insert(targets, {["target"]=enemy, ["dis"]=dis})
 			end
 		end

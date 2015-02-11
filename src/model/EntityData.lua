@@ -24,10 +24,11 @@ function EntityData:create(eid, gameMap)
     local dict
     if eid == 1 then
         dict = {name='bgj', speed=200, dir=Direction.S, criRate=0.5, antiCriRate=0.5,
-                camp=0, atk=100, def=10, hp=2000, controlType=const.ControlType.Keyboard}
+                camp=0, atk=100, def=10, hp=2000, controlType=const.ControlType.Keyboard,
+                atkRange=40}
     else
         dict = {name='bgj', speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,
-                camp=1, atk=80, def=10, hp=200}
+                camp=1, atk=80, def=10, hp=200, atkRange=40}
     end
 
     return self:createWithDict(dict, gameMap)
@@ -134,7 +135,7 @@ end
 
 function EntityData:attack(enemys, skillId)
     --TODO: 应该根据skillId来初始化
-    skillData = {theta=90, r=64, rate=1, additional=0}
+    skillData = {theta=90, r=self.atkRange, rate=1, additional=0}
     local targets = self.gameMap:searchTargetsInFan(self.pos.x, self.pos.y, self.dir, skillData.r, skillData.theta, enemys)
     for _, target in pairs(targets) do
         if target._model.lifeState == const.LifeState.Alive then
@@ -159,6 +160,7 @@ function EntityData:init(dict, gameMap)
     self.criRate = dict.criRate
     self.antiCriRate = dict.antiCriRate
     self.maxhp = dict.hp
+    self.atkRange = dict.atkRange
     self.texturePath = self.name .. '.plist'
     self.effectPath = 'effect.plist'
     self.lifeState = const.LifeState.Alive

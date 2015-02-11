@@ -90,7 +90,7 @@ function Entity:stopRuning()
     
     self:stopActionByTag(self.runAnimateTag)
     self:setStandDirection(self.dir)
-    self:setStatus(Status.idle)
+    -- self:setStatus(Status.idle)
 end
 
 function Entity:_run(path, idx, cb_end, dir)
@@ -146,6 +146,9 @@ function Entity:_run(path, idx, cb_end, dir)
 end
 
 function Entity:runPath(path, cb_end, dir)
+    if self.status ~= Status.idle and self.status ~= Status.run then
+        return
+    end
     self._model:setPath(path)
 end
 
@@ -165,11 +168,11 @@ function Entity:releaseCache()
 end
 
 function Entity:tryAttack()
-    if self.status == Status.attack then
+    if self.status == Status.attack or self.status == Status.hurt then
         return false
     end
 
-    self:stopRuning()
+    self:stopActionByTag(self.runAnimateTag)
     self._model.runFlag = false
     self:setStatus(Status.attack)
     local cb = function ()
@@ -177,7 +180,7 @@ function Entity:tryAttack()
         self:setStatus(Status.idle)
     end
 
-    self:playAnimation(self.attackAnimationFrames, cb, false, self.runAnimDelay * 0.5)
+    self:playAnimation(self.attackAnimationFrames, cb, false, self.runAnimDelay * 0.8)
 
     --技能特效
     local rect = self:getTextureRect()
@@ -185,9 +188,9 @@ function Entity:tryAttack()
     local cb = function ()
         effect:removeFromParent(true)
     end
-    self:playAnimation(self.atkEffectAnimationFrames, cb, true, self.runAnimDelay * 0.5, effect)
+    self:playAnimation(self.atkEffectAnimationFrames, cb, true, self.runAnimDelay * 0.8, effect)
     local v = DirectionToVec[self.dir]
-    local r = 32
+    local r = const.TILESIZE * 0.8
     local dx, dy = v[1] * r, v[2] * r -- * INVSQRT2
     local moveBy = cc.MoveBy:create(0.3, cc.p(dx, dy))
     effect:runAction(moveBy)
@@ -236,15 +239,19 @@ function Entity:showHurt(deltaHp, isCritial)
     self:setStatus(Status.hurt)
     
     -- 飘血
-    local fontSize = 22
+    local fontSize = 24
     if isCritial == true then
-        fontSize = 26
+        fontSize = 28
     end
-    local bloodLabel = cc.Label:createWithSystemFont(tostring(deltaHp), "fonts/Marker Felt.ttf", fontSize)
+    local bloodLabel = cc.Label:createWithSystemFont(tostring(-deltaHp), "fonts/Marker Felt.ttf", fontSize)
     self:getParent():addChild(bloodLabel, 10)
     local rect = self:getTextureRect()
-    bloodLabel:setPosition(self:getPositionX(), self:getPositionY() + rect.height)
-    bloodLabel:setColor(cc.c3b(255, 0, 0))
+    bloodLabel:setPosition(self:getPositionX(), self:getPositionY() + rect.height - const.TILESIZE/2)
+    if self:getCamp() == 0 then
+        bloodLabel:setColor(cc.c3b(0,0,255))
+    else
+        bloodLabel:setColor(cc.c3b(255, 0, 0))
+    end
     local moveup = cc.MoveBy:create(0.8, cc.p(0, 100))
     local callFunc = cc.CallFunc:create(function ()
         bloodLabel:removeFromParent(true)
@@ -356,11 +363,18 @@ function Entity:getRangeId()
     return self._model.rangeId
 end
 
+function Entity:getCamp()
+    return self._model.camp
+end
+
+function Entity:getAtkRange()
+    return self._model.atkRange
+end
+
 function Entity:init(data)
     self._model = data
     self.name = data.name
     self.dir = data.dir
-    self.camp = camp
     self:setScale(0.8)
 
     self.texturePlist = data.texturePath

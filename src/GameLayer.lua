@@ -85,11 +85,10 @@ function GameLayer:initEntity(objectGroup)
             local dict = {
                 ['entity'] = monster,
                 ['gameMap'] = self.gameMap,
-                ['bornPoint'] = cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2),
+                ['bornPoint'] = cc.p(object.x+object.width/2, object.y+object.height/2),
                 ['enemyEntity'] = {self.player},
-                ['atkRange'] = 64,
-                ['detectRange'] = 64,
-                ['catchRange'] = 64,
+                ['detectRange'] = object.width/2,
+                ['catchRange'] = object.width/2,
             }
             local aiComp = AIComp:create(dict, true)
             monster:setAIComp(aiComp)

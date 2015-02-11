@@ -176,8 +176,10 @@ function Entity:tryAttack()
     self._model.runFlag = false
     self:setStatus(Status.attack)
     local cb = function ()
-        self:setStandDirection(self.dir)
-        self:setStatus(Status.idle)
+        if self.status == Status.attack then
+            self:setStandDirection(self.dir)
+            self:setStatus(Status.idle)
+        end
     end
 
     self:playAnimation(self.attackAnimationFrames, cb, false, self.runAnimDelay * 0.8)

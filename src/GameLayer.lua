@@ -38,14 +38,14 @@ function GameLayer:initEntity(objectGroup)
     self.rangeFlags = {}
     self.npcs = {}
 
-    self.player = nil
+    self.playerEntity = nil
     --先初始化玩家
     local object = objectGroup:getObject("bornPoint")
     local entityData = EntityData:create(1, self.gameMap)
     entityData.pos = cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2)
-    local player = Entity:create(entityData)
-    self.player = player
-    self:addChild(player, 5)
+    local playerEntity = Entity:create(entityData)
+    self.playerEntity = playerEntity
+    self:addChild(playerEntity, 5)
 
     local objects = objectGroup:getObjects()
     for _, object in pairs(objects) do
@@ -86,7 +86,7 @@ function GameLayer:initEntity(objectGroup)
                 ['entity'] = monster,
                 ['gameMap'] = self.gameMap,
                 ['bornPoint'] = cc.p(object.x+object.width/2, object.y+object.height/2),
-                ['enemyEntity'] = {self.player},
+                ['enemyEntity'] = {self.playerEntity},
                 ['detectRange'] = object.width/2,
                 ['catchRange'] = object.width/2,
             }
@@ -108,7 +108,7 @@ function GameLayer:clearAll()
         self.schedulerTickID = nil
     end
 
-    self.player = nil
+    self.playerEntity = nil
     self.monsterEntity = {}
     self.transfers = {}
     self.gameMap = nil
@@ -157,16 +157,16 @@ function GameLayer:init(dict)
     local last_dir = Direction.S
     local function tick(dt)
         -- 更新玩家
-        if self.player ~= nil and self.player:getLifeState() ~= const.LifeState.Die then
-            self.player:step(dt)
-            local px, py = self.player:getPosition()
+        if self.playerEntity ~= nil and self.playerEntity:getLifeState() ~= const.LifeState.Die then
+            self.playerEntity:step(dt)
+            local px, py = self.playerEntity:getPosition()
             -- self:setViewPointCenter(px, py)   
             if self.gameMap.skyLayer ~= nil then
                 local gid = self.gameMap.skyLayer:getTileGIDAt(cc.p(self.gameMap:convertToTiledSpace(px, py)))
                 if gid ~= 0 then
-                    self.player:setOpacity(200)
+                    self.playerEntity:setOpacity(200)
                 else
-                    self.player:setOpacity(255)
+                    self.playerEntity:setOpacity(255)
                 end 
             end
         end
@@ -233,11 +233,11 @@ function GameLayer:initTouchEvent()
 
         local tox, toy = self.gameMap:clampEntityPos(location.x, location.y)
 
-        local px, py = self.player:getPosition()
+        local px, py = self.playerEntity:getPosition()
 
         local path = self.gameMap:pathTo(cc.p(px, py), cc.p(tox, toy))
         
-        self.player:runPath(path)
+        self.playerEntity:runPath(path)
     end
 
     local listener = cc.EventListenerTouchOneByOne:create()
@@ -275,7 +275,7 @@ function GameLayer:initKeyboardEvent()
     local function tryMoveOneStep()
         local dir = getDirection(self.pressSum)
         local d = const.DirectionToVec
-        self.player:runOneStep(dir)
+        self.playerEntity:runOneStep(dir)
         if dir ~= nil and d[dir] ~= nil then
             if self.tryMoveOneStepID == nil then
                 local scheduler = cc.Director:getInstance():getScheduler()
@@ -333,12 +333,12 @@ function GameLayer:initKeyboardEvent()
 end
 
 function GameLayer:OnAttackPressed()
-    if self.player:getLifeState() == const.LifeState.Die then
+    if self.playerEntity:getLifeState() == const.LifeState.Die then
         return
     end
 
     -- 1. 检查是否碰到传送阵
-    local px, py = self.player:getPosition()
+    local px, py = self.playerEntity:getPosition()
     local pRect = cc.rect(px, py, 1, 1)
     for _, transfer in ipairs(self.transfers) do
         local tRect = transfer.rect
@@ -357,11 +357,11 @@ function GameLayer:OnAttackPressed()
     -- 3. 检查是否有道具 TODO: 可以优化，检查下脚下坐标里的是不是道具就可以了
     for k, item in pairs(self.items) do
         local rangeId = item.rangeId
-        if rangeId == nil or self.rangeFlags[rangeId] == true then
+        if item.isObtained == false and (rangeId == nil or self.rangeFlags[rangeId] == true) then
             local tRect = item:getTextureRect()
             tRect.x, tRect.y = item:getPosition()
             if cc.rectIntersectsRect(pRect, tRect) then
-                item:onObtain(self.player)
+                item:onObtain(self.playerEntity)
                 self.items[k] = nil
                 self:removeChild(item, true)  
                 return
@@ -369,9 +369,9 @@ function GameLayer:OnAttackPressed()
         end
     end
     -- 4. 攻击打怪
-    local can_attack = self.player:tryAttack()
+    local can_attack = self.playerEntity:tryAttack()
     if can_attack == true then
-        self.player:attack(self.monsterEntity)
+        self.playerEntity:attack(self.monsterEntity)
     end
 end
 

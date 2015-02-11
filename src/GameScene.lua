@@ -1,3 +1,5 @@
+require "GameLayer"
+require "Player"
 
 GameScene = class("GameScene",
     function()
@@ -8,7 +10,7 @@ GameScene = class("GameScene",
 GameScene.__index = GameScene
 
 function GameScene:createGameLayer()
-    require "GameLayer"
+    
     local dict = {stageId = 1}
     local gameLayer = GameLayer:create(dict)
     return gameLayer
@@ -23,6 +25,8 @@ function GameScene:create()
 end
 
 function GameScene:init()
+    local player = Player:create()
+
     local origin = cc.Director:getInstance():getVisibleOrigin()
     local gameLayer = self:createGameLayer()
     gameLayer:setPosition(origin.x, origin.y)

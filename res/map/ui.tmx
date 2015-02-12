@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="8" height="24" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" source="提取整合古代素材.tsx"/>
+ <layer name="块层 1" width="8" height="24">
+  <data encoding="base64" compression="zlib">
+   eJyrYWVgqMWC64C4HohbgDgXB24flR+VH+TyPUDci4b7oLgfiAHYtFs8
+  </data>
+ </layer>
+</map>

@@ -1,4 +1,5 @@
 local const = require("const")
+local helper = require("utils.helper")
 
 Item = class("Item",
 	function ()
@@ -14,24 +15,32 @@ function Item:create(dict)
 	return item
 end
 
-function Item:onObtain(target)
+function Item:onObtain()
 	-- body
 	self:setVisible(false)
 	self.isObtained = true
 end
 
+function Item:getItemInfo()
+	return self.data
+end
+
 function Item:init(dict)
 	self.itemId = dict.itemId
 	self.rangeId = dict.rangeId
+
+	local data = helper.getItemInfoByItemId(self.itemId)
+	self.data = data
+
 	self.isObtained = false
 
 	-- 初始化图标
-	self.icon = dict.icon
+	self.icon = data.icon
 	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-	local frame = spriteFrameCache:getSpriteFrame(self.icon)
+	local frame = spriteFrameCache:getSpriteFrame(data.icon)
 	if frame == nil then
-		frame = cc.SpriteFrame:create(self.icon, cc.rect(0, 0, const.TILESIZE, const.TILESIZE))
-		spriteFrameCache:addSpriteFrame(frame, self.icon)
+		frame = cc.SpriteFrame:create(data.icon, cc.rect(0, 0, const.TILESIZE, const.TILESIZE))
+		spriteFrameCache:addSpriteFrame(frame, data.icon)
 	end
 	self:setSpriteFrame(frame)
 

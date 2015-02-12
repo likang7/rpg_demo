@@ -245,7 +245,7 @@ function Entity:showHurt(deltaHp, isCritial)
     if isCritial == true then
         fontSize = 28
     end
-    local bloodLabel = cc.Label:createWithSystemFont(tostring(-deltaHp), "fonts/Marker Felt.ttf", fontSize)
+    local bloodLabel = cc.Label:createWithSystemFont(tostring(-deltaHp), const.DEFAULT_FONT, fontSize)
     self:getParent():addChild(bloodLabel, 10)
     local rect = self:getTextureRect()
     bloodLabel:setPosition(self:getPositionX(), self:getPositionY() + rect.height - const.TILESIZE/2)
@@ -349,6 +349,26 @@ end
 function Entity:updateDir(dir)
     self.dir = dir
     self._model.dir = dir
+end
+
+function Entity:obtainItem(item)
+    local info = item:getItemInfo()
+    self._model:onObtainItem(info)
+    item:onObtain()
+    -- 显示
+    local msg = helper.getRewardInfoByItemInfo(info)
+    local bloodLabel = cc.Label:createWithSystemFont(msg, const.DEFAULT_FONT, 24)
+    self:getParent():addChild(bloodLabel, 10)
+    local rect = self:getTextureRect()
+    bloodLabel:setPosition(self:getPositionX(), self:getPositionY() + rect.height - const.TILESIZE/2)
+    bloodLabel:setColor(cc.c3b(0, 255, 0))
+
+    local moveup = cc.MoveBy:create(0.8, cc.p(0, 100))
+    local callFunc = cc.CallFunc:create(function ()
+        bloodLabel:removeFromParent(true)
+    end)
+    local seq = cc.Sequence:create(moveup, callFunc)
+    bloodLabel:runAction(seq)
 end
 
 -- skillId 暂时用不上

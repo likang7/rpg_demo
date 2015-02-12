@@ -65,7 +65,7 @@ function GameLayer:initEntity(objectGroup)
             table.insert(self.npcs, npc)
         elseif otype == 4 then
             -- 初始化道具
-            local fakeDict = {itemId=tonumber(object.name), rangeId=tonumber(object.rangeID),icon="block.jpg",x=object.x, y=object.y}
+            local fakeDict = {itemId=tonumber(object.name), rangeId=tonumber(object.rangeID), x=object.x, y=object.y}
             local item = Item:create(fakeDict)
             self:addChild(item, 1)
             table.insert(self.items, item)
@@ -361,7 +361,7 @@ function GameLayer:OnAttackPressed()
             local tRect = item:getTextureRect()
             tRect.x, tRect.y = item:getPosition()
             if cc.rectIntersectsRect(pRect, tRect) then
-                item:onObtain(self.playerEntity)
+                self.playerEntity:obtainItem(item)
                 self.items[k] = nil
                 self:removeChild(item, true)  
                 return

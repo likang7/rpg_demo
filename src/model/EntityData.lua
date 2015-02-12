@@ -149,6 +149,23 @@ function EntityData:attack(enemys, skillId)
     end
 end
 
+function EntityData:onObtainItem(itemInfo)
+    if itemInfo.attack ~= nil then
+        self.atk = self.atk + itemInfo.attack
+    elseif itemInfo.defense ~= nil then
+        self.def = self.def + itemInfo.defense
+    elseif itemInfo.hp ~= nil then
+        self.hp = self.hp + itemInfo.hp
+    elseif itemInfo.critical ~= nil then
+        self.criRate = self.criRate + itemInfo.critical / 100.0
+    elseif itemInfo.block ~= nil then
+        self.antiCriRate = self.antiCriRate + itemInfo.block / 100.0
+    elseif itemInfo.coin ~= nil then
+        print('coin should not be controled by me')
+    end
+    return s
+end
+
 function EntityData:init(dict, gameMap)
     self.name = dict.name
     self.speed = dict.speed

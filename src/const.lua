@@ -24,4 +24,6 @@ const.ControlType = {Keyboard=0, Click=1}
 
 const.LifeState = {Alive=0, Protected=1, Die=3}
 
+const.DEFAULT_FONT = "fonts/Marker Felt.ttf"
+
 return const

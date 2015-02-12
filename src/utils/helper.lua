@@ -71,7 +71,32 @@ local function getDirection(p1, p2)
     return getDirectionByDegree(deg)
 end
 
+local function getItemInfoByItemId(itemId)
+    local data = require("data.itemData")
+    return data[itemId]
+end
+
+local function getRewardInfoByItemInfo(itemInfo)
+    s = ""
+    if itemInfo.attack ~= nil then
+        s = "攻击力+" .. itemInfo.attack
+    elseif itemInfo.defense ~= nil then
+        s = "防御力+" .. itemInfo.defense
+    elseif itemInfo.hp ~= nil then
+        s = "HP+" .. itemInfo.hp
+    elseif itemInfo.critical ~= nil then
+        s = "暴击率+" .. itemInfo.critical .. "%"
+    elseif itemInfo.block ~= nil then
+        s = "防暴击率+" .. itemInfo.block .. "%"
+    elseif itemInfo.coin ~= nil then
+        s = "金币+" .. itemInfo.coin
+    end
+    return s
+end
+
 return {
 	isPointInCircularSector = isPointInCircularSector,
 	getDirection = getDirection,
+    getItemInfoByItemId = getItemInfoByItemId,
+    getRewardInfoByItemInfo = getRewardInfoByItemInfo,
 }

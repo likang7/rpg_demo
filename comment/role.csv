@@ -1,9 +1,0 @@
-角色ID,角色名,头像,站立动画,跑步动画,受击动画,死亡动画,技能1动画,技能2动画,技能3动画,声音列表,攻,防,血,暴击,防爆,移动速度,技能ID列表
-roleID,name,headIcon,stand,run,hit,die,skill1,skill2,skill3,soundList,attack,defense,hp,critical,parry,moveSpeed,skillIDList
-1001,白骨精,,bgj-stand,bgj-run,bgj-hit,bgj-die,bgj-skill1,,,,100,50,500,30,10,2,
-,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,

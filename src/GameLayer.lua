@@ -59,10 +59,12 @@ function GameLayer:initEntity(objectGroup)
         elseif otype == 3 then
             -- 初始化NPC
             local entityData = EntityData:create(2, self.gameMap)
-            entityData.pos = cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2)
+            local px, py = object.x+const.TILESIZE/2, object.y+const.TILESIZE/2
+            entityData.pos = cc.p(px, py)
             local npc = Entity:create(entityData)
             self:addChild(npc, 2)
             table.insert(self.npcs, npc)
+            self.gameMap:addBlock(px, py, const.BLOCK_TYPE.NPC)
         elseif otype == 4 then
             -- 初始化道具
             local fakeDict = {itemId=tonumber(object.name), rangeId=tonumber(object.rangeID), x=object.x, y=object.y}

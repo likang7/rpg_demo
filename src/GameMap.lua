@@ -38,7 +38,7 @@ function GameMap:init(tilemapPath)
             for y = 0, self.mapSize.height - 1 do
                 local gid = blockLayer:getTileGIDAt(cc.p(x, y))
                 if gid ~= 0 then
-                    self.map[x][y] = gid
+                    self.map[x][y] = const.BLOCK_TYPE.BLOCK
                 end
             end
         end
@@ -87,6 +87,11 @@ function GameMap:clampEntityPos(x, y)
         self.map_h - self.tileSize.height / 2)
 
     return px, py
+end
+
+function GameMap:addBlock(px, py, type)
+    tx, ty = self:convertToTiledSpace(px, py)
+    self.map[tx][ty] = type
 end
 
 -- A star

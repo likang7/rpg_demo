@@ -26,4 +26,6 @@ const.LifeState = {Alive=0, Protected=1, Die=3}
 
 const.DEFAULT_FONT = "fonts/Marker Felt.ttf"
 
+const.BLOCK_TYPE = {BLOCK=1, NPC=2}
+
 return const

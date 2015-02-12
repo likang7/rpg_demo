@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" nextobjectid="4">
+ <tileset firstgid="1" source="提取整合古代素材.tsx"/>
+ <layer name="floor" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJydllFuwzAMQ4tgu9T+1n5tu81uIMu+9xzAAl5ZekD7IaRNFJGSKDlxXC5jWUxr03JaX5brWcJnwHLd6+vdhhj1PE2cRIwGvMD/NPcKvwOnOBQP5tIMPmM3cGh4l9gJn5S45BpyPyWuwx+4NuB9vD9n7Fsc97mwtsqNObBvz+KrNprBHJsra1dcX8En/zAYrAPrxPzL/4z5Cfua9r3sZ9oNdvpSY+y1aqAbo0YT+JxBzZeaK3zVotY9Nth6b0jM2OB3POO7Oo96vx2Pc04dFP5AHNdv1qreY685D6735cM8WW/2xuVf/axaFVfq32k8jsd+DMR7Zf4dFmukO9Ptiw5ep+avy6h9zsAVRo1rf1lz3f/E5C7UPf/7dm88s7h3ubtVC9ztOy66I+u/4mu9UvxZ94DtZp9aJN/i9B++9phxnC7YE+VPf/ZD8al31RNz0zOIO0fPdN2R7JniB55xlobwYT1V53r+Km/uc1f/naZYU85XGF+eU/RlL3b5c+drnTk7/K35615kXvRx+ZOr2/k6F7ojyJkceSZU/B0+8+J3lmqfz8Jgay+HmNs/7puxGT7sk2qOu0q1QV/F55nBmjF/nmcO+7z+Afv+c2U=
+  </data>
+ </layer>
+ <layer name="block-1" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztlLFOAkEQhgflCrUC3oCSN1BoFBuUBjgKFV+Q0tLKWNoZExNDQmKsDBW5Cmj4NyzJZJ3NDZkQCu9LvmyyszNzye4cEdF5megCNmELOt6xjpV++BypjoZLnL2CbXgNP0tEX1iflE58TlhHSwdnb+At7MIpan1jfVb643PCOlp6ONuHA5j6vF+sr4FDopcUhvuzcrxOHtu7uocPcOTz5ljfAtHbfcOf/czn3LE62rcQu6u5sDeCj0KNTDirfQuxu5L6x5D6a99C7K6s/bVvgd85Z4G9JTOEx1ZCnL8FqX4epYToiBnCY8dC3MoJap4yHfVko4PHzvbQv4KaVaajkWx08FjN0H/Xf7UW6/xbsc6/Fev8W7HOvxXr/P8Xivkr5u+Q87cGIf1o7g==
+  </data>
+ </layer>
+ <layer name="block-2" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJxjYBj8YCULA8MqNLyahX72bwTatQkNb6ay/ZZA86yA2BqIbaBm67BC6J1A/i4glgTypVkh7N1oarDpJwU4AvU4AbEzELtA9ZtAzT4I5B8CYkUgX5kVwj6MpgabflKAJ1CPFxB7A7EPmv6TQP4pINYE2qXNCmGfZiFePzEgEKgnCIiDgThkAPRHAvVEAXE0EMcMgP5RMAqwgauM5MlRC9zFYwc+OVIApWUnpeZQWnZSag6lZSel5lBadlJqDrXKztEyeBQMNQAAVUwvTw==
+  </data>
+ </layer>
+ <layer name="block-3" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztkzsOgkAARBeyF9FOPYGfBqHh0/Bp+DTGylgZz4CnsrT3JJb2DgET3OwCG1a0YJIXiRlnMLNLyKhR7cprz5fq8zpQ90QjZKp9fvcAN3AfoH+G7jlY1N7hqSh7SQlZgTXY0OHzDHi2wASWgn7ZPBseB7jAU9Avm+fDE4AQRMDQ8f7ABJZeenLO74o7UHhZP5vXphieBKQgAzYyHOACT+/wfxk/mycrHxkBCEFU9e84OXsq9vdRjIwEpCCr8g6c/iMtvTx/X7Gbivp5Z0WF2E1F/bJnpavYTUX9qrd/i920af9vb19I1C/y9xFv06Z+1WeAt2lT/y/vv8jfV/92/0+c/rOi+/8CMAVA+A==
+  </data>
+ </layer>
+ <objectgroup name="object">
+  <object id="1" name="transfer" type="1" x="320" y="736" width="128" height="32">
+   <properties>
+    <property name="direction" value="0"/>
+   </properties>
+  </object>
+  <object id="2" name="bornPoint" type="2" x="384" y="192" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="3" name="2000" type="3" x="416" y="384" width="32" height="32">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <layer name="sky" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjAL84BcLKqY3kGRlYJCCYmlW+tuviGSn8gDYr4lkp/YA2D8KRsEoGAWjYHgBAAktBSE=
+  </data>
+ </layer>
+</map>

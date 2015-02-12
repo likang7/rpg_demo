@@ -1,0 +1,408 @@
+Quick-Cocos2d-x C++ support ready.
+
+Get data from file(C:\cocos\quick-3.3\quick\lib\framework_precompiled\framework_precompiled.zip) failed, error code is 3
+
+lua_loadChunksFromZIP() - not found or invalid zip file: C:\cocos\quick-3.3\quick\lib\framework_precompiled\framework_precompiled.zip
+
+------------------------------------------------
+
+LOAD LUA FILE: C:/Users/Administrator/Documents/gameCouple-p1/rpg_demo/src/main.lua
+
+------------------------------------------------
+
+[LUA-print] result is 0
+
+cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [269] to [360].
+
+cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [360] to [481].
+
+cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [481] to [642].
+
+cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [642] to [857].
+
+[LUA-print] Key with keycode 139 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [269] to [360].
+
+cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [360] to [481].
+
+cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [481] to [642].
+
+cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [642] to [857].
+
+[LUA-print] xxx
+
+[LUA-print] Key with keycode 139 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] gua le
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] Key with keycode 139 pressed
+
+[LUA-print] Key with keycode 121 pressed
+
+[LUA-print] Key with keycode 143 pressed
+
+[LUA-print] Key with keycode 139 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] coin should not be controled by me
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 139 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 121 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 121 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 143 pressed
+
+[LUA-print] Key with keycode 143 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 121 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 139 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] gua le
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] gua le
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 143 pressed
+
+[LUA-print] Key with keycode 139 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 143 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 143 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 139 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] gua le
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 121 pressed
+
+[LUA-print] Key with keycode 143 pressed
+
+[LUA-print] Key with keycode 139 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 143 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 121 pressed
+
+[LUA-print] Key with keycode 139 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 143 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 121 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 121 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] gua le
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 139 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 121 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 121 pressed
+
+[LUA-print] Key with keycode 139 pressed
+
+[LUA-print] Key with keycode 121 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] gua le
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 129 pressed
+
+[LUA-print] Key with keycode 139 pressed
+
+[LUA-print] Key with keycode 124 pressed
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+
+[LUA-print] xxxxxxxxxxxxxxxxxxxxxx
+

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" nextobjectid="111">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" nextobjectid="112">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
   <image source="tileset.png" width="1024" height="2048"/>
  </tileset>
- <layer name="floor-1" width="32" height="24" visible="0">
+ <layer name="floor-1" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJx9lluOwyAQBC2k/OYeDHD/621WG7SVcpMPZBvmTU+Pn4/rqnZd87VW+3sfr9Xfq97PfT4g1/E9sPp7r+t9n0/oPR//ZzuOCfunmCae9rkUY4eNwnmH/sS+z5l30mOcEz4sU9BnThVkZrvnuX3we+e0Y2IeQ+cppv0c0mftWPvZ7vc82r0W9FOSLdlg/RmPY+Ba0qvga0qOWGG9/V6SWe0z34QZYqBwTlw7/tU+75rfrrvvkn4Y1wlrE/LGh/NizzE215t18T2y35ib7RCHxib1k2/HZnuj3fMwlmnffUYOK9l1rF2+HbP5peQ/nXfZdg4JJyUbxtmu00medSc+XKMhu+YOY5q2PAuWdNlz7NlvPM18Uk8TA+xxcrz7wDPF/cG5Rvy6zyibej1xKu+b9e2y5ZloXk/YJU+RtxKmnD851bPd2HGNyWHsO/o3dtKMZl0SNo0Fzgvel2eQZxpzZd/QD3FFf9Rh3RKH+F+ppG+e6e0eD+26tx1TwqP/k+yDsfiueP+JF09YT35P83pJl73m/IxL7p3+dS3jOemeSdyc+MScxZqd+vsbF3qWmIcYY2mZt3/3fgBZuYbL
+   eJyNltttwzAMRQ0F+c0eei3SxyItOkjbTJJO0k5VB7HQ42M66AdhO5J4L6lLMqfjNJU0TW22nm7vdba8WFmeY71iX8Z3heXlt6z3sd5w7nT8Wxs8GvzvcWp4GrOLY4aPgvWM8w2/e51xR+fIswHDewrOM6YS7GlpG+fA4PeIaXBiHFXrEafxrDrP3DH3LW3vuaZtLohTtLfIB/NPPuZA6zpXAqymfdQK8+33oj09reONNEMNFKxT1+bf0/qu+e28+y6JQ157WmvYb304LtYcuTnfzIvvkfXG2OyHOrQ2eT7CNjf7q2kbh7VM/64z9rAiv+aahW3O7i9F+NF6lm/HEOmkyId1NvK0t595pz6coyq/7h3WNH15FnSdZc2xZu/1acYT1TQ1cH2+Habp47Du8a4DzxTXB+ca9es6496B/bIYz0W1zJnIfsT7z9oXrRH7c8F+Oqz7VqQpx8+e6tlu7VDDETbzxL5G7UQzmnmJtGktDIxXYV/5kLdnGmNl3RCHuiIezzD278Pt/bJ8ux67fJALdW4+zJNr+/r8WWJ/X3DP0F/0P8kY5OK74v2ztoZdcO824+7Na9afZ6tz/jz7fZjtcQeTVsW/iwtny8DKMtYd+8nQ25cwz3iP6vteL/QscR8ix+d/5OAXNKaaWQ==
   </data>
  </layer>
- <layer name="floor-2" width="32" height="24" visible="0">
+ <layer name="floor-2" width="32" height="24">
   <data encoding="base64" compression="zlib">
    eJxjYGBguMSEiukNPjGh4lEwCkbBwAEftoGz25+VgSGHDUIPFMgaQP+PglGADwxk3uwC5klfNgg9EGC0bBgFo4C6AADiHAxK
   </data>
@@ -24,7 +24,7 @@
     <property name="direction" value="1"/>
    </properties>
   </object>
-  <object id="7" name="3000" type="5" x="0" y="64" width="160" height="160">
+  <object id="7" name="3000" type="5" x="0" y="96" width="160" height="160">
    <properties>
     <property name="rangeID" value="1"/>
    </properties>
@@ -54,7 +54,7 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="30" name="1009" type="4" x="32" y="128" width="32" height="32">
+  <object id="30" name="1009" type="4" x="32" y="192" width="32" height="32">
    <properties>
     <property name="rangeID" value="1"/>
    </properties>
@@ -315,5 +315,13 @@
     <property name="rangeID" value="7"/>
    </properties>
   </object>
+  <object id="111" name="bornPoint" type="2" x="96" y="32" width="32" height="32">
+   <ellipse/>
+  </object>
  </objectgroup>
+ <layer name="sky" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzt1GkKglAYheFLapCltY0Go21k0zpsspXkSmoj0bCNLK0l9AYFEkVXEqnwwAP+UI9e76cQWbJkyRI/bu79OXtFCB8HHBEgVJLp9yT6C6oQOooowYCpJtMvkypdNdTRgIVmiv1tumx00EUP/RT7HbqGGGGMCaYp9t+zZq9ssMVOYt8knYDOECecH/pl5ujTGMyciTIqD/N3nSNf49to8e8re41FZx8DtG79i8h76/n43c9iv3ieKZ0uPMwS+v98W+aR9XQ4Hqa8z5cSfas/XftfzQWe4R2O
+  </data>
+ </layer>
 </map>

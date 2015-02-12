@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="67">
- <tileset firstgid="1" source="提取整合古代素材.tsx"/>
- <layer name="floor-1" width="16" height="16">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" nextobjectid="111">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
+  <image source="tileset.png" width="1024" height="2048"/>
+ </tileset>
+ <layer name="floor-1" width="32" height="24" visible="0">
   <data encoding="base64" compression="zlib">
-   eJx1kksSwyAMQxlzr+x7iB4GO9y7GzR5KHThYfyThO2rt1bR2r1s4pUNxGv5ufyrP3WJd6xaYQ/00T794WZdHWLT/NvqXL/41DvRR32JlxiOWdajfMb+V/+/ZkbN0kRtwvn2/1rS8HPVuxV6M957nLHvRDNRP+dXBx33Ie67pk/Oil2PYuI73VIiRqvYd+p3xrmn4fCuTrfumpUjht+f3xJvwDmHYYzYZ+n+NI4JrkR+HPB8FprRD++0gyI=
+   eJx9lluOwyAQBC2k/OYeDHD/621WG7SVcpMPZBvmTU+Pn4/rqnZd87VW+3sfr9Xfq97PfT4g1/E9sPp7r+t9n0/oPR//ZzuOCfunmCae9rkUY4eNwnmH/sS+z5l30mOcEz4sU9BnThVkZrvnuX3we+e0Y2IeQ+cppv0c0mftWPvZ7vc82r0W9FOSLdlg/RmPY+Ba0qvga0qOWGG9/V6SWe0z34QZYqBwTlw7/tU+75rfrrvvkn4Y1wlrE/LGh/NizzE215t18T2y35ib7RCHxib1k2/HZnuj3fMwlmnffUYOK9l1rF2+HbP5peQ/nXfZdg4JJyUbxtmu00medSc+XKMhu+YOY5q2PAuWdNlz7NlvPM18Uk8TA+xxcrz7wDPF/cG5Rvy6zyibej1xKu+b9e2y5ZloXk/YJU+RtxKmnD851bPd2HGNyWHsO/o3dtKMZl0SNo0Fzgvel2eQZxpzZd/QD3FFf9Rh3RKH+F+ppG+e6e0eD+26tx1TwqP/k+yDsfiueP+JF09YT35P83pJl73m/IxL7p3+dS3jOemeSdyc+MScxZqd+vsbF3qWmIcYY2mZt3/3fgBZuYbL
   </data>
  </layer>
- <layer name="floor-2" width="16" height="16">
+ <layer name="floor-2" width="32" height="24" visible="0">
   <data encoding="base64" compression="zlib">
-   eJxjYGBgKGJBxaSCKhZUPAooAz3M5Ov1B+qdwgyhyQWTKNA7mEETMwSTA6KYIbgLSpMK/KH6BlvcAABRZQsL
+   eJxjYGBguMSEiukNPjGh4lEwCkbBwAEftoGz25+VgSGHDUIPFMgaQP+PglGADwxk3uwC5klfNgg9EGC0bBgFo4C6AADiHAxK
   </data>
  </layer>
- <layer name="block-1" width="16" height="16">
+ <layer name="block-1" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJwrZGHAAMVYxLABB2YGhkosaqvx6O9iQtVvx4ypZgoTphgM2COpx6V/Bhb9E4Fik9DEcelfgMd+YvQTC0D63YDYHQk3Qs1rBtJZBLAHEPsBsT8S7oTq70YSm4CmBoYDsLh9IlRsMpLcDAr8SAhkE2G2PR416OGHD6OHLUgsEoijiMTIYQsTQw9/fBhb3JACsMUNLvAGmIbfEpGOAVSVKS4=
+   eJy7yMSAAS5jEcMHBFhJE0cGH7HY9RmP/T5Y5Cixnw+Lmhw89vNjUU9t+wvw2J9NB/9PwGLHeqDYBiD2o4P9pIJR+8m3Xw+oRh8Ja7JBxLXZUMXxYQMK7PcDqvFHwp5Q+73ZEGIBbKhq0HEABfajg0yo/dlsCLECNuxqCQFy7KcmGLWfsBpi8h+2Mp9a9qPnP3yY1LyJK18ig05QHgKa18VKGCPnTWLUdxOZ//MJ5G98ZQM55QK5AFvZQCtwhpmB4Swz7e0ZBSMbAADvAi86
   </data>
  </layer>
  <objectgroup name="object">
@@ -22,125 +24,37 @@
     <property name="direction" value="1"/>
    </properties>
   </object>
-  <object id="5" name="transfer" type="1" gid="911" x="32" y="416">
-   <properties>
-    <property name="direction" value="0"/>
-   </properties>
-  </object>
-  <object id="6" name="transfer" type="1" gid="919" x="32" y="448">
-   <properties>
-    <property name="direction" value="0"/>
-   </properties>
-  </object>
-  <object id="7" name="3000" type="5" x="32" y="64" width="128" height="128">
+  <object id="7" name="3000" type="5" x="0" y="64" width="160" height="160">
    <properties>
     <property name="rangeID" value="1"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="9" name="3006" type="5" x="384" y="64" width="128" height="128">
+  <object id="9" name="3006" type="5" x="384" y="96" width="160" height="160">
    <properties>
     <property name="rangeID" value="7"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="10" name="3009" type="5" x="416" y="256" width="96" height="96">
-   <properties>
-    <property name="rangeID" value="8"/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="11" name="3001" type="5" x="32" y="256" width="96" height="96">
-   <properties>
-    <property name="rangeID" value="4"/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="12" name="3000" type="5" x="288" y="448" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="13" name="3000" type="5" x="256" y="448" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="14" name="3002" type="5" x="224" y="448" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="15" name="3004" type="5" x="96" y="448" width="96" height="64">
+  <object id="15" name="3004" type="5" x="0" y="640" width="128" height="128">
    <properties>
     <property name="rangeID" value="6"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="16" name="3001" type="5" x="288" y="288" width="32" height="32">
+  <object id="20" name="3000" type="5" x="160" y="192" width="64" height="64">
    <properties>
     <property name="rangeID" value=""/>
    </properties>
    <ellipse/>
   </object>
-  <object id="17" name="3000" type="5" x="256" y="288" width="32" height="32">
+  <object id="22" name="3000" type="5" x="384" y="0" width="64" height="64">
    <properties>
     <property name="rangeID" value=""/>
    </properties>
    <ellipse/>
   </object>
-  <object id="18" name="3002" x="320" y="288" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="19" name="3005" x="320" y="256" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="20" name="3000" type="5" x="160" y="160" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="22" name="3000" type="5" x="384" y="0" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="24" name="3002" type="5" x="320" y="128" width="64" height="64">
-   <properties>
-    <property name="rangeID" value="5"/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="27" name="3002" type="5" x="384" y="448" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="28" name="3004" type="5" x="32" y="448" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="29" name="3002" type="5" x="64" y="448" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="30" name="1009" type="4" x="64" y="96" width="32" height="32">
+  <object id="30" name="1009" type="4" x="32" y="128" width="32" height="32">
    <properties>
     <property name="rangeID" value="1"/>
    </properties>
@@ -150,133 +64,32 @@
     <property name="rangeID" value="2"/>
    </properties>
   </object>
-  <object id="32" name="1009" type="4" x="256" y="0" width="32" height="32">
+  <object id="32" name="1009" type="4" x="288" y="0" width="32" height="32">
    <properties>
     <property name="rangeID" value="3"/>
    </properties>
   </object>
-  <object id="34" name="1006" type="4" x="320" y="32" width="32" height="32">
+  <object id="34" name="1006" type="4" x="320" y="0" width="32" height="32">
    <properties>
     <property name="rangeID" value="3"/>
    </properties>
   </object>
-  <object id="35" name="1009" type="4" x="448" y="0" width="32" height="32">
+  <object id="35" name="1009" type="4" x="512" y="0" width="32" height="32">
    <properties>
     <property name="rangeID" value=""/>
    </properties>
   </object>
-  <object id="36" name="1009" type="4" x="448" y="32" width="32" height="32">
+  <object id="36" name="1009" type="4" x="512" y="32" width="32" height="32">
    <properties>
     <property name="rangeID" value=""/>
    </properties>
   </object>
-  <object id="37" name="1006" type="4" x="320" y="160" width="32" height="32">
-   <properties>
-    <property name="rangeID" value="5"/>
-   </properties>
-  </object>
-  <object id="38" name="1010" type="4" x="448" y="96" width="32" height="32">
-   <properties>
-    <property name="rangeID" value="7"/>
-   </properties>
-  </object>
-  <object id="39" name="1001" type="4" x="448" y="128" width="32" height="32">
-   <properties>
-    <property name="rangeID" value="7"/>
-   </properties>
-  </object>
-  <object id="40" name="1007" type="4" x="448" y="160" width="32" height="32">
-   <properties>
-    <property name="rangeID" value="7"/>
-   </properties>
-  </object>
-  <object id="41" name="1011" type="4" x="416" y="160" width="32" height="32">
-   <properties>
-    <property name="rangeID" value="7"/>
-   </properties>
-  </object>
-  <object id="42" name="1009" type="4" x="32" y="256" width="32" height="32">
+  <object id="58" name="1006" type="4" x="32" y="736" width="32" height="32">
    <properties>
     <property name="rangeID" value=""/>
    </properties>
   </object>
-  <object id="43" name="1009" type="4" x="32" y="288" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-  </object>
-  <object id="44" name="1003" type="4" x="64" y="288" width="32" height="32">
-   <properties>
-    <property name="rangeID" value="4"/>
-   </properties>
-  </object>
-  <object id="45" name="1011" type="4" x="480" y="256" width="32" height="32">
-   <properties>
-    <property name="rangeID" value="8"/>
-   </properties>
-  </object>
-  <object id="46" name="1004" type="4" x="480" y="288" width="32" height="32">
-   <properties>
-    <property name="rangeID" value="8"/>
-   </properties>
-  </object>
-  <object id="47" name="1001" type="4" x="448" y="256" width="32" height="32">
-   <properties>
-    <property name="rangeID" value="8"/>
-   </properties>
-  </object>
-  <object id="48" name="1010" type="4" x="352" y="256" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-  </object>
-  <object id="49" name="1000" type="4" x="448" y="480" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-  </object>
-  <object id="50" name="2001" type="3" x="480" y="480" width="32" height="32"/>
-  <object id="51" name="1010" type="4" x="480" y="448" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-  </object>
-  <object id="52" name="1009" type="4" x="448" y="448" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-  </object>
-  <object id="53" name="1009" type="4" x="288" y="480" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-  </object>
-  <object id="54" name="1010" type="4" x="256" y="480" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-  </object>
-  <object id="56" name="1010" type="4" x="192" y="448" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-  </object>
-  <object id="57" name="1003" type="4" x="96" y="448" width="32" height="32">
-   <properties>
-    <property name="rangeID" value="6"/>
-   </properties>
-  </object>
-  <object id="58" name="1006" type="4" x="32" y="480" width="32" height="32">
-   <properties>
-    <property name="rangeID" value=""/>
-   </properties>
-  </object>
-  <object id="59" name="1000" x="96" y="480" width="32" height="32">
-   <properties>
-    <property name="rangeID" value="6"/>
-   </properties>
-  </object>
-  <object id="60" name="3001" type="5" x="192" y="160" width="32" height="32">
+  <object id="60" name="3001" type="5" x="192" y="192" width="64" height="64">
    <properties>
     <property name="rangeID" value=""/>
    </properties>
@@ -288,35 +101,219 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="62" name="3001" type="5" x="224" y="0" width="160" height="96">
+  <object id="62" name="3001" type="5" x="256" y="0" width="128" height="128">
    <properties>
     <property name="rangeID" value="3"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="63" name="3002" type="5" x="416" y="0" width="32" height="32">
+  <object id="63" name="3002" type="5" x="448" y="0" width="64" height="64">
    <properties>
     <property name="rangeID" value=""/>
    </properties>
    <ellipse/>
   </object>
-  <object id="64" name="3002" x="384" y="416" width="32" height="32">
+  <object id="67" name="transfer" type="1" x="32" y="512" width="32" height="64">
+   <properties>
+    <property name="direction" value="0"/>
+   </properties>
+  </object>
+  <object id="69" name="3000" type="5" x="384" y="576" width="96" height="96">
    <properties>
     <property name="rangeID" value=""/>
    </properties>
    <ellipse/>
   </object>
-  <object id="65" name="3000" type="5" x="384" y="352" width="32" height="32">
+  <object id="70" name="3002" x="352" y="640" width="96" height="96">
    <properties>
     <property name="rangeID" value=""/>
    </properties>
    <ellipse/>
   </object>
-  <object id="66" name="3001" type="5" x="384" y="384" width="32" height="32">
+  <object id="71" name="3001" type="5" x="448" y="608" width="96" height="96">
    <properties>
     <property name="rangeID" value=""/>
    </properties>
    <ellipse/>
+  </object>
+  <object id="72" name="3002" type="5" x="448" y="672" width="96" height="96">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="73" name="1009" type="4" x="672" y="736" width="32" height="32">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+  </object>
+  <object id="74" name="1010" type="4" x="704" y="736" width="32" height="32">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+  </object>
+  <object id="75" name="1000" type="4" x="640" y="736" width="32" height="32">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+  </object>
+  <object id="76" name="2001" type="3" x="672" y="576" width="32" height="32"/>
+  <object id="77" name="3002" type="5" x="64" y="576" width="64" height="64">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="78" name="3004" type="5" x="32" y="576" width="64" height="64">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="79" name="1003" type="4" x="0" y="736" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="6"/>
+   </properties>
+  </object>
+  <object id="80" name="1000" x="0" y="704" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="6"/>
+   </properties>
+  </object>
+  <object id="81" name="1010" type="4" x="128" y="736" width="32" height="32">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+  </object>
+  <object id="82" name="3002" type="5" x="128" y="640" width="96" height="96" rotation="-0.248466">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="83" name="1010" type="4" x="192" y="736" width="32" height="32">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+  </object>
+  <object id="84" name="3000" type="5" x="288" y="640" width="96" height="96">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="85" name="3000" type="5" x="256" y="576" width="96" height="96">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="86" name="1009" type="4" x="256" y="736" width="32" height="32">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+  </object>
+  <object id="87" name="1011" type="4" x="640" y="32" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="8"/>
+   </properties>
+  </object>
+  <object id="88" name="3009" type="5" x="576" y="160" width="160" height="160">
+   <properties>
+    <property name="rangeID" value="8"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="89" name="1001" type="4" x="608" y="32" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="8"/>
+   </properties>
+  </object>
+  <object id="90" name="1004" type="4" x="672" y="32" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="8"/>
+   </properties>
+  </object>
+  <object id="91" name="3002" x="352" y="384" width="96" height="96">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="92" name="3000" type="5" x="224" y="352" width="64" height="64">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="93" name="3001" type="5" x="256" y="384" width="64" height="64">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="94" name="1010" type="4" x="544" y="448" width="32" height="32">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+  </object>
+  <object id="95" name="3005" x="416" y="352" width="96" height="96">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="101" name="3001" type="5" x="0" y="320" width="160" height="160">
+   <properties>
+    <property name="rangeID" value="4"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="102" name="1003" type="4" x="64" y="448" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="4"/>
+   </properties>
+  </object>
+  <object id="103" name="1009" type="4" x="32" y="448" width="32" height="32">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+  </object>
+  <object id="104" name="1009" type="4" x="0" y="416" width="32" height="32">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+  </object>
+  <object id="105" name="3002" type="5" x="288" y="160" width="96" height="96">
+   <properties>
+    <property name="rangeID" value="5"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="106" name="1006" type="4" x="352" y="224" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="5"/>
+   </properties>
+  </object>
+  <object id="107" name="1011" type="4" x="480" y="224" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="7"/>
+   </properties>
+  </object>
+  <object id="108" name="1007" type="4" x="512" y="224" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="7"/>
+   </properties>
+  </object>
+  <object id="109" name="1001" type="4" x="512" y="192" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="7"/>
+   </properties>
+  </object>
+  <object id="110" name="1010" type="4" x="512" y="160" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="7"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

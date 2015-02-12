@@ -1,42 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="4">
- <tileset firstgid="1" source="提取整合古代素材.tsx"/>
- <layer name="floor" width="16" height="16">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" nextobjectid="4">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
+  <image source="tileset.png" width="1024" height="2048"/>
+  <terraintypes>
+   <terrain name="草坪" tile="-1"/>
+  </terraintypes>
+ </tileset>
+ <layer name="floor" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJydk00OAiEMhSdEL+XOmZV6G29AgXtLE17y0ThjnMULpfT1H0vLUjrqgMsNZx5ngz4PWxuygVuDTnzZF/jIiEGuYsveglyDD5dv1//AXNoJvvJW387wDXW67g48Op4Dr44NcNuC/MXnDGM89kx89bIFXd7hV7zxLr568o3fQq7ciwKfdpC/7JVrTvv1/oL8qV7v+TrA3nMGK6CdlJ+45+/LjJbm/qhO7W+8R76l+c9x/vy3mskRX/Hc/gMBcmsJ
+   eJydlltOxDAMRUeRmP8ZVuE0+QD2v4lZCiugFbU4PU1Aw4fVxHlcP66dLuVyWVbpq7RVYp/nOPa1TSq+y/6NfW/VubqPF4jPd+k79nJOm2hHCCN1tCmkS/uIHeVsT9X+KEf7WznbZ7yOu7pwOLZPm/7z5Tnp5eh/193pS8Yq8M3cV4yfxW/CdzwyDvSZfOtaexa/CqfBhuQOOVHLMfdN+7Y779dvuV3PeLl239eWcuRF0730kblg7PN8lJ+Ypn4Ub3IlY0++uR5ybvuSIyE8csn49Jf2tHKMNTGISW5wTv+5x/isx7Qn40muuXZdE+xVtNt3zvwP7eU97idRjjHhmnvjf+qfHHIvMs+7sC038PttlXfJxyqvkAX+ud/O3gaPRxxO/UNiDO7Ns/Rz1GuZl4wLOVh/wWdu7RtrjL2Oe7mPOr85OTY+e5fv4TtKDjMftK9q7H5VJ/6Ta36T7b/rk7qQzrXR/vB/9rYwpo77rF+x5zGvI/7xbnKPvZF+EZd8H/1rOX8j/CYs28S68L+LffUZzmf865LRf5R7j/nlXs280FbjM7aMYxvc59p2b+E6a4M8GOGbT4yv/2vd38yZLp1rcYbvmmG8mRvWKX39AgXU4H0=
   </data>
  </layer>
- <layer name="block-1" width="16" height="16">
+ <layer name="block-1" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJzljjEKwkAQRX90t1Ar9QaWnke7eEFLSyuxtBNBEEEQK7EKVmrjHwZhnGxgGysfPAhv+GEBZRuAeaa7gC/2BXBgW2R6DLr5cOL3mW2Z6SXoxnJlWzunwGpCfb+59wsV28bJrfyj1u8Ne09JZ/WcvW/iF/sH29PosbdX4l5EoGX02Fs7ce+wdY3CKKqCvfUS+z7bwCiMoyrY2zCx/1fecO1BsA==
+   eJztlckNwkAMRQ0ZxJmlBOBOoATgHkIjLJ1QCdAALQCVsBTAjxIkY2aEIwtxgC+9y9jzHcn2hIjoXCG6gCu4gUyJI9pGOlKX3/H5aNSoEjVBC7RBr060gecx0rF0+R3po1UfuTEYgCGYFPUvkY61y+9IH60S5E5BCmbFvQM8m4JuhfYdIM93LuzzTo9eLZC/BCtWPxagdvYNL+enov68+uyjmYVQrw7u9WwEn7HHa+3J1c5CqFe++iHtPLnaWQj1qkz9kydXOwu851znbP4ZUjx29cTlLJRVo4b+MaR4rOWJW9WHZ8yQ4rHBB+on8JwypHgsNdQv+1Zrpf0XlH2rtbLuv1XW/bfKuv9WWff/V/Tfv//+fXP/7ohiagw=
   </data>
  </layer>
- <layer name="block-2" width="16" height="16">
+ <layer name="block-2" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYKA+WMnCwLAKDa9mIV7/RqDaTWh4MxH6dVgh9E6g2l1ALAnkS7NC2LtZUNVgAyZQuYNAtYeAWBHIV2aFsA+zoKrBB04C1Z4CYk2gWm1WCPs0Cf4fBQMHrjKSJwcDd/GowSc3UAAAn/cWxw==
+   eJztlMkNwjAURL8UO5zZK6AA9grogKURljpQKgmhEZZG2K+M5FxiWVHMtwhIHunJ6/y5DdHvKw6IdhpJ8L38A7KOGifH+XdJ9ABP8JLqbp+uF2RdNW5B9o/Jb6NGSNQELdAO1d05nVMVRDWwxTmSal8X2T8mv40G8AzBCIw1fxdZPRAjK5Fq3xfF/UU0hWcG5mBRgn8JzwqswaYEv5eXSZ3KZ2+uNMnJyHuzEbc7uXO43cmdw+1O7hxud3LnuOpO38Fe/6Y3IVs5Yw==
   </data>
  </layer>
- <layer name="block-3" width="16" height="16">
+ <layer name="block-3" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF2EArErsNSu8hUq8iIwODEiOq2FsgPgLE54nQrwnUqwXE2khmfCXS7qEGHJkYGJyA2BmIXZggYq1Y1LXhUOsJpL2A2BuIfZjw24VNbSCQDgLiYCAOgYolsmDqTWbBrjYSSEcBcTQQx0DFMrHoz2bBrhYbwKWfWFCIRW0xDv0AxNsUjg==
+   eJztkzcOwlAQRBebcAHCGQgl4QyEklBDRygJNSAKQoM4AwdAXIELIK4AnIDQMki2gNX/BssfVx7pSV/WasbS7BJ58vRdJ9/rfTbeO82d7LqfqOH//DbRiY7ID+n/zx8iewTGb/+wVpR7CRBdwQ3cA+77hYNEERAFsaDzfLt+acxkQBbkFOTb9StjpgKqoAbi2O0ESIKUsefvu2/KvAE+z/2+qYuZHuiDAcjDowCKoCTI5eLz3M+umvBogTboGPlLwZ2vNPm8E03hMQNzsDD8NoL8rSafdyreqSxftCsqxDuV5dvdlV/FO5Xlq+7eFO9Ulu9G909Z7Z/qHRB1apWvegdEnVrle/f///vfC/IPiu7/ASTzUQo=
   </data>
  </layer>
  <objectgroup name="object">
-  <object id="1" name="transfer" type="1" x="192" y="480" width="128" height="32">
+  <object id="1" name="transfer" type="1" x="320" y="736" width="128" height="32">
    <properties>
     <property name="direction" value="0"/>
    </properties>
   </object>
-  <object id="2" name="bornPoint" type="2" x="256" y="192" width="32" height="32">
+  <object id="2" name="bornPoint" type="2" x="384" y="192" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="3" name="2000" type="3" x="288" y="384" width="32" height="32">
+  <object id="3" name="2000" type="3" x="416" y="384" width="32" height="32">
    <ellipse/>
   </object>
  </objectgroup>
- <layer name="sky" width="16" height="16">
+ <layer name="sky" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFowAT/GJBxaQCSVYGBikolmYlXb8ikh5lMvRrIunRJkP/SAEAHesFIQ==
+   eJxjYBgFo2AUjAL84BMLKqY3KGRlYCiC4mJW+ts/EcnOyQNg/0YkOzcPgP2jYBSMglEwCoYXAADPyAhR
   </data>
  </layer>
 </map>

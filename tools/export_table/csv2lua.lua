@@ -92,6 +92,7 @@ local function table2lua(t, outPath)
         file:write(',\n')
     end
     file:write('}')
+    file:flush()
     file:close()
 end
 

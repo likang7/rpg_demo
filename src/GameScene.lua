@@ -1,5 +1,5 @@
 require "GameLayer"
-require "Player"
+require "model.Player"
 
 GameScene = class("GameScene",
     function()

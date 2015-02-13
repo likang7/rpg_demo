@@ -28,4 +28,8 @@ const.DEFAULT_FONT = "fonts/Marker Felt.ttf"
 
 const.BLOCK_TYPE = {BLOCK=1, NPC=2}
 
+const.RECORD_DIR = "record"
+const.RECORD_PATH = const.RECORD_DIR .. "/record.json"
+const.DEFAULT_RECORD = "res/default_record.json"
+
 return const

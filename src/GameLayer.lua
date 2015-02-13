@@ -1,14 +1,18 @@
 local const = require "const"
 require "Entity"
 require "model.EntityData"
-require "AIComp"
+require "model.AIComp"
 require "Transfer"
 require "Item"
+require "GameMap"
 
 local Direction = const.Direction
 local math = math
 local ipairs = ipairs
+local pairs = pairs
 local helper = require "utils.helper"
+local tonumber = tonumber
+local table = table
 
 GameLayer = class("GameLayer",
     function()
@@ -128,7 +132,6 @@ end
 function GameLayer:initTileMap(tilemapPath)
     local origin = cc.Director:getInstance():getVisibleOrigin()
 
-    require "GameMap"
     self.gameMap = GameMap:create(tilemapPath)
 
     local tilemap = self.gameMap.tilemap
@@ -141,8 +144,7 @@ end
 
 function GameLayer:init(dict)
     self:clearAll()
-
-    local sceneTexturePath = "scene.jpg"
+    
     local tilemapPath = string.format("map/map-%d.tmx", dict.stageId)
 
     self.stageId = dict.stageId
@@ -150,6 +152,7 @@ function GameLayer:init(dict)
     self:initTileMap(tilemapPath)
 
     -- add bg
+    -- local sceneTexturePath = "scene.jpg"
     -- local bg = cc.Sprite:create(sceneTexturePath)
     -- bg:setAnchorPoint(0, 0)
     -- -- -- 高度补偿

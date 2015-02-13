@@ -30,5 +30,6 @@ function GameScene:init()
     local origin = cc.Director:getInstance():getVisibleOrigin()
     local gameLayer = self:createGameLayer()
     gameLayer:setPosition(origin.x, origin.y)
+    -- gameLayer:setScale(2)
     self:addChild(gameLayer)
 end

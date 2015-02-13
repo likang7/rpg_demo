@@ -37,12 +37,15 @@ function Item:init(dict)
 	-- 初始化图标
 	self.icon = data.icon
 	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+	spriteFrameCache:addSpriteFrames(data.plist)
 	local frame = spriteFrameCache:getSpriteFrame(data.icon)
-	if frame == nil then
-		frame = cc.SpriteFrame:create(data.icon, cc.rect(0, 0, const.TILESIZE, const.TILESIZE))
-		spriteFrameCache:addSpriteFrame(frame, data.icon)
-	end
+
 	self:setSpriteFrame(frame)
+
+	-- 这里其实应该直接出合适大小的图才对 = =
+	local size = frame:getOriginalSizeInPixels()
+	local scale = const.TILESIZE / math.max(size.width, size.height)
+	self:setScale(scale)
 
 	-- 坐标
 	-- 锚点设置为左下角，和tilemap一致

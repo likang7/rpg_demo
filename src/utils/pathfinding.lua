@@ -59,7 +59,7 @@ local function pathTo(from, to, maxd, map, width, height)
     _height = height
     
     if maxd == nil then
-        maxd = 200
+        maxd = 300
     end
 
     local function Node(x, y, parent)

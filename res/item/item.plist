@@ -276,7 +276,7 @@
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:d5b15e9675b2574934043375fc55459f:12b48a8fa9bdbb2b4044f93ffe98e0aa:59939a4a587d378f0fcbb69f55d845d5$</string>
             <key>textureFileName</key>
-            <string>item.png</string>
+            <string>item/item.png</string>
         </dict>
     </dict>
 </plist>

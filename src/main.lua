@@ -31,11 +31,11 @@ local function main()
     local director = cc.Director:getInstance()
     local glview = director:getOpenGLView()
     if nil == glview then
-        glview = cc.GLViewImpl:createWithRect("HelloLua", cc.rect(0,0,900,640))
+        glview = cc.GLViewImpl:createWithRect("HelloLua", cc.rect(0,0,1024,768))
         director:setOpenGLView(glview)
     end
 
-    glview:setDesignResolutionSize(1024, 768, cc.ResolutionPolicy.FIXED_HEIGHT)
+    glview:setDesignResolutionSize(1024, 768, cc.ResolutionPolicy.SHOW_ALL)
 
     --turn on display FPS
     director:setDisplayStats(true)

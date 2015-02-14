@@ -1,4 +1,4 @@
-local json = require("utils.json")
+local json = json
 local const = require("const")
 
 GameRecorder = class("GameRecorder")
@@ -32,7 +32,7 @@ end
 function GameRecorder:init()
 	local jsonStr = self:loadRecord()
 
-	self.record = json.Marshal(jsonStr)
+	self.record = json.decode(jsonStr)
 end
 
 function GameRecorder:loadRecord()
@@ -60,19 +60,17 @@ function GameRecorder:loadRecord()
 end
 
 function GameRecorder:saveRecord()
-	-- local file = io.open(self.recordPath, 'w')
-	-- if file == nil then
-	-- 	os.execute("mkdir " .. const.RECORD_DIR)
-	-- 	file = io.open(const.RECORD_PATH, 'w')
-	-- 	if file == nil then
-	-- 		error("cannot create record file " .. const.RECORD_PATH)
-	-- 	end
-	-- end
-	-- print('bit32', bit32)
-	-- print(1<<2)
-	-- local jsonStr = json.Unmarshal(self.record)
-	-- print(bit32, jsonStr)
-	-- file:write(jsonStr)
-	-- file:flush()
-	-- file:close()
+	local file = io.open(self.recordPath, 'w')
+	if file == nil then
+		os.execute("mkdir " .. const.RECORD_DIR)
+		file = io.open(const.RECORD_PATH, 'w')
+		if file == nil then
+			error("cannot create record file " .. const.RECORD_PATH)
+		end
+	end
+
+	local jsonStr = json.encode(self.record)
+	file:write(jsonStr)
+	file:flush()
+	file:close()
 end

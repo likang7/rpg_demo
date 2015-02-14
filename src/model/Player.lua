@@ -24,7 +24,10 @@ end
 
 function Player:init()
 	self.recorder = GameRecorder:create()
-	self.recorder:saveRecord()
+	if self.recorder.isNewPlayer then
+
+	end
+	
 end
 
 function Player:initWithRecord()
@@ -43,5 +46,5 @@ function Player:initEntity(dict)
 end
 
 function Player:saveRecord(gameInfo)
-	-- body
+	self.recorder:saveRecord()
 end

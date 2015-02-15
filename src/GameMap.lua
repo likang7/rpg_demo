@@ -56,6 +56,11 @@ function GameMap:init(tilemapPath)
     self.map_h = self.mapSize.height * self.tileSize.height
 end
 
+function GameMap:hashViewCoord(vx,  vy)
+    local tx, ty = self:convertToTiledSpace(vx, vy)
+    return tx * self.mapSize.height + ty
+end
+
 function GameMap:isAvailable(tx, ty)
     return not(tx < 0 or tx >= self.mapSize.width or ty < 0 or 
             ty >= self.mapSize.height or self.map[tx][ty] ~= 0)

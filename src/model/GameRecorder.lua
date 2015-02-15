@@ -1,4 +1,5 @@
 local json = json
+local pairs = pairs
 local const = require("const")
 
 GameRecorder = class("GameRecorder")
@@ -21,12 +22,46 @@ function GameRecorder:getStageInfo()
 	return self.record.stageInfo
 end
 
+function GameRecorder:getStageState(stageId)
+	local stageState = self:getStageInfo().stageState
+	local state = stageState[stageId]
+	if state == nil then
+		state = {}
+	end
+	return state
+end
+
+function GameRecorder:updateStageState(stageId, stageState)
+	local stageInfo = self:getStageInfo()
+	stageInfo.curStageId = stageId
+	if stageId > stageInfo.maxStageId then
+		stageInfo.maxStageId = stageId
+	end
+
+	stageInfo.stageState[stageId] = stageState
+end
+
 function GameRecorder:getHeroInfo()
 	return self.record.heroInfo
 end
 
+function GameRecorder:updateHeroInfo(info)
+	local heroInfo = self:getHeroInfo()
+	for k, v in pairs(info) do
+		heroInfo[k] = v 
+	end
+end
+
 function GameRecorder:getPlayerInfo()
 	return self.record.playerInfo
+end
+
+function GameRecorder:updatePlayerInfo(info)
+	local playerInfo = self:getPlayerInfo()
+
+	for k, v in pairs(info) do
+		playerInfo[k] = v 
+	end
 end
 
 function GameRecorder:init()

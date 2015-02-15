@@ -166,6 +166,22 @@ function EntityData:onObtainItem(itemInfo)
     return s
 end
 
+function EntityData:getPersistent()
+    return {
+        name = self.name,
+        speed = self.speed,
+        camp = self.camp,
+        atk = self.atk,
+        def = self.def,
+        hp = self.hp,
+        criRate = self.criRate,
+        antiCriRate = self.antiCriRate,
+        maxhp = self.maxhp,
+        atkRange = self.atkRange,
+        pos = self.pos,
+    }
+end
+
 function EntityData:init(dict, gameMap)
     self.name = dict.name
     self.speed = dict.speed

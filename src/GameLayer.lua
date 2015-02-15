@@ -71,33 +71,41 @@ function GameLayer:initEntity(objectGroup)
             self.gameMap:addBlock(px, py, const.BLOCK_TYPE.NPC)
         elseif otype == 4 then
             -- 初始化道具
-            local fakeDict = {itemId=tonumber(object.name), rangeId=tonumber(object.rangeID), x=object.x, y=object.y}
-            local item = Item:create(fakeDict)
-            self:addChild(item, 1)
-            table.insert(self.items, item)
+            local viewx, viewy = object.x, object.y
+            local hashId = self.gameMap:hashViewCoord(viewx, viewy)
+            if self.deadItemIds[hashId] ~= nil then
+                local fakeDict = {itemId=tonumber(object.name), rangeId=tonumber(object.rangeID), x=object.x, y=object.y}
+                local item = Item:create(fakeDict)
+                self:addChild(item, 1)
+                self.items[hashId] = item
+            end
         elseif otype == 5 then
             -- 初始化monster
-            local entityData = EntityData:create(2, self.gameMap)
-            entityData.pos = cc.p(object.x+object.width/2, object.y+object.height/2)
-            entityData.rangeId = tonumber(object.rangeID)
-            if entityData.rangeId ~= nil then
-                self.rangeFlags[object.rangeID] = false
-            end
-            local monster = Entity:create(entityData)
-            self:addChild(monster, 3)
-            table.insert(self.monsterEntity, monster)
+            local viewx, viewy = object.x+object.width/2, object.y+object.height/2
+            local hashId = self.gameMap:hashViewCoord(viewx, viewy)
+            if self.deadMonsterIds[hashId] ~= nil then
+                local entityData = EntityData:create(2, self.gameMap)
+                entityData.pos = cc.p(viewx, viewy)
+                entityData.rangeId = tonumber(object.rangeID)
+                if entityData.rangeId ~= nil then
+                    self.rangeFlags[object.rangeID] = false
+                end
+                local monster = Entity:create(entityData)
+                self:addChild(monster, 3)
+                self.monsterEntity[hashId] = monster
 
-            --ai
-            local dict = {
-                ['entity'] = monster,
-                ['gameMap'] = self.gameMap,
-                ['bornPoint'] = cc.p(object.x+object.width/2, object.y+object.height/2),
-                ['enemyEntity'] = {self.playerEntity},
-                ['detectRange'] = object.width/2,
-                ['catchRange'] = object.width/2,
-            }
-            local aiComp = AIComp:create(dict, true)
-            monster:setAIComp(aiComp)
+                --ai
+                local dict = {
+                    ['entity'] = monster,
+                    ['gameMap'] = self.gameMap,
+                    ['bornPoint'] = cc.p(object.x+object.width/2, object.y+object.height/2),
+                    ['enemyEntity'] = {self.playerEntity},
+                    ['detectRange'] = object.width/2,
+                    ['catchRange'] = object.width/2,
+                }
+                local aiComp = AIComp:create(dict, true)
+                monster:setAIComp(aiComp)
+            end
         end
     end
 end
@@ -118,6 +126,9 @@ function GameLayer:clearAll()
     self.monsterEntity = {}
     self.transfers = {}
     self.gameMap = nil
+    self.deadMonsterIds = {}
+    self.deadItemIds = {}
+
     if self.pressSum == nil then
         self.pressSum = 0
     end
@@ -184,6 +195,7 @@ function GameLayer:init(dict)
                 end
                 self.monsterEntity[k] = nil
                 self:removeChild(monster, true)
+                self.deadMonsterIds[k] = true
             else
                 monster:step(dt)
             end
@@ -369,6 +381,7 @@ function GameLayer:OnAttackPressed()
                 self.playerEntity:obtainItem(item)
                 self.items[k] = nil
                 self:removeChild(item, true)  
+                self.deadItemIds[k] = true
                 return
             end
         end
@@ -392,4 +405,10 @@ function GameLayer:setViewPointCenter(x, y)
     self:setPosition(viewx, viewy)
 end
 
+function GameLayer:getStageState()
+    return {
+        'deadMonsterIds' = self.deadMonsterIds,
+        'deadItemIds' = self.deadItemIds
+    }
+end
 

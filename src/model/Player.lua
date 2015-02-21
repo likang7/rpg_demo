@@ -24,7 +24,9 @@ end
 function Player:init()
 	self.recorder = GameRecorder:create()
 	if self.recorder.isNewPlayer then
-
+		self:initWithRecord()
+	else
+		self:initWithRecord()
 	end
 	
 end
@@ -41,7 +43,14 @@ end
 
 function Player:initWithRecord()
 	local playerInfo = self.recorder:getPlayerInfo()
+	self.name = playerInfo.name
+	self.level = playerInfo.level
+	self.exp = playerInfo.exp
+	self.coin = playerInfo.coin
+	self.package = playerInfo.package
 
+	local heroInfo = self.recorder:getHeroInfo()
+	self:initHeroData(heroInfo)
 end
 
 function Player:getHeroData()
@@ -49,8 +58,8 @@ function Player:getHeroData()
 	return self.heroData
 end
 
-function Player:initHeroData(dict)
-	local heroData = heroData:create(1, dict.gameMap)
+function Player:initHeroData(info)
+	local heroData = EntityData:create(1)
 	self.heroData = heroData
 end
 
@@ -62,6 +71,8 @@ function Player:saveRecord(gameInfo)
 	self.recorder:updateHeroInfo(heroInfo)
 
 	-- get map info
+	self.recorder:updateStageState(gameInfo.stageId, gameInfo.stageState)
+
 	self.recorder:saveRecord()
 end
 

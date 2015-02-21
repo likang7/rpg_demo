@@ -182,6 +182,10 @@ function EntityData:getPersistent()
     }
 end
 
+function EntityData:setGameMap( gameMap )
+    self.gameMap = gameMap
+end
+
 function EntityData:init(dict, gameMap)
     self.name = dict.name
     self.speed = dict.speed

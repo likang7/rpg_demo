@@ -10,8 +10,7 @@ GameScene = class("GameScene",
 GameScene.__index = GameScene
 
 function GameScene:createGameLayer()
-    
-    local dict = {stageId = 1}
+    local dict = {stageId = 1, player = self.player}
     local gameLayer = GameLayer:create(dict)
     return gameLayer
 end
@@ -25,7 +24,7 @@ function GameScene:create()
 end
 
 function GameScene:init()
-    local player = Player:create()
+    self.player = Player:create()
 
     local origin = cc.Director:getInstance():getVisibleOrigin()
     local gameLayer = self:createGameLayer()

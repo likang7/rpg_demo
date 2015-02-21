@@ -42,10 +42,20 @@ function GameLayer:initEntity(objectGroup)
     self.rangeFlags = {}
     self.npcs = {}
 
+    local stageState = self.player:getStageState(self.stageId)
+    if stageState == nil then
+        self.deadMonsterIds = {}
+        self.deadItemIds = {}
+    else
+        self.deadMonsterIds = stageState.deadMonsterIds
+        self.deadItemIds = stageState.deadItemIds
+    end
+
     self.playerEntity = nil
     --先初始化玩家
     local object = objectGroup:getObject("bornPoint")
-    local entityData = EntityData:create(1, self.gameMap)
+    local entityData = EntityData:create(1)
+    entityData:setGameMap(self.gameMap)
     entityData.pos = cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2)
     local playerEntity = Entity:create(entityData)
     self.playerEntity = playerEntity
@@ -73,7 +83,7 @@ function GameLayer:initEntity(objectGroup)
             -- 初始化道具
             local viewx, viewy = object.x, object.y
             local hashId = self.gameMap:hashViewCoord(viewx, viewy)
-            if self.deadItemIds[hashId] ~= nil then
+            if self.deadItemIds[hashId] == nil then
                 local fakeDict = {itemId=tonumber(object.name), rangeId=tonumber(object.rangeID), x=object.x, y=object.y}
                 local item = Item:create(fakeDict)
                 self:addChild(item, 1)
@@ -83,7 +93,7 @@ function GameLayer:initEntity(objectGroup)
             -- 初始化monster
             local viewx, viewy = object.x+object.width/2, object.y+object.height/2
             local hashId = self.gameMap:hashViewCoord(viewx, viewy)
-            if self.deadMonsterIds[hashId] ~= nil then
+            if self.deadMonsterIds[hashId] == nil then
                 local entityData = EntityData:create(2, self.gameMap)
                 entityData.pos = cc.p(viewx, viewy)
                 entityData.rangeId = tonumber(object.rangeID)
@@ -158,6 +168,7 @@ function GameLayer:init(dict)
     
     local tilemapPath = string.format("map/map-%d.tmx", dict.stageId)
 
+    self.player = dict.player
     self.stageId = dict.stageId
 
     self:initTileMap(tilemapPath)
@@ -218,7 +229,8 @@ function GameLayer:init(dict)
 end
 
 function GameLayer:saveRecord()
-    
+    local gameInfo = {stageId=self.stageId, stageState=self:getStageState()}
+    self.player:saveRecord(gameInfo)
 end
 
 function GameLayer:onNextStage()
@@ -226,7 +238,7 @@ function GameLayer:onNextStage()
     self:saveRecord()
     --2. 切换到下一关
     local nextStageId = self.stageId + 1
-    local dict = {stageId=nextStageId}
+    local dict = {stageId=nextStageId, player=self.player}
     self:init(dict)
     print('xxx')
 end
@@ -234,7 +246,7 @@ end
 function GameLayer:onPrevStage()
     self:saveRecord()
     local prevStageId = self.stageId - 1
-    local dict = {stageId=prevStageId}
+    local dict = {stageId=prevStageId, player=self.player}
     self:init(dict)
 end
 
@@ -374,7 +386,7 @@ function GameLayer:OnAttackPressed()
     -- 3. 检查是否有道具 TODO: 可以优化，检查下脚下坐标里的是不是道具就可以了
     for k, item in pairs(self.items) do
         local rangeId = item.rangeId
-        if item.isObtained == false and (rangeId == nil or self.rangeFlags[rangeId] == true) then
+        if item.isObtained == false and (rangeId == nil or self.rangeFlags[rangeId] ~= false) then
             local tRect = item:getTextureRect()
             tRect.x, tRect.y = item:getPosition()
             if cc.rectIntersectsRect(pRect, tRect) then
@@ -407,8 +419,8 @@ end
 
 function GameLayer:getStageState()
     return {
-        'deadMonsterIds' = self.deadMonsterIds,
-        'deadItemIds' = self.deadItemIds
+        ['deadMonsterIds'] = self.deadMonsterIds,
+        ['deadItemIds'] = self.deadItemIds,
     }
 end
 

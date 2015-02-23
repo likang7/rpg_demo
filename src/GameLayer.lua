@@ -54,9 +54,11 @@ function GameLayer:initEntity(objectGroup)
     self.playerEntity = nil
     --先初始化玩家
     local object = objectGroup:getObject("bornPoint")
-    local entityData = EntityData:create(1)
+    local entityData = self.player:getHeroData() --EntityData:create(1)
     entityData:setGameMap(self.gameMap)
-    entityData.pos = cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2)
+    -- if entityData.pos ~= nil then
+        entityData.pos = cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2)
+    -- end
     local playerEntity = Entity:create(entityData)
     self.playerEntity = playerEntity
     self:addChild(playerEntity, 5)
@@ -82,7 +84,7 @@ function GameLayer:initEntity(objectGroup)
         elseif otype == 4 then
             -- 初始化道具
             local viewx, viewy = object.x, object.y
-            local hashId = self.gameMap:hashViewCoord(viewx, viewy)
+            local hashId = tostring(self.gameMap:hashViewCoord(viewx, viewy))
             if self.deadItemIds[hashId] == nil then
                 local fakeDict = {itemId=tonumber(object.name), rangeId=tonumber(object.rangeID), x=object.x, y=object.y}
                 local item = Item:create(fakeDict)
@@ -92,13 +94,13 @@ function GameLayer:initEntity(objectGroup)
         elseif otype == 5 then
             -- 初始化monster
             local viewx, viewy = object.x+object.width/2, object.y+object.height/2
-            local hashId = self.gameMap:hashViewCoord(viewx, viewy)
+            local hashId = tostring(self.gameMap:hashViewCoord(viewx, viewy))
             if self.deadMonsterIds[hashId] == nil then
                 local entityData = EntityData:create(2, self.gameMap)
                 entityData.pos = cc.p(viewx, viewy)
                 entityData.rangeId = tonumber(object.rangeID)
                 if entityData.rangeId ~= nil then
-                    self.rangeFlags[object.rangeID] = false
+                    self.rangeFlags[entityData.rangeId] = false
                 end
                 local monster = Entity:create(entityData)
                 self:addChild(monster, 3)
@@ -230,6 +232,7 @@ end
 
 function GameLayer:saveRecord()
     local gameInfo = {stageId=self.stageId, stageState=self:getStageState()}
+    -- self.player:updateRecord(gameInfo)
     self.player:saveRecord(gameInfo)
 end
 
@@ -387,9 +390,13 @@ function GameLayer:OnAttackPressed()
     for k, item in pairs(self.items) do
         local rangeId = item.rangeId
         if item.isObtained == false and (rangeId == nil or self.rangeFlags[rangeId] ~= false) then
-            local tRect = item:getTextureRect()
-            tRect.x, tRect.y = item:getPosition()
+            local ix, iy = item:getPosition()
+            local tRect = cc.rect(ix, iy, const.TILESIZE, const.TILESIZE)
             if cc.rectIntersectsRect(pRect, tRect) then
+                local itemInfo = item:getItemInfo()
+                if itemInfo.coin ~= nil then
+                    self.player.coin = self.player.coin + itemInfo.coin
+                end
                 self.playerEntity:obtainItem(item)
                 self.items[k] = nil
                 self:removeChild(item, true)  

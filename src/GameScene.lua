@@ -10,7 +10,8 @@ GameScene = class("GameScene",
 GameScene.__index = GameScene
 
 function GameScene:createGameLayer()
-    local dict = {stageId = 1, player = self.player}
+    local curStageId = self.player:getCurStageId()
+    local dict = {stageId = curStageId, player = self.player}
     local gameLayer = GameLayer:create(dict)
     return gameLayer
 end

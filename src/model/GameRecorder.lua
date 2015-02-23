@@ -25,9 +25,6 @@ end
 function GameRecorder:getStageState(stageId)
 	local stageState = self:getStageInfo().stageState
 	local state = stageState[stageId]
-	if state == nil then
-		state = {}
-	end
 	return state
 end
 
@@ -47,6 +44,7 @@ end
 
 function GameRecorder:updateHeroInfo(info)
 	local heroInfo = self:getHeroInfo()
+
 	for k, v in pairs(info) do
 		heroInfo[k] = v 
 	end

@@ -43,11 +43,13 @@ end
 
 function Player:initWithRecord()
 	local playerInfo = self.recorder:getPlayerInfo()
-	self.name = playerInfo.name
-	self.level = playerInfo.level
-	self.exp = playerInfo.exp
-	self.coin = playerInfo.coin
-	self.package = playerInfo.package
+	if next(playerInfo) ~= nil then
+		self.name = playerInfo.name
+		self.level = playerInfo.level
+		self.exp = playerInfo.exp
+		self.coin = playerInfo.coin
+		self.package = playerInfo.package
+	end
 
 	local heroInfo = self.recorder:getHeroInfo()
 	self:initHeroData(heroInfo)
@@ -59,11 +61,15 @@ function Player:getHeroData()
 end
 
 function Player:initHeroData(info)
-	local heroData = EntityData:create(1)
-	self.heroData = heroData
+	if next(info) == nil then
+		local heroData = EntityData:create(1)
+		self.heroData = heroData
+	else
+		self.heroData = EntityData:createWithDict(info)
+	end
 end
 
-function Player:saveRecord(gameInfo)                                               
+function Player:updateRecord(gameInfo)
 	local playerInfo = self:getPersistent()
 	self.recorder:updatePlayerInfo(playerInfo)
 
@@ -72,10 +78,20 @@ function Player:saveRecord(gameInfo)
 
 	-- get map info
 	self.recorder:updateStageState(gameInfo.stageId, gameInfo.stageState)
+end
+
+function Player:saveRecord(gameInfo)                                               
+	self:updateRecord(gameInfo)
 
 	self.recorder:saveRecord()
 end
 
 function Player:getStageState(stageId)
 	return self.recorder:getStageState(stageId)
+end
+
+function Player:getCurStageId()
+	local stageInfo = self.recorder:getStageInfo()
+    local curStageId = stageInfo.curStageId
+    return curStageId
 end

@@ -24,11 +24,11 @@ function EntityData:create(eid, gameMap)
     local dict
     if eid == 1 then
         dict = {name='bgj', speed=200, dir=Direction.S, criRate=0.5, antiCriRate=0.5,
-                camp=0, atk=100, def=10, hp=2000, controlType=const.ControlType.Keyboard,
+                camp=0, atk=100, def=10, hp=2000, maxhp=2000, controlType=const.ControlType.Keyboard,
                 atkRange=40}
     else
         dict = {name='bgj', speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,
-                camp=1, atk=80, def=10, hp=200, atkRange=40}
+                camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40}
     end
 
     return self:createWithDict(dict, gameMap)
@@ -170,6 +170,7 @@ function EntityData:getPersistent()
     return {
         name = self.name,
         speed = self.speed,
+        dir = self.dir,
         camp = self.camp,
         atk = self.atk,
         def = self.def,
@@ -179,6 +180,8 @@ function EntityData:getPersistent()
         maxhp = self.maxhp,
         atkRange = self.atkRange,
         pos = self.pos,
+        texturePath = self.texturePath,
+        effectPath = self.effectPath,
     }
 end
 
@@ -196,7 +199,7 @@ function EntityData:init(dict, gameMap)
     self.hp = dict.hp
     self.criRate = dict.criRate
     self.antiCriRate = dict.antiCriRate
-    self.maxhp = dict.hp
+    self.maxhp = dict.maxhp
     self.atkRange = dict.atkRange
     self.texturePath = self.name .. '.plist'
     self.effectPath = 'effect.plist'

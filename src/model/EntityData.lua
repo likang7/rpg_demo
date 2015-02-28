@@ -25,10 +25,10 @@ function EntityData:create(eid, gameMap)
     if eid == 1 then
         dict = {name='bgj', speed=200, dir=Direction.S, criRate=0.5, antiCriRate=0.5,
                 camp=0, atk=100, def=10, hp=2000, maxhp=2000, controlType=const.ControlType.Keyboard,
-                atkRange=40}
+                atkRange=40, atkDelay=0.5}
     else
         dict = {name='bgj', speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,
-                camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40}
+                camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5}
     end
 
     return self:createWithDict(dict, gameMap)
@@ -182,6 +182,7 @@ function EntityData:getPersistent()
         pos = self.pos,
         texturePath = self.texturePath,
         effectPath = self.effectPath,
+        atkDelay = self.atkDelay
     }
 end
 
@@ -204,6 +205,8 @@ function EntityData:init(dict, gameMap)
     self.texturePath = self.name .. '.plist'
     self.effectPath = 'effect.plist'
     self.lifeState = const.LifeState.Alive
+    self.atkDelay = dict.atkDelay
+    self.atkLock = false
 
     self.rangeId = dict.rangeId
 

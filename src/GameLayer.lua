@@ -243,6 +243,7 @@ function GameLayer:onNextStage()
     local nextStageId = self.stageId + 1
     local dict = {stageId=nextStageId, player=self.player}
     self:init(dict)
+    self:saveRecord()
     print('xxx')
 end
 
@@ -251,6 +252,7 @@ function GameLayer:onPrevStage()
     local prevStageId = self.stageId - 1
     local dict = {stageId=prevStageId, player=self.player}
     self:init(dict)
+    self:saveRecord()
 end
 
 function GameLayer:initTouchEvent()
@@ -395,7 +397,7 @@ function GameLayer:OnAttackPressed()
             if cc.rectIntersectsRect(pRect, tRect) then
                 local itemInfo = item:getItemInfo()
                 if itemInfo.coin ~= nil then
-                    self.player.coin = self.player.coin + itemInfo.coin
+                    self.player:obtainCoin(itemInfo.coin)
                 end
                 self.playerEntity:obtainItem(item)
                 self.items[k] = nil

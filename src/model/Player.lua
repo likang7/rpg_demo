@@ -95,3 +95,15 @@ function Player:getCurStageId()
     local curStageId = stageInfo.curStageId
     return curStageId
 end
+
+function Player:obtainCoin(num)
+	self.coin = self.coin + num
+end
+
+function Player:obtainExp(num)
+	self.exp = self.exp + num
+end
+
+function Player:onUpgradeLevel()
+	self.level = self.level + 1
+end

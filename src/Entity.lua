@@ -6,6 +6,7 @@ local DiagDirection = const.DiagDirection
 local DirectionToVec = const.DirectionToVec
 local math = math
 local Status = const.Status
+local performWithDelay = performWithDelay
 
 Entity = class("Entity",
     function()
@@ -168,7 +169,7 @@ function Entity:releaseCache()
 end
 
 function Entity:tryAttack()
-    if self.status == Status.attack or self.status == Status.hurt then
+    if self.status == Status.attack or self.status == Status.hurt or self._model.atkLock then
         return false
     end
 
@@ -375,6 +376,11 @@ end
 function Entity:attack(enemys, skillId)
     -- 1. 尝试播放攻击动画(如果不能，返回)
     self._model:attack(enemys, skillId)
+    local cb = function ()
+        self._model.atkLock = false
+    end
+    self._model.atkLock = true
+    performWithDelay(self, cb, self._model.atkDelay)
 end
 
 function Entity:getLifeState()

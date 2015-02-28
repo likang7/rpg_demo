@@ -32,4 +32,16 @@ function GameScene:init()
     gameLayer:setPosition(origin.x, origin.y)
     -- gameLayer:setScale(2)
     self:addChild(gameLayer)
+
+    local function onNodeEvent(event)
+        if "exit" == event then
+           self:clearAll()
+        end
+    end
+    self:registerScriptHandler(onNodeEvent)
+end
+
+function clearAll()
+    local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+    spriteFrameCache:removeUnusedSpriteFrames()
 end

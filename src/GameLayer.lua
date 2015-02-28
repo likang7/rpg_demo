@@ -56,7 +56,7 @@ function GameLayer:initEntity(objectGroup)
     local object = objectGroup:getObject("bornPoint")
     local entityData = self.player:getHeroData() --EntityData:create(1)
     entityData:setGameMap(self.gameMap)
-    -- if entityData.pos ~= nil then
+    -- if entityData.pos == nil then
         entityData.pos = cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2)
     -- end
     local playerEntity = Entity:create(entityData)
@@ -99,6 +99,7 @@ function GameLayer:initEntity(objectGroup)
                 local entityData = EntityData:create(2, self.gameMap)
                 entityData.pos = cc.p(viewx, viewy)
                 entityData.rangeId = tonumber(object.rangeID)
+                entityData.detectRange = object.width
                 if entityData.rangeId ~= nil then
                     self.rangeFlags[entityData.rangeId] = false
                 end
@@ -110,7 +111,7 @@ function GameLayer:initEntity(objectGroup)
                 local dict = {
                     ['entity'] = monster,
                     ['gameMap'] = self.gameMap,
-                    ['bornPoint'] = cc.p(object.x+object.width/2, object.y+object.height/2),
+                    ['bornPoint'] = cc.p(viewx, viewy),
                     ['enemyEntity'] = {self.playerEntity},
                     ['detectRange'] = object.width/2,
                     ['catchRange'] = object.width/2,

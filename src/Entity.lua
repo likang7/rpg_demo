@@ -243,9 +243,6 @@ function Entity:showHurt(deltaHp, isCritial)
     
     -- 飘血
     local fontSize = 24
-    if isCritial == true then
-        fontSize = 28
-    end
     local bloodLabel = cc.Label:createWithSystemFont(tostring(-deltaHp), const.DEFAULT_FONT, fontSize)
     self:getParent():addChild(bloodLabel, 10)
     local rect = self:getTextureRect()
@@ -254,6 +251,10 @@ function Entity:showHurt(deltaHp, isCritial)
         bloodLabel:setColor(cc.c3b(0,0,255))
     else
         bloodLabel:setColor(cc.c3b(255, 0, 0))
+    end
+    bloodLabel:enableShadow()
+    if isCritial then
+        bloodLabel:setScale(1.5)
     end
     local moveup = cc.MoveBy:create(0.8, cc.p(0, 100))
     local callFunc = cc.CallFunc:create(function ()
@@ -358,18 +359,18 @@ function Entity:obtainItem(item)
     item:onObtain()
     -- 显示
     local msg = helper.getRewardInfoByItemInfo(info)
-    local bloodLabel = cc.Label:createWithSystemFont(msg, const.DEFAULT_FONT, 24)
-    self:getParent():addChild(bloodLabel, 10)
+    local label = cc.Label:createWithSystemFont(msg, const.DEFAULT_FONT, 24)
+    self:getParent():addChild(label, 10)
     local rect = self:getTextureRect()
-    bloodLabel:setPosition(self:getPositionX(), self:getPositionY() + rect.height - const.TILESIZE/2)
-    bloodLabel:setColor(cc.c3b(0, 255, 0))
-
+    label:setPosition(self:getPositionX(), self:getPositionY() + rect.height - const.TILESIZE/2)
+    label:setColor(cc.c3b(0, 255, 0))
+    label:enableShadow()
     local moveup = cc.MoveBy:create(0.8, cc.p(0, 100))
     local callFunc = cc.CallFunc:create(function ()
-        bloodLabel:removeFromParent(true)
+        label:removeFromParent(true)
     end)
     local seq = cc.Sequence:create(moveup, callFunc)
-    bloodLabel:runAction(seq)
+    label:runAction(seq)
 end
 
 -- skillId 暂时用不上
@@ -443,6 +444,12 @@ function Entity:init(data)
     self:setAnchorPoint(cc.p(0.5, 0.25))
 
     self:registerScriptHandler(onNodeEvent)
+
+    -- if data.detectRange ~= nil then
+    --     local drawNode = cc.DrawNode:create()
+    --     drawNode:drawDot(cc.p(const.TILESIZE, 0), data.detectRange, cc.c4f(0,0,1.0, 0.1))
+    --     self:addChild(drawNode, -1)
+    -- end
 end
 
 return Entity

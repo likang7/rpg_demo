@@ -165,6 +165,52 @@ function GameLayer:initTileMap(tilemapPath)
     self:initEntity(objects)
 end
 
+function GameLayer:updateHeroInfo()
+    local ui = self.ui
+
+    local panel = ui:getChildByName("InfoPanel")
+    local heroInfo = panel:getChildByName("heroInfo")
+
+    local heroNameLabel = heroInfo:getChildByName("heroName")
+    heroNameLabel:setString(self.player.name)
+
+    local heroLevelLabel = heroInfo:getChildByName("heroLevel")
+    heroLevelLabel:setString('Lv.' .. self.player.level)
+
+    local expLabel = heroInfo:getChildByName("expLabel")
+    expLabel:setString(self.player.exp)
+
+    local coinLabel = heroInfo:getChildByName("coinLabel")
+    coinLabel:setString(self.player.coin)
+
+    local heroData = self.player:getHeroData()
+
+    local attackLabel = heroInfo:getChildByName("attackLabel")
+    attackLabel:setString(heroData.atk)
+
+    local defenseLabel = heroInfo:getChildByName("defenseLabel")
+    defenseLabel:setString(heroData.def)
+
+    local hpLabel = heroInfo:getChildByName("hpLabel")
+    hpLabel:setString(heroData.hp)
+
+    local criticalLabel = heroInfo:getChildByName("criticalLabel")
+    criticalLabel:setString(heroData.criRate * 100 .. '%')
+
+    local antiCriticalLabel = heroInfo:getChildByName("antiCriticalLabel")
+    antiCriticalLabel:setString(heroData.antiCriRate * 100 .. '%')
+
+    local monsterInfo = panel:getChildByName("monsterInfo")
+    monsterInfo:setVisible(false)
+end
+
+function GameLayer:initUI()
+    self.ui = cc.CSLoader:createNode("gameUI.csb")
+    self:addChild(self.ui, 100)
+
+    self:updateHeroInfo()    
+end
+
 function GameLayer:init(dict)
     self:clearAll()
     
@@ -213,6 +259,8 @@ function GameLayer:init(dict)
                 monster:step(dt)
             end
         end
+
+        self:updateHeroInfo()
     end
 
     local scheduler = cc.Director:getInstance():getScheduler()
@@ -228,6 +276,8 @@ function GameLayer:init(dict)
     self:initTouchEvent()
 
     self:initKeyboardEvent()
+
+    self:initUI()
 end
 
 function GameLayer:saveRecord()

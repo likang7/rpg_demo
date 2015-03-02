@@ -39,6 +39,9 @@ function GameScene:init()
         end
     end
     self:registerScriptHandler(onNodeEvent)
+
+    self.ui = cc.CSLoader:createNode("welcomeUI.csb")
+    self:addChild(self.ui) 
 end
 
 function clearAll()

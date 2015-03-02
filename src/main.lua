@@ -108,7 +108,8 @@ local function main()
     -- run
     -- gameScene:addChild(createLayerMenu())
     require "GameScene"
-    local gameScene = GameScene:create()
+    require "WelcomeScene"
+    local gameScene = WelcomeScene:create()
 
     if cc.Director:getInstance():getRunningScene() then
         cc.Director:getInstance():replaceScene(gameScene)

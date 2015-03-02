@@ -49,7 +49,12 @@ function Entity:createAnimationFrames(isFullDir, pname, prefix, num)
     for _, dir in pairs(directions) do
         frames[dir] = {}
         for i = 0, num-1 do 
-            local name = string.format("%s-%s-%d%d.tga", pname, prefix, dir, i)
+            local name
+            if num > 10 then
+                name = string.format("%s-%s-%d%02d.tga", pname, prefix, dir, i)
+            else
+                name = string.format("%s-%s-%d%d.tga", pname, prefix, dir, i)
+            end
             table.insert(frames[dir], spriteFrameCache:getSpriteFrame(name))
         end
     end
@@ -80,7 +85,7 @@ end
 
 function Entity:setStandDirection(dir)
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-    local frame = spriteFrameCache:getSpriteFrame(string.format("bgj-stand-%d0.tga", dir))
+    local frame = spriteFrameCache:getSpriteFrame(string.format(self.name .. "-stand-%d0.tga", dir))
     self:setSpriteFrame(frame)
 end
 
@@ -183,7 +188,7 @@ function Entity:tryAttack()
         end
     end
 
-    self:playAnimation(self.attackAnimationFrames, cb, false, self.runAnimDelay * 0.8)
+    self:playAnimation(self.attackAnimationFrames, cb, false, self.runAnimDelay * 0.5)
 
     --技能特效
     local rect = self:getTextureRect()
@@ -421,6 +426,7 @@ function Entity:init(data)
 
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     spriteFrameCache:addSpriteFrames(self.texturePlist)
+    spriteFrameCache:addSpriteFrames('3000.plist')
     
     spriteFrameCache:addSpriteFrames(effectPath)
 

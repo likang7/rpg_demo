@@ -27,7 +27,7 @@ function EntityData:create(eid, gameMap)
                 camp=0, atk=100, def=10, hp=2000, maxhp=2000, controlType=const.ControlType.Keyboard,
                 atkRange=40, atkDelay=0.5}
     else
-        dict = {name='bgj', speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,
+        dict = {name='3000', speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,
                 camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5}
     end
 

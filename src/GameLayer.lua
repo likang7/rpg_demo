@@ -209,6 +209,10 @@ function GameLayer:initUI()
     self.ui = cc.CSLoader:createNode("gameUI.csb")
     self:addChild(self.ui, 100)
 
+    local panel = self.ui:getChildByName("InfoPanel")
+    local saveRecordBtn = panel:getChildByName("saveRecordBtn")
+    saveRecordBtn:addTouchEventListener(function () self:saveRecord() end)
+
     self:updateHeroInfo()    
 end
 
@@ -289,27 +293,31 @@ end
 
 function GameLayer:saveRecord()
     local gameInfo = {stageId=self.stageId, stageState=self:getStageState()}
-    -- self.player:updateRecord(gameInfo)
     self.player:saveRecord(gameInfo)
+end
+
+function GameLayer:updateRecord()
+    local gameInfo = {stageId=self.stageId, stageState=self:getStageState()}
+    self.player:updateRecord(gameInfo)
+    -- self.player:saveRecord(gameInfo)
 end
 
 function GameLayer:onNextStage()
     --1. 保存当前关卡记录
-    self:saveRecord()
+    self:updateRecord()
     --2. 切换到下一关
     local nextStageId = self.stageId + 1
     local dict = {stageId=nextStageId, player=self.player}
     self:init(dict)
-    self:saveRecord()
-    print('xxx')
+    self:updateRecord()
 end
 
 function GameLayer:onPrevStage()
-    self:saveRecord()
+    self:updateRecord()
     local prevStageId = self.stageId - 1
     local dict = {stageId=prevStageId, player=self.player}
     self:init(dict)
-    self:saveRecord()
+    self:updateRecord()
 end
 
 function GameLayer:initTouchEvent()
@@ -486,9 +494,11 @@ function GameLayer:setViewPointCenter(x, y)
 end
 
 function GameLayer:getStageState()
+    local px, py = self.playerEntity:getPosition()
     return {
         ['deadMonsterIds'] = self.deadMonsterIds,
         ['deadItemIds'] = self.deadItemIds,
+        ['heroPosition'] = {px, py}
     }
 end
 

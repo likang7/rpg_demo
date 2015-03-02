@@ -68,28 +68,39 @@ function GameRecorder:init()
 	self.record = json.decode(jsonStr)
 end
 
+function GameRecorder:initWithDefaultRecord()
+	local jsonStr = self:loadDefaultRecord()
+
+	self.record = json.decode(jsonStr)
+end
+
+function GameRecorder:loadDefaultRecord( )
+	self.isNewPlayer = true
+	local file = io.open(const.DEFAULT_RECORD)
+	local jsonStr = nil
+	if file == nil then
+		error("cannot read data through " .. const.DEFAULT_RECORD)
+	else
+		jsonStr = file:read('*a')
+		file:close()
+	end
+	assert(jsonStr ~= nil and jsonStr ~= '')
+	return jsonStr
+end
+
 function GameRecorder:loadRecord()
 	local file = io.open(self.recordPath, 'r')
 	local jsonStr = nil
 
 	if file == nil then
-		self.isNewPlayer = true
-
-		file = io.open(const.DEFAULT_RECORD)
-		if file == nil then
-			error("cannot read data through " .. const.DEFAULT_RECORD)
-		else
-			jsonStr = file:read('*a')
-			file:close()
-		end
+		return self:loadDefaultRecord()
 	else
 		self.isNewPlayer = false
 		jsonStr = file:read('*a')
 		file:close()
+		assert(jsonStr ~= nil and jsonStr ~= '')
+		return jsonStr
 	end
-
-	assert(jsonStr ~= nil and jsonStr ~= '')
-	return jsonStr
 end
 
 function GameRecorder:saveRecord()

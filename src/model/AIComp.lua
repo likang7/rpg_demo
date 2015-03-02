@@ -48,14 +48,12 @@ function AIComp:step()
 		if self.target ~= nil then
 			local path = self.gameMap:pathTo(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
 			entity:runPath(path)
-			self.status = AIStatus.running
+			self.status = AIStatus.attacking
 		end
 	elseif self.target ~= nil and self.target.status == const.Status.die then
 		self.target = nil
 		self:returnToBornPoint()
 		self.status = AIStatus.backing
-	elseif self.status == AIStatus.running then
-		self.status = AIStatus.attacking
 	elseif self.status == AIStatus.attacking then
 		local dis = self:getDistance(entity, self.target)
 		local disToBornPoint = cc.pGetDistance(cc.p(entity:getPosition()), self.bornPoint)
@@ -84,6 +82,9 @@ function AIComp:step()
 			cclog('undefinded in AIStatus:attacking')
 		end
 	elseif self.status == AIStatus.backing then
+		if entity.status ~= const.Status.run then
+			self:returnToBornPoint()
+		end
 		local t= cc.p(entity:getPosition())
 		local dis = cc.pGetDistance(cc.p(entity:getPosition()), self.bornPoint)
 		if dis <= self.gameMap.tileSize.width then
@@ -115,7 +116,7 @@ function AIComp:findTarget()
 	local pos = cc.p(self.entity:getPosition())
 	local targets = {}
 	for _, enemy in pairs(self.enemyEntity) do
-		if enemy:getLifeState() ~= const.LifeState.Die then
+		if enemy:getLifeState() == const.LifeState.Alive then
 			ex, ey = enemy:getPosition()
 			local dis = cc.pGetDistance(cc.p(ex, ey), pos)
 			if dis < math.max(self.atkRange, self.detectRange) and enemy:getLifeState() ~= const.LifeState.Die then

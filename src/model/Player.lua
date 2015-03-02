@@ -28,7 +28,11 @@ function Player:init()
 	else
 		self:initWithRecord()
 	end
-	
+end
+
+function Player:initWithDefaultRecord()
+	self.recorder:initWithDefaultRecord()
+	self:initWithRecord()
 end
 
 function Player:getPersistent()

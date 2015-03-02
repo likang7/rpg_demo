@@ -1,3 +1,6 @@
+require "model.Player"
+require "GameScene"
+
 WelcomeScene = class("WelcomeScene",
     function()
         return cc.Scene:create()  
@@ -18,16 +21,28 @@ function WelcomeScene:init()
     self:addChild(self.ui) 
 
     local ctnBtn = self.ui:getChildByName("ctnBtn")
-    -- ctnBtn:registerScriptTapHandler(self.onCtnJourneyTap)
+    ctnBtn:addTouchEventListener(function() self:onCtnJourneyTap() end)
+
+    local newBtn = self.ui:getChildByName("newJourneyBtn")
+    newBtn:addTouchEventListener(function() self:onNewJourneyTap() end)
 end
 
 function WelcomeScene:onCtnJourneyTap()
-	require "GameScene"
-	local gameScene = GameScene:create()
+    local player = Player:create()
+    local dict = {['player']=player}
 
-    if cc.Director:getInstance():getRunningScene() then
-        cc.Director:getInstance():replaceScene(gameScene)
-    else
-        cc.Director:getInstance():runWithScene(gameScene)
-    end
+	self:enterGameScene(dict)
+end
+
+function WelcomeScene:onNewJourneyTap()
+    local player = Player:create()
+    player:initWithDefaultRecord()
+
+    local dict = {['player']=player}
+    self:enterGameScene(dict)
+end
+
+function WelcomeScene:enterGameScene(dict)
+    local gameScene = GameScene:create(dict)
+    cc.Director:getInstance():replaceScene(gameScene)
 end

@@ -107,7 +107,6 @@ local function main()
 
     -- run
     -- gameScene:addChild(createLayerMenu())
-    require "GameScene"
     require "WelcomeScene"
     local gameScene = WelcomeScene:create()
 

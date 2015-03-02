@@ -17,15 +17,15 @@ function GameScene:createGameLayer()
 end
 
 
-function GameScene:create()
+function GameScene:create(dict)
     local scene = GameScene.new()
-    scene:init()
+    scene:init(dict)
 
     return scene
 end
 
-function GameScene:init()
-    self.player = Player:create()
+function GameScene:init(dict)
+    self.player = dict.player
 
     local origin = cc.Director:getInstance():getVisibleOrigin()
     local gameLayer = self:createGameLayer()
@@ -39,9 +39,6 @@ function GameScene:init()
         end
     end
     self:registerScriptHandler(onNodeEvent)
-
-    self.ui = cc.CSLoader:createNode("welcomeUI.csb")
-    self:addChild(self.ui) 
 end
 
 function clearAll()

@@ -99,7 +99,7 @@ function GameLayer:initEntity(objectGroup)
                 local entityData = EntityData:create(2, self.gameMap)
                 entityData.pos = cc.p(viewx, viewy)
                 entityData.rangeId = tonumber(object.rangeID)
-                entityData.detectRange = object.width
+                entityData.detectRange = object.width/2
                 if entityData.rangeId ~= nil then
                     self.rangeFlags[entityData.rangeId] = false
                 end
@@ -212,6 +212,10 @@ function GameLayer:initUI()
     self:updateHeroInfo()    
 end
 
+function GameLayer:toggleShowDetectRange(  )
+    self.showDetectRange = not self.showDetectRange
+end
+
 function GameLayer:init(dict)
     self:clearAll()
     
@@ -222,6 +226,8 @@ function GameLayer:init(dict)
 
     self:initTileMap(tilemapPath)
 
+    self.showDetectRange = false
+
     -- add bg
     -- local sceneTexturePath = "scene.jpg"
     -- local bg = cc.Sprite:create(sceneTexturePath)
@@ -230,7 +236,6 @@ function GameLayer:init(dict)
     -- bg:setPosition(origin.x, origin.y + self.gameMap.map_h - bg:getTextureRect().height)
     -- self:addChild(bg, -1)
 
-    local last_dir = Direction.S
     local function tick(dt)
         -- 更新玩家
         if self.playerEntity ~= nil and self.playerEntity:getLifeState() ~= const.LifeState.Die then
@@ -257,6 +262,7 @@ function GameLayer:init(dict)
                 self:removeChild(monster, true)
                 self.deadMonsterIds[k] = true
             else
+                monster:setDetectRangeShow(self.showDetectRange)
                 monster:step(dt)
             end
         end
@@ -377,7 +383,7 @@ function GameLayer:initKeyboardEvent()
 
     local function onKeyPressed(keyCode, event)
         -- TOFIX: 这里要偏移3才对的上，quick Lua的Bug?
-        keyCode = keyCode - 3
+        -- keyCode = keyCode - 3
         cclog(string.format("Key with keycode %d pressed", keyCode))
         if keyCode == cc.KeyCode.KEY_W or keyCode == cc.KeyCode.KEY_CAPITAL_W then
             self.pressSum = self.pressSum + KEYW
@@ -392,11 +398,13 @@ function GameLayer:initKeyboardEvent()
 
         if keyCode == cc.KeyCode.KEY_I or keyCode == cc.KeyCode.KEY_CAPITAL_I then
             self:OnAttackPressed()
+        elseif keyCode == cc.KeyCode.KEY_TAB then
+            self:toggleShowDetectRange()
         end
     end
 
     local function onKeyReleased(keyCode, event)
-        keyCode = keyCode - 3
+        -- keyCode = keyCode - 3
         -- cclog(string.format("Key with keycode %d released", keyCode))
         if keyCode == cc.KeyCode.KEY_W or keyCode == cc.KeyCode.KEY_CAPITAL_W then
             self.pressSum = self.pressSum - KEYW

@@ -21,7 +21,7 @@ local IDLE_DELAYTIME = 1
 local function onNodeEvent(tag)
     if tag == "exit" then
         print("xxxxxxxxxxxxxxxxxxxxxx")
-        -- self.runAnimationFrames:release()        
+        -- self.runAnimationFrames:release()      
     end
 end
 
@@ -61,7 +61,7 @@ function Entity:createAnimationFrames(isFullDir, pname, prefix, num)
     return frames
 end
 
-function Entity:playAnimation(frames, callback, isFullDir, dt, target)
+function Entity:playAnimation(frames, callback, isFullDir, dt, target, tag)
     if target == nil then
         target = self
     end
@@ -78,8 +78,14 @@ function Entity:playAnimation(frames, callback, isFullDir, dt, target)
         local callFunc = cc.CallFunc:create(callback)
         local seq = cc.Sequence:create(animate, callFunc)
         target:runAction(seq)
+        -- if tag ~= nil then
+        --     seq:setTag(tag)
+        -- end
     else
         target:runAction(animate)
+        -- if tag ~= nil then
+        --     animate:setTag(tag)
+        -- end
     end
 end
 
@@ -188,7 +194,7 @@ function Entity:tryAttack()
         end
     end
 
-    self:playAnimation(self.attackAnimationFrames, cb, false, self.runAnimDelay * 0.5)
+    self:playAnimation(self.attackAnimationFrames, cb, false, self.runAnimDelay * 0.5, self, self.atkAnimateTag)
 
     --技能特效
     local rect = self:getTextureRect()
@@ -236,6 +242,7 @@ function Entity:setStatus(status)
             self.idleScheduleID = nil
         end
     end
+    self:stopActionByTag(self.atkAnimateTag)
     self.status = status
 end
 
@@ -296,6 +303,9 @@ function Entity:showHurt(deltaHp, isCritial)
             if self.sechedulerAIID ~= nil then
                 scheduler:unscheduleScriptEntry(self.sechedulerAIID)
             end
+            if self.drawNode ~= nil then
+                self.drawNode:removeFromParent(true)
+            end
             self:setVisible(false)
             self:setStatus(Status.die)
         end
@@ -351,6 +361,30 @@ function Entity:step(dt)
 
     -- 更新角色位置，以及跑的动画
     self:updatePosition()
+
+    -- 更新警戒范围的显示
+    self:updateDetectRangeShow()
+end
+
+function Entity:updateDetectRangeShow()
+    if self.showDetectRange == true and self.detectRange ~= nil then
+        if self.drawNode == nil then
+            self.drawNode = cc.DrawNode:create()
+            local x, y = self:getPosition()
+            self.drawNode:drawDot(cc.p(x, y), self.detectRange, cc.c4f(0,0,1.0, 0.2))
+            self:getParent():addChild(self.drawNode, 1)
+        else
+            self.drawNode:setVisible(true)
+        end
+    else
+        if self.drawNode ~= nil then
+            self.drawNode:setVisible(false)
+        end
+    end
+end
+
+function Entity:setDetectRangeShow(flag)
+    self.showDetectRange = flag
 end
 
 function Entity:updateDir(dir)
@@ -421,6 +455,8 @@ function Entity:init(data)
     self.runAnimateTag = 11
     self.idleActionTag = 12
     self.idleScheduleID = nil
+
+    self.atkAnimateTag = 13
     
     self.status = Status.idle
     self.aiComp = nil
@@ -451,11 +487,9 @@ function Entity:init(data)
 
     self:registerScriptHandler(onNodeEvent)
 
-    -- if data.detectRange ~= nil then
-    --     local drawNode = cc.DrawNode:create()
-    --     drawNode:drawDot(cc.p(const.TILESIZE, 0), data.detectRange, cc.c4f(0,0,1.0, 0.1))
-    --     self:addChild(drawNode, -1)
-    -- end
+    self.detectRange = data.detectRange
+    self.drawNode = nil
+    self.showDetectRange = true
 end
 
 return Entity

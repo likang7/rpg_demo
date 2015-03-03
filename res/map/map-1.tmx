@@ -8,12 +8,12 @@
  </tileset>
  <layer name="floor" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJydlltOxDAMRUeRmP8ZVuE0+QD2vwmWwgpoRa05PZOAyofVxHlcP66dLuVyWVbpq7RVYp/nOPa1TSq+y/6NfW/VubqPF4jPd+k79nJOm2hHCCN1tCmkS/uIHeXZnqr9UY72t/Jsn/E67urC4dg+bfqvl3PSy9H/rrvTl4xV4Ju5rxifxW/CdzwyDvSZfOtaO4tfhdNgQ3KHnKjlmPumfdud9+uP3K4PnBzn2n2fL+XIi6Z76SNzwdjn+SiPmKZ+FG9yJWNPvrkecm77kiMhPHLJ+PSX9rRyjDUxiElucE7/ucf4rMe0J+NJrrl2XRPsVbTbd878D+3lPe4nUY4x4Zp743/qnxxyLzLPu7AtN/D7bZV3yccqr5AF/rnfzt4Gj0ccTv2nxBjcm2fp56jXMi8ZF3Kw/oLP3No31hh7HfdyH3V+c3JsfPYu38N3lBxmPmhf1dj9qk78J9f8Jtt/1yd1IZ1ro/3h/+xtYUwd91m/Ys9jXkf8493kHnsj/SIu+T7613L+RvhNWLaJdeF/F/vqM5zP+Nclo/8o9x7zy72aeaGtxmdsGcc2uM+17d7CddYGeTDCN58YX//Xur+ZM1061+IM3zXDeDM3rFP6+g1PW9+d
+   eJydlltuxCAQBFdIyV3A8JP7nyJHyQnildxKUQuJnI+RYQz0PHoGjvJ4HKeMU/op9ZpnXK9/T2n4Hte3Xmub9rVrfEC8f0g/sJZz2kQ7qjCio01VuthH7Fpe7WlaX8tsfy+v9hlv4KwhHI7t01P/9XZPRpn9Hzo7viRWFd/kvmF8F78L3/FIHOgz+Tb07y5+E06HDeEOOdHKnPuudTkz+hVezn/OjzLzoutc+shcMPbZX8tPTBswHG9yJbEn31wPmdu+cKQKj1wyPv2lPb3MsSYGMckNzuk/1xif9egYk2uuXdcEexXtjo85c+e/exDPcT8JFnnRypyz/P9P/ZND7kXm+RC2pUs+3mfx/8Taef3tbvB4xeHoPyXG4NrspZ+rXsu80AfatsNnbu0ba4y9jmu5jjrfORkbn73L5/AeJYeZD9rXNHa/ahv/yTXfyfbf9Uldlc610f/wf3e3MKaO+65fsecxryv+8Wxyj72RfhGXfF+9tZy/FX4Xlm1iXfjtYl+9h/Md/4Zk9Y5y7zG/3KuZF9pqfMaWceyL81zb7i3uX3ybxJcVvvnE+Ppd6/5mzgzpXIs7fNcM483csE7p6zfdV9/W
   </data>
  </layer>
  <layer name="block-1" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJztlckNwkAMRQ0ZxJmlBOBOoATgHkIjLJ1QCdAALQCVsBTAjxIkY2aEIwtxgC+9y9jzHcn2hIjoXCG6gCu4gUyJI9pGOlKX3/H5aNSoEjVBC7RBr060gecx0rF0+R3po1UfuTEYgCGYFPUvkY61y+9IH60S5E5BCmbFvQM8m4JuhfYdIM93LuzzTo9eLZC/BCtWPxagdvYNL+enov68+uyjmYVQrw7u9WwEn7HHa+3J1c5CqFe++iHtPLnaWQj1qkz9kydXOwu851znbP4ZUjx29cTlLJRVo4b+MaR4rOWJW9WHZ8yQ4rHBB+on8JwypHgsNdQv+1Zrpf0XlH2rtbLuv1XW/bfKuv9WWff/V/Tfv//+fXP/7ohiagw=
+   eJztls1xwkAMhQXewJmfEpLcbaeEwN04jSSkEypJaIAWCJUAKYBnbAZFaIk8mpzCm/kuK+0TWBKGiGjbIdqBPfgGlYpA9JnYKEN9R/OxaNAlGoIRGIPHPtEHPL8SG/NQ35E+VqXIzUAOnsC0qb9LbCxCfUf6WFUgdwZK8NLcW8NzKHjo0OoeyPNliPv8plOv3pA/B++sfiZA7eozXJxvmvqv3Z8+llmI9WodLs+e4TNRvBZKrnUWYr06Pv/eGSkeWyr1rbMQ65X2/WPaKLnWWeA959pW88+Q4rG9Epez0FaDOzxbhhSPjZS4Vyk8M4YUj+V/UL+A54whxWOlo/61/TzNd6rMf967vh/Wd0Hb32qrvPvvlXf/vfLuv1fe/f8vavtfyarb/t32z7J/B8L2a4Q=
   </data>
  </layer>
  <layer name="block-2" width="32" height="24">

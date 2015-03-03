@@ -1,0 +1,14 @@
+<Solution>
+  <PropertyGroup Name="GameUILayer" Version="2.1.0.0" Type="CocosStudio" />
+  <SolutionFolder>
+    <Group ctype="ResourceGroup">
+      <RootFolder Name=".">
+        <Project Name="gameUI.csd" />
+        <Image Name="ui.png" />
+        <Image Name="heroIcon.jpg" />
+        <Project Name="welcomeUI.csd" />
+        <Image Name="welcomeBg.jpg" />
+      </RootFolder>
+    </Group>
+  </SolutionFolder>
+</Solution>

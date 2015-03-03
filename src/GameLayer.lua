@@ -281,6 +281,9 @@ function GameLayer:init(dict)
                 if rangeId ~= nil then
                     self.rangeFlags[rangeId] = true
                 end
+                if self.playerEntity:getTarget() == monster then
+                    self.playerEntity:setTarget(nil)
+                end
                 self.monsterEntity[k] = nil
                 self:removeChild(monster, true)
                 self.deadMonsterIds[k] = true
@@ -487,7 +490,7 @@ function GameLayer:OnAttackPressed()
                 end
                 self.playerEntity:obtainItem(item)
                 self.items[k] = nil
-                self:removeChild(item, true)  
+                self:removeChild(item, true)
                 self.deadItemIds[k] = true
                 return
             end

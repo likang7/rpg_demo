@@ -554,7 +554,7 @@ function Entity:init(data)
 
     self.targetEntity = nil
 
-    self:showDialog()
+    -- self:showDialog()
 end
 
 return Entity

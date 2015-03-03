@@ -57,8 +57,9 @@ function GameMap:init(tilemapPath)
 end
 
 function GameMap:hashViewCoord(vx,  vy)
-    local tx, ty = self:convertToTiledSpace(vx, vy)
-    return tx * self.mapSize.height + ty
+    -- local tx, ty = self:convertToTiledSpace(vx, vy)
+    -- return tx * self.mapSize.height + ty
+    return vx * self.map_h + vy
 end
 
 function GameMap:isAvailable(tx, ty)

@@ -24,7 +24,7 @@ function EntityData:create(eid, gameMap)
     local dict
     if eid == 1 then
         dict = {name='bgj', displayName='白晶晶', speed=200, dir=Direction.S, criRate=0.5, antiCriRate=0.5,
-                camp=0, atk=100, def=10, hp=2000, maxhp=2000, controlType=const.ControlType.Keyboard,
+                camp=0, atk=100, def=10, hp=20000, maxhp=20000, controlType=const.ControlType.Keyboard,
                 atkRange=40, atkDelay=0.5, level=1}
     else
         dict = {name='3000', displayName='恶魔随从',speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,

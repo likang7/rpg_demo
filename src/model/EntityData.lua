@@ -264,5 +264,7 @@ function EntityData:init(dict, gameMap)
     self.deltaPos = cc.p(0, 0)
 
     self.gameMap = gameMap
+
+    self.dialog = "放弃吧！你走不出我的手掌心的！"
     
 end

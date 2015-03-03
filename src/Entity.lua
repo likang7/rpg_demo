@@ -477,6 +477,30 @@ function Entity:getData()
     return self._model
 end
 
+function Entity:showDialog()
+    if self.dialog == nil then
+         -- 显示
+        local fontSize = 20
+        local msg = self._model.dialog
+        self.dialog = cc.Label:createWithSystemFont(msg, const.DEFAULT_FONT, fontSize)
+        self:addChild(self.dialog, 10)
+        local rect = self:getTextureRect()
+        self.dialog:setPosition(0 + const.TILESIZE/2, 0 + rect.height)
+        self.dialog:setAnchorPoint(cc.p(0, 0))
+        self.dialog:enableShadow()
+        self.dialog:setWidth(fontSize * 8)
+    else
+        self.dialog:setVisible(true)
+    end
+    
+end
+
+function Entity:hideDialog()
+    if self.dialog ~= nil then
+        self.dialog:setVisible(false)
+    end
+end
+
 function Entity:init(data)
     self._model = data
     self.name = data.name
@@ -529,6 +553,8 @@ function Entity:init(data)
     self.showDetectRange = true
 
     self.targetEntity = nil
+
+    self:showDialog()
 end
 
 return Entity

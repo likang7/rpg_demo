@@ -229,25 +229,24 @@ function Entity:showHurt(deltaHp, isCritial)
     
     -- 飘血
     local fontSize = 24
-    local bloodLabel = cc.Label:createWithSystemFont(tostring(-deltaHp), const.DEFAULT_FONT, fontSize)
-    self:getParent():addChild(bloodLabel, 10)
-    local rect = self:getTextureRect()
-    bloodLabel:setPosition(self:getPositionX(), self:getPositionY() + rect.height - const.TILESIZE/2)
-    if self:getCamp() == 0 then
-        bloodLabel:setColor(cc.c3b(0,0,255))
-    else
-        bloodLabel:setColor(cc.c3b(255, 0, 0))
-    end
-    bloodLabel:enableShadow()
     if isCritial then
-        bloodLabel:setScale(1.5)
+        fontSize = fontSize * 1.5
     end
-    local moveup = cc.MoveBy:create(0.8, cc.p(0, 100))
-    local callFunc = cc.CallFunc:create(function ()
-        bloodLabel:removeFromParent(true)
-    end)
-    local seq = cc.Sequence:create(moveup, callFunc)
-    bloodLabel:runAction(seq)
+
+    local msg = tostring(-deltaHp)
+    if deltaHp <= 0 then
+        msg = 'MISS'
+    end
+
+    local color = cc.c3b(0, 0, 255)
+    if self:getCamp() ~= 0 then
+        color = cc.c3b(255, 0, 0)
+    end
+
+    local rect = self:getTextureRect()
+    local pos = cc.p(self:getPositionX(), self:getPositionY() + rect.height - const.TILESIZE/2)
+
+    helper.jumpMsg(self:getParent(), msg, color, pos, fontSize)
 
     -- 击中特效
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
@@ -344,8 +343,7 @@ function Entity:updateDetectRangeShow()
     if self.showDetectRange == true and self._model.detectRange ~= nil then
         if self.drawNode == nil then
             self.drawNode = cc.DrawNode:create()
-            local x, y = self:getPosition()
-            self.drawNode:drawDot(cc.p(x, y), self._model.detectRange, cc.c4f(0,0,1.0, 0.2))
+            self.drawNode:drawDot(self._model.bornPoint, self._model.detectRange, cc.c4f(0,0,1.0, 0.2))
             self:getParent():addChild(self.drawNode, 1)
         else
             self.drawNode:setVisible(true)
@@ -372,18 +370,9 @@ function Entity:obtainItem(item)
     item:onObtain()
     -- 显示
     local msg = helper.getRewardInfoByItemInfo(info)
-    local label = cc.Label:createWithSystemFont(msg, const.DEFAULT_FONT, 24)
-    self:getParent():addChild(label, 10)
     local rect = self:getTextureRect()
-    label:setPosition(self:getPositionX(), self:getPositionY() + rect.height - const.TILESIZE/2)
-    label:setColor(cc.c3b(0, 255, 0))
-    label:enableShadow()
-    local moveup = cc.MoveBy:create(0.8, cc.p(0, 100))
-    local callFunc = cc.CallFunc:create(function ()
-        label:removeFromParent(true)
-    end)
-    local seq = cc.Sequence:create(moveup, callFunc)
-    label:runAction(seq)
+    local pos = cc.p(self:getPositionX(), self:getPositionY() + rect.height - const.TILESIZE/2)
+    helper.jumpMsg(self:getParent(), msg, cc.c3b(0, 255, 0), pos, 20)
 end
 
 function Entity:playAtkAnimate()
@@ -477,6 +466,10 @@ function Entity:getData()
     return self._model
 end
 
+function Entity:getBornPoint()
+    return self._model.bornPoint
+end
+
 function Entity:showDialog()
     if self.dialog == nil then
          -- 显示
@@ -499,6 +492,10 @@ function Entity:hideDialog()
     if self.dialog ~= nil then
         self.dialog:setVisible(false)
     end
+end
+
+function Entity:isRunning()
+    return self._model.runFlag
 end
 
 function Entity:init(data)

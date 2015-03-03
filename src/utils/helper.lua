@@ -94,9 +94,27 @@ local function getRewardInfoByItemInfo(itemInfo)
     return s
 end
 
+local function jumpMsg(parent, msg, color, pos, fontSize)
+    local label = cc.Label:createWithSystemFont(msg, const.DEFAULT_FONT, fontSize)
+    label:enableShadow()
+    label:setPosition(pos)
+    label:setColor(color)
+    local moveup = cc.MoveBy:create(0.6, cc.p(0, 100))
+    local scaleBy = cc.ScaleBy:create(0.3, 1.5)
+    local scaleBack = scaleBy:reverse()
+    local spawn = cc.Spawn:create(moveup, cc.Sequence:create(scaleBy, scaleBack))
+    local callFunc = cc.CallFunc:create(function ()
+        label:removeFromParent(true)
+    end)
+    parent:addChild(label, const.DISPLAY_PRIORITY.JumpWord)
+    local seq = cc.Sequence:create(spawn, callFunc)
+    label:runAction(seq)
+end
+
 return {
 	isPointInCircularSector = isPointInCircularSector,
 	getDirection = getDirection,
     getItemInfoByItemId = getItemInfoByItemId,
     getRewardInfoByItemInfo = getRewardInfoByItemInfo,
+    jumpMsg = jumpMsg,
 }

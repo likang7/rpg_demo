@@ -23,7 +23,7 @@ end
 function AIComp:init(dict, enabled)
 	self.entity = dict.entity
 	self.gameMap = dict.gameMap
-	self.bornPoint = dict.bornPoint
+	self.bornPoint = dict.entity:getBornPoint()
 	self.enemyEntity = dict.enemyEntity
 	self.atkRange = dict.entity:getAtkRange()
 	self.detectRange = dict.entity:getDetectRange()
@@ -82,12 +82,9 @@ function AIComp:step()
 			cclog('undefinded in AIStatus:attacking')
 		end
 	elseif self.status == AIStatus.backing then
-		if entity.status ~= const.Status.run then
-			self:returnToBornPoint()
-		end
 		local t= cc.p(entity:getPosition())
 		local dis = cc.pGetDistance(cc.p(entity:getPosition()), self.bornPoint)
-		if dis <= self.gameMap.tileSize.width then
+		if dis <= self.gameMap.tileSize.width / 2 or not entity:isRunning() then
 			self.status = AIStatus.idle
 		end
 	end

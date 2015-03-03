@@ -225,6 +225,13 @@ function EntityData:setGameMap( gameMap )
     self.gameMap = gameMap
 end
 
+function EntityData:setBornPoint(p, resetPos)
+    self.bornPoint = p
+    if self.pos == nil or resetPos == true then
+        self.pos = p
+    end
+end
+
 function EntityData:init(dict, gameMap)
     self.name = dict.name
     self.displayName = dict.displayName
@@ -256,6 +263,7 @@ function EntityData:init(dict, gameMap)
     self.runFlag = false
     self.controlType = dict.controlType
     self.pos = dict.pos
+    self.bornPoint = dict.pos
     self.path = {}
     self.pathIdx = 1
     self.runTimeUsed = 0

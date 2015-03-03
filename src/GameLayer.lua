@@ -61,9 +61,9 @@ function GameLayer:initEntity(objectGroup)
     local entityData = self.player:getHeroData() --EntityData:create(1)
     entityData:setGameMap(self.gameMap)
     if px == nil or py == nil then
-        entityData.pos = cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2)
+        entityData:setBornPoint(cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2), true)
     else
-        entityData.pos = cc.p(px, py)
+        entityData:setBornPoint(cc.p(px, py), true)
     end
     local playerEntity = Entity:create(entityData)
     self.playerEntity = playerEntity
@@ -82,7 +82,7 @@ function GameLayer:initEntity(objectGroup)
             -- 初始化NPC
             local entityData = EntityData:create(2, self.gameMap)
             local px, py = object.x+const.TILESIZE/2, object.y+const.TILESIZE/2
-            entityData.pos = cc.p(px, py)
+            entityData:setBornPoint(cc.p(px, py))
             local npc = Entity:create(entityData)
             self:addChild(npc, 2)
             table.insert(self.npcs, npc)
@@ -103,7 +103,7 @@ function GameLayer:initEntity(objectGroup)
             local hashId = tostring(self.gameMap:hashViewCoord(viewx, viewy))
             if self.deadMonsterIds[hashId] == nil then
                 local entityData = EntityData:create(2, self.gameMap)
-                entityData.pos = cc.p(viewx, viewy)
+                entityData:setBornPoint(cc.p(viewx, viewy))
                 entityData.rangeId = tonumber(object.rangeID)
                 entityData.detectRange = object.width/2
                 if entityData.rangeId ~= nil then
@@ -117,7 +117,6 @@ function GameLayer:initEntity(objectGroup)
                 local dict = {
                     ['entity'] = monster,
                     ['gameMap'] = self.gameMap,
-                    ['bornPoint'] = cc.p(viewx, viewy),
                     ['enemyEntity'] = {self.playerEntity},
                     ['catchRange'] = object.width/2,
                 }

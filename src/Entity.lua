@@ -305,6 +305,10 @@ function Entity:setAIComp(comp)
     self.aiComp = comp
 end
 
+function Entity:setDialogComp(comp)
+    self.dialogComp = comp
+end
+
 function Entity:updatePosition()
     if self._model.runFlag == true then
         local p = self._model.pos
@@ -328,6 +332,10 @@ end
 function Entity:step(dt)
     if self.aiComp ~= nil then
         self.aiComp:step()
+    end
+
+    if self.dialogComp ~= nil then
+        self.dialogComp:step()
     end
 
     self._model:step(dt)
@@ -473,7 +481,7 @@ end
 function Entity:showDialog()
     if self.dialog == nil then
          -- 显示
-        local fontSize = 20
+        local fontSize = 22
         local msg = self._model.dialog
         self.dialog = cc.Label:createWithSystemFont(msg, const.DEFAULT_FONT, fontSize)
         self:addChild(self.dialog, 10)
@@ -481,11 +489,10 @@ function Entity:showDialog()
         self.dialog:setPosition(0 + const.TILESIZE/2, 0 + rect.height)
         self.dialog:setAnchorPoint(cc.p(0, 0))
         self.dialog:enableShadow()
-        self.dialog:setWidth(fontSize * 8)
+        self.dialog:setWidth(fontSize * 7)
     else
         self.dialog:setVisible(true)
     end
-    
 end
 
 function Entity:hideDialog()
@@ -520,6 +527,7 @@ function Entity:init(data)
     
     self.status = Status.idle
     self.aiComp = nil
+    self.dialogComp = nil
 
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     spriteFrameCache:addSpriteFrames(self.texturePlist)

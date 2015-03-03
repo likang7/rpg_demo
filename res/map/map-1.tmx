@@ -35,7 +35,7 @@
   <object id="2" name="bornPoint" type="2" x="384" y="192" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="3" name="2000" type="3" x="416" y="384" width="32" height="32">
+  <object id="3" name="2000" type="3" x="351" y="328" width="160" height="160">
    <ellipse/>
   </object>
  </objectgroup>

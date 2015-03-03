@@ -2,6 +2,7 @@ local const = require "const"
 require "Entity"
 require "model.EntityData"
 require "model.AIComp"
+require "model.DialogComp"
 require "Transfer"
 require "Item"
 require "GameMap"
@@ -82,11 +83,21 @@ function GameLayer:initEntity(objectGroup)
             -- 初始化NPC
             local entityData = EntityData:create(2, self.gameMap)
             local px, py = object.x+const.TILESIZE/2, object.y+const.TILESIZE/2
+            px, py = px+object.width/2, py+object.height/2
             entityData:setBornPoint(cc.p(px, py))
             local npc = Entity:create(entityData)
             self:addChild(npc, 2)
             table.insert(self.npcs, npc)
             self.gameMap:addBlock(px, py, const.BLOCK_TYPE.NPC)
+
+            --comp
+            local dict = {
+                ['entity'] = npc,
+                ['target'] = self.playerEntity,
+                ['detectRange'] = object.width/2,
+            }
+            local dialogComp = DialogComp:create(dict, true)
+            npc:setDialogComp(dialogComp)
         elseif otype == 4 then
             -- 初始化道具
             local viewx, viewy = object.x, object.y
@@ -290,6 +301,11 @@ function GameLayer:init(dict)
                 monster:setDetectRangeShow(self.showDetectRange)
                 monster:step(dt)
             end
+        end
+
+        -- 更新npc
+        for _, npc in ipairs(self.npcs) do
+            npc:step(dt)
         end
 
         self:updateHeroInfo()

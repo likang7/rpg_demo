@@ -26,7 +26,7 @@ function DialogComp:step()
 	end
 
 	if self.target == nil or self.target:getLifeState() == const.LifeState.Die then
-		self.enabled == false
+		self.enabled = false
 	end
 
 	self.cnt = self.cnt + 1
@@ -39,5 +39,8 @@ function DialogComp:step()
 
 	local dis = cc.pGetDistance(cc.p(ex, ey), cc.p(tx, ty))
 	if dis <= self.detectRange then
+		self.entity:showDialog()
+	else
+		self.entity:hideDialog()
 	end
 end

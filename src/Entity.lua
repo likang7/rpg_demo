@@ -78,14 +78,14 @@ function Entity:playAnimation(frames, callback, isFullDir, dt, target, tag)
         local callFunc = cc.CallFunc:create(callback)
         local seq = cc.Sequence:create(animate, callFunc)
         target:runAction(seq)
-        -- if tag ~= nil then
-        --     seq:setTag(tag)
-        -- end
+        if tag ~= nil then
+            seq:setTag(tag)
+        end
     else
         target:runAction(animate)
-        -- if tag ~= nil then
-        --     animate:setTag(tag)
-        -- end
+        if tag ~= nil then
+            animate:setTag(tag)
+        end
     end
 end
 
@@ -184,32 +184,6 @@ function Entity:tryAttack()
         return false
     end
 
-    self:stopActionByTag(self.runAnimateTag)
-    self._model.runFlag = false
-    self:setStatus(Status.attack)
-    local cb = function ()
-        if self.status == Status.attack then
-            self:setStandDirection(self.dir)
-            self:setStatus(Status.idle)
-        end
-    end
-
-    self:playAnimation(self.attackAnimationFrames, cb, false, self.runAnimDelay * 0.5, self, self.atkAnimateTag)
-
-    --技能特效
-    local rect = self:getTextureRect()
-    local effect = cc.Sprite:create()
-    local cb = function ()
-        effect:removeFromParent(true)
-    end
-    self:playAnimation(self.atkEffectAnimationFrames, cb, true, self.runAnimDelay * 0.8, effect)
-    local v = DirectionToVec[self.dir]
-    local r = const.TILESIZE * 0.8
-    local dx, dy = v[1] * r, v[2] * r -- * INVSQRT2
-    local moveBy = cc.MoveBy:create(0.3, cc.p(dx, dy))
-    effect:runAction(moveBy)
-    self:addChild(effect,-1)
-    effect:setPosition(rect.width * 0.8 + 0.5 * r * v[1], rect.height * 0.5 + 0.5 * r * v[2])
     return true
 end
 
@@ -367,11 +341,11 @@ function Entity:step(dt)
 end
 
 function Entity:updateDetectRangeShow()
-    if self.showDetectRange == true and self.detectRange ~= nil then
+    if self.showDetectRange == true and self._model.detectRange ~= nil then
         if self.drawNode == nil then
             self.drawNode = cc.DrawNode:create()
             local x, y = self:getPosition()
-            self.drawNode:drawDot(cc.p(x, y), self.detectRange, cc.c4f(0,0,1.0, 0.2))
+            self.drawNode:drawDot(cc.p(x, y), self._model.detectRange, cc.c4f(0,0,1.0, 0.2))
             self:getParent():addChild(self.drawNode, 1)
         else
             self.drawNode:setVisible(true)
@@ -412,10 +386,58 @@ function Entity:obtainItem(item)
     label:runAction(seq)
 end
 
+function Entity:playAtkAnimate()
+    self:stopActionByTag(self.runAnimateTag)
+    self._model.runFlag = false
+    self:setStatus(Status.attack)
+    local cb = function ()
+        if self.status == Status.attack then
+            self:setStandDirection(self.dir)
+            self:setStatus(Status.idle)
+        end
+    end
+
+    self:playAnimation(self.attackAnimationFrames, cb, false, self.atkAnimDelay, self, self.atkAnimateTag)
+
+    --技能特效
+    local rect = self:getTextureRect()
+    local effect = cc.Sprite:create()
+    local cb = function ()
+        effect:removeFromParent(true)
+    end
+    self:playAnimation(self.atkEffectAnimationFrames, cb, true, self.runAnimDelay, effect)
+    local v = DirectionToVec[self.dir]
+    local r = const.TILESIZE * 0.8
+    local dx, dy = v[1] * r, v[2] * r -- * INVSQRT2
+    local moveBy = cc.MoveBy:create(0.3, cc.p(dx, dy))
+    effect:runAction(moveBy)
+    self:addChild(effect,-1)
+    effect:setPosition(rect.width * 0.8 + 0.5 * r * v[1], rect.height * 0.5 + 0.5 * r * v[2])
+end
+
+function Entity:findTarget(enemys)
+    return self._model:findTarget(enemys)
+end
+
+function Entity:updateTarget(target)
+    self:setTarget(target)
+    if target ~= nil then
+        self._model:updateDirWithPoint(target._model.pos)
+        self:updateDir(self._model.dir)
+        self:setStandDirection(self._model.dir)
+    end
+end
+
 -- skillId 暂时用不上
 function Entity:attack(enemys, skillId)
-    -- 1. 尝试播放攻击动画(如果不能，返回)
-    self._model:attack(enemys, skillId)
+    local target = self:findTarget(enemys)
+    self:updateTarget(target)
+
+    -- 1. 播放攻击动画
+    self:playAtkAnimate()
+
+    -- 2. 攻击
+    self._model:attack({target}, skillId)
     local cb = function ()
         self._model.atkLock = false
     end
@@ -439,6 +461,46 @@ function Entity:getAtkRange()
     return self._model.atkRange
 end
 
+function Entity:getDetectRange()
+    return self._model.detectRange
+end
+
+function Entity:setTarget(target)
+    self.targetEntity = target
+end
+
+function Entity:getTarget()
+    return self.targetEntity
+end
+
+function Entity:getData()
+    return self._model
+end
+
+function Entity:showDialog()
+    if self.dialog == nil then
+         -- 显示
+        local fontSize = 20
+        local msg = self._model.dialog
+        self.dialog = cc.Label:createWithSystemFont(msg, const.DEFAULT_FONT, fontSize)
+        self:addChild(self.dialog, 10)
+        local rect = self:getTextureRect()
+        self.dialog:setPosition(0 + const.TILESIZE/2, 0 + rect.height)
+        self.dialog:setAnchorPoint(cc.p(0, 0))
+        self.dialog:enableShadow()
+        self.dialog:setWidth(fontSize * 8)
+    else
+        self.dialog:setVisible(true)
+    end
+    
+end
+
+function Entity:hideDialog()
+    if self.dialog ~= nil then
+        self.dialog:setVisible(false)
+    end
+end
+
 function Entity:init(data)
     self._model = data
     self.name = data.name
@@ -456,6 +518,7 @@ function Entity:init(data)
     self.idleActionTag = 12
     self.idleScheduleID = nil
 
+    self.atkAnimDelay = 0.03
     self.atkAnimateTag = 13
     
     self.status = Status.idle
@@ -463,7 +526,6 @@ function Entity:init(data)
 
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     spriteFrameCache:addSpriteFrames(self.texturePlist)
-    spriteFrameCache:addSpriteFrames('3000.plist')
     
     spriteFrameCache:addSpriteFrames(effectPath)
 
@@ -479,7 +541,7 @@ function Entity:init(data)
 
     self.atkEffectAnimationFrames = self:createAnimationFrames(true, 'effect', 'skill1', 8)
 
-    self:setStandDirection(Direction.S)
+    self:setStandDirection(self.dir)
 
     self:setStatus(Status.idle)
 
@@ -487,9 +549,12 @@ function Entity:init(data)
 
     self:registerScriptHandler(onNodeEvent)
 
-    self.detectRange = data.detectRange
     self.drawNode = nil
     self.showDetectRange = true
+
+    self.targetEntity = nil
+
+    self:showDialog()
 end
 
 return Entity

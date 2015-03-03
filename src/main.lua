@@ -1,6 +1,9 @@
 local cc = cc
 cc.FileUtils:getInstance():addSearchPath("src")
 cc.FileUtils:getInstance():addSearchPath("res")
+cc.FileUtils:getInstance():addSearchPath("res/ui")
+cc.FileUtils:getInstance():addSearchPath("res/skill")
+cc.FileUtils:getInstance():addSearchPath("res/role")
 -- CC_USE_DEPRECATED_API = true
 require "cocos.init"
 

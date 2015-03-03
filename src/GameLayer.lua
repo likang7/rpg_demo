@@ -43,12 +43,16 @@ function GameLayer:initEntity(objectGroup)
     self.npcs = {}
 
     local stageState = self.player:getStageState(self.stageId)
+    local px, py = nil, nil
     if stageState == nil then
         self.deadMonsterIds = {}
         self.deadItemIds = {}
     else
         self.deadMonsterIds = stageState.deadMonsterIds
         self.deadItemIds = stageState.deadItemIds
+        if stageState.heroPosition ~= nil then
+            px, py = stageState.heroPosition[1], stageState.heroPosition[2]
+        end
     end
 
     self.playerEntity = nil
@@ -56,9 +60,11 @@ function GameLayer:initEntity(objectGroup)
     local object = objectGroup:getObject("bornPoint")
     local entityData = self.player:getHeroData() --EntityData:create(1)
     entityData:setGameMap(self.gameMap)
-    -- if entityData.pos == nil then
+    if px == nil or py == nil then
         entityData.pos = cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2)
-    -- end
+    else
+        entityData.pos = cc.p(px, py)
+    end
     local playerEntity = Entity:create(entityData)
     self.playerEntity = playerEntity
     self:addChild(playerEntity, 5)
@@ -113,7 +119,6 @@ function GameLayer:initEntity(objectGroup)
                     ['gameMap'] = self.gameMap,
                     ['bornPoint'] = cc.p(viewx, viewy),
                     ['enemyEntity'] = {self.playerEntity},
-                    ['detectRange'] = object.width/2,
                     ['catchRange'] = object.width/2,
                 }
                 local aiComp = AIComp:create(dict, true)
@@ -170,39 +175,53 @@ function GameLayer:updateHeroInfo()
     local ui = self.ui
 
     local panel = ui:getChildByName("InfoPanel")
-    local heroInfo = panel:getChildByName("heroInfo")
+    local heroInfoPanel = panel:getChildByName("heroInfo")
 
-    local heroNameLabel = heroInfo:getChildByName("heroName")
+    local heroNameLabel = heroInfoPanel:getChildByName("heroName")
     heroNameLabel:setString(self.player.name)
 
-    local heroLevelLabel = heroInfo:getChildByName("heroLevel")
+    local heroLevelLabel = heroInfoPanel:getChildByName("heroLevel")
     heroLevelLabel:setString('Lv.' .. self.player.level)
 
-    local expLabel = heroInfo:getChildByName("expLabel")
+    local expLabel = heroInfoPanel:getChildByName("expLabel")
     expLabel:setString(self.player.exp)
 
-    local coinLabel = heroInfo:getChildByName("coinLabel")
+    local coinLabel = heroInfoPanel:getChildByName("coinLabel")
     coinLabel:setString(self.player.coin)
 
     local heroData = self.player:getHeroData()
+    self:updateEntityInfo(heroInfoPanel, heroData)
+   
+    local monsterInfoPanel = panel:getChildByName("monsterInfo")
+    local target = self.playerEntity:getTarget()
+    if target == nil then
+        monsterInfoPanel:setVisible(false)
+    else 
+        local targetData = target:getData()
+        self:updateEntityInfo(monsterInfoPanel, targetData)
+        local heroNameLabel = monsterInfoPanel:getChildByName("heroName")
+        heroNameLabel:setString(targetData.displayName)
+        local heroLevelLabel = monsterInfoPanel:getChildByName("heroLevel")
+        heroLevelLabel:setString('Lv.' .. targetData.level)
+        monsterInfoPanel:setVisible(true)
+    end
+end
 
-    local attackLabel = heroInfo:getChildByName("attackLabel")
-    attackLabel:setString(heroData.atk)
+function GameLayer:updateEntityInfo(panel, info)
+    local attackLabel = panel:getChildByName("attackLabel")
+    attackLabel:setString(info.atk)
 
-    local defenseLabel = heroInfo:getChildByName("defenseLabel")
-    defenseLabel:setString(heroData.def)
+    local defenseLabel = panel:getChildByName("defenseLabel")
+    defenseLabel:setString(info.def)
 
-    local hpLabel = heroInfo:getChildByName("hpLabel")
-    hpLabel:setString(heroData.hp)
+    local hpLabel = panel:getChildByName("hpLabel")
+    hpLabel:setString(info.hp)
 
-    local criticalLabel = heroInfo:getChildByName("criticalLabel")
-    criticalLabel:setString(heroData.criRate * 100 .. '%')
+    local criticalLabel = panel:getChildByName("criticalLabel")
+    criticalLabel:setString(info.criRate * 100 .. '%')
 
-    local antiCriticalLabel = heroInfo:getChildByName("antiCriticalLabel")
-    antiCriticalLabel:setString(heroData.antiCriRate * 100 .. '%')
-
-    local monsterInfo = panel:getChildByName("monsterInfo")
-    monsterInfo:setVisible(false)
+    local antiCriticalLabel = panel:getChildByName("antiCriticalLabel")
+    antiCriticalLabel:setString(info.antiCriRate * 100 .. '%')
 end
 
 function GameLayer:initUI()

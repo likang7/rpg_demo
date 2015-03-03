@@ -26,7 +26,7 @@ function AIComp:init(dict, enabled)
 	self.bornPoint = dict.bornPoint
 	self.enemyEntity = dict.enemyEntity
 	self.atkRange = dict.entity:getAtkRange()
-	self.detectRange = dict.detectRange
+	self.detectRange = dict.entity:getDetectRange()
 	self.catchRange = dict.catchRange
 	self.enabled = enabled
 	self.target = nil
@@ -44,7 +44,7 @@ function AIComp:step()
 	end
 	local entity = self.entity
 	if self.status == AIStatus.idle then
-		self.target = self:findTarget()
+		self.target = entity:findTarget(self.enemyEntity)
 		if self.target ~= nil then
 			local path = self.gameMap:pathTo(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
 			entity:runPath(path)
@@ -87,7 +87,7 @@ function AIComp:step()
 		end
 		local t= cc.p(entity:getPosition())
 		local dis = cc.pGetDistance(cc.p(entity:getPosition()), self.bornPoint)
-		if dis <= self.gameMap.tileSize.width then
+		if dis < self.gameMap.tileSize.width then
 			self.status = AIStatus.idle
 		end
 	end
@@ -109,30 +109,4 @@ function AIComp:canAttack(target)
 	local tpos = cc.p(target:getPosition())
 	local dis = cc.pGetDistance(tpos, pos)
 	return dis < self.atkRange
-end
-
--- 返回侦查范围内的目标(主动攻击型调用)
-function AIComp:findTarget()
-	local pos = cc.p(self.entity:getPosition())
-	local targets = {}
-	for _, enemy in pairs(self.enemyEntity) do
-		if enemy:getLifeState() == const.LifeState.Alive then
-			ex, ey = enemy:getPosition()
-			local dis = cc.pGetDistance(cc.p(ex, ey), pos)
-			if dis < math.max(self.atkRange, self.detectRange) and enemy:getLifeState() ~= const.LifeState.Die then
-				table.insert(targets, {["target"]=enemy, ["dis"]=dis})
-			end
-		end
-	end
-
-	local comp = function (a, b)
-		return a.dis < b.dis
-	end
-	table.sort(targets, comp)
-	local r = targets[1]
-	if r ~= nil then
-		return r.target
-	else
-		return nil
-	end
 end

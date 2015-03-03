@@ -23,12 +23,12 @@ end
 function EntityData:create(eid, gameMap)
     local dict
     if eid == 1 then
-        dict = {name='bgj', speed=200, dir=Direction.S, criRate=0.5, antiCriRate=0.5,
+        dict = {name='bgj', displayName='白晶晶', speed=200, dir=Direction.S, criRate=0.5, antiCriRate=0.5,
                 camp=0, atk=100, def=10, hp=2000, maxhp=2000, controlType=const.ControlType.Keyboard,
-                atkRange=40, atkDelay=0.5}
+                atkRange=40, atkDelay=0.5, level=1}
     else
-        dict = {name='3000', speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,
-                camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5}
+        dict = {name='3000', displayName='恶魔随从',speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,
+                camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5, level=3}
     end
 
     return self:createWithDict(dict, gameMap)
@@ -53,6 +53,11 @@ function EntityData:setKeyboardMoveDir(flag, dir)
         self.dir = dir
     end
     self.controlType = const.ControlType.Keyboard
+end
+
+function EntityData:updateDirWithPoint(p)
+    local dir = helper.getDirection(self.pos, p)
+    self.dir = dir
 end
 
 -- 更新用户点击屏幕行走时的位置
@@ -142,10 +147,39 @@ function EntityData:attack(enemys, skillId)
             local hurt, isCritial = self:calHurt(target._model, skillData)
             target._model.hp = target._model.hp - hurt
             if target._model.hp <= 0 then
+                target._model.hp = 0
                 target._model.lifeState = const.LifeState.Die
             end
             target:showHurt(hurt, isCritial)
         end
+    end
+end
+
+function EntityData:findTarget(enemys)
+    local targets = {}
+    for _, enemy in pairs(enemys) do
+        if enemy:getLifeState() == const.LifeState.Alive then
+            ex, ey = enemy:getPosition()
+            local dis = cc.pGetDistance(cc.p(ex, ey), self.pos)
+            local detectRange = self.detectRange
+            if detectRange == nil then
+                detectRange = self.atkRange
+            end
+            if dis < math.max(self.atkRange, detectRange) then
+                table.insert(targets, {["target"]=enemy, ["dis"]=dis})
+            end
+        end
+    end
+
+    local comp = function (a, b)
+        return a.dis < b.dis
+    end
+    table.sort(targets, comp)
+    local r = targets[1]
+    if r ~= nil then
+        return r.target
+    else
+        return nil
     end
 end
 
@@ -179,6 +213,7 @@ function EntityData:getPersistent()
         antiCriRate = self.antiCriRate,
         maxhp = self.maxhp,
         atkRange = self.atkRange,
+        detectRange = self.detectRange,
         pos = self.pos,
         texturePath = self.texturePath,
         effectPath = self.effectPath,
@@ -192,6 +227,7 @@ end
 
 function EntityData:init(dict, gameMap)
     self.name = dict.name
+    self.displayName = dict.displayName
     self.speed = dict.speed
     self.dir = dict.dir
     self.camp = dict.camp
@@ -202,11 +238,13 @@ function EntityData:init(dict, gameMap)
     self.antiCriRate = dict.antiCriRate
     self.maxhp = dict.maxhp
     self.atkRange = dict.atkRange
+    self.detectRange = dict.detectRange
     self.texturePath = self.name .. '.plist'
     self.effectPath = 'effect.plist'
     self.lifeState = const.LifeState.Alive
     self.atkDelay = dict.atkDelay
     self.atkLock = false
+    self.level = dict.level
 
     self.rangeId = dict.rangeId
 

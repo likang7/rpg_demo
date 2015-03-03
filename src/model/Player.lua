@@ -6,12 +6,6 @@ Player = class("Player")
 Player.__index = Player
 
 function Player:ctor()
-	self.name = 'demo'
-	self.level = 1
-	self.heroData = nil
-	self.exp = 0
-	self.coin = 0
-	self.package = {}
 	self.recorder = nil
 end
 
@@ -53,6 +47,13 @@ function Player:initWithRecord()
 		self.exp = playerInfo.exp
 		self.coin = playerInfo.coin
 		self.package = playerInfo.package
+	else
+		self.name = '白晶晶'
+		self.level = 1
+		self.heroData = nil
+		self.exp = 0
+		self.coin = 0
+		self.package = {}
 	end
 
 	local heroInfo = self.recorder:getHeroInfo()

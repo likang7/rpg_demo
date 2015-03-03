@@ -8,17 +8,17 @@
    eJyNltttwzAMRQ0F+c0eei3SxyItOkjbTJJO0k5VB7HQ42M66AdhO5J4L6lLMqfjNJU0TW22nm7vdba8WFmeY71iX8Z3heXlt6z3sd5w7nT8Wxs8GvzvcWp4GrOLY4aPgvWM8w2/e51xR+fIswHDewrOM6YS7GlpG+fA4PeIaXBiHFXrEafxrDrP3DH3LW3vuaZtLohTtLfIB/NPPuZA6zpXAqymfdQK8+33oj09reONNEMNFKxT1+bf0/qu+e28+y6JQ157WmvYb304LtYcuTnfzIvvkfXG2OyHOrQ2eT7CNjf7q2kbh7VM/64z9rAiv+aahW3O7i9F+NF6lm/HEOmkyId1NvK0t595pz6coyq/7h3WNH15FnSdZc2xZu/1acYT1TQ1cH2+Habp47Du8a4DzxTXB+ca9es6496B/bIYz0W1zJnIfsT7z9oXrRH7c8F+Oqz7VqQpx8+e6tlu7VDDETbzxL5G7UQzmnmJtGktDIxXYV/5kLdnGmNl3RCHuiIezzD278Pt/bJ8ux67fJALdW4+zJNr+/r8WWJ/X3DP0F/0P8kY5OK74v2ztoZdcO824+7Na9afZ6tz/jz7fZjtcQeTVsW/iwtny8DKMtYd+8nQ25cwz3iP6vteL/QscR8ix+d/5OAXNKaaWQ==
   </data>
  </layer>
- <layer name="floor-2" width="32" height="24">
+ <layer name="floor-2" width="32" height="24" visible="0">
   <data encoding="base64" compression="zlib">
    eJxjYGBguMSEiukNPjGh4lEwCkbBwAEftoGz25+VgSGHDUIPFMgaQP+PglGADwxk3uwC5klfNgg9EGC0bBgFo4C6AADiHAxK
   </data>
  </layer>
  <layer name="block-1" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJy7yMSAAS5jEcMHBFhJE0cGH7HY9RmP/T5Y5Cixnw+Lmhw89vNjUU9t+wvw2J9NB/9PwGLHeqDYBiD2o4P9pIJR+8m3Xw+oRh8Ja7JBxLXZUMXxYQMK7PcDqvFHwp5Q+73ZEGIBbKhq0HEABfajg0yo/dlsCLECNuxqCQFy7KcmGLWfsBpi8h+2Mp9a9qPnP3yY1LyJK18ig05QHgKa18VKGCPnTWLUdxOZ//MJ5G98ZQM55QK5AFvZQCtwhpmB4Swz7e0ZBSMbAADvAi86
+   eJy9lEtOwzAQhqNE8RK4Rhwbeo3SUnoNCIheo48F5ygLuAYIFoiTIC6Arcyok6kfsdRkpF9xJo4//7bH33l2FD+OXCguSn++MmPpvH3WIAVPm/91sP4C/LnjW4xvJYEpgYtzOnP8+xDgnzv6h/jotyJsOh8XfxXgN4n+0TPug8q7c3Lxnx2MV5N7M1ok8hXj18S7z39qhPia+EXvVcT/KfnoVxHPePb1CPyK8CVj2/al6XNFVIn231p08yFNAnzJao7uh20vTJ9boinwZ+KQW4puH65lhF8z/3gnKMdZvgN+Iw65lTju1yfw/GviFyU9/FMGnn+dd2tfkzUYi1+ztcf3ofm09hRZ98ciyzZFv/pz3fl9+bjXuObIvgfx+gsptTYnpP4pewvsudHa1pAZb1PGRWuzT/9t2a01zpZQ/0+R+g7dDbF7gd55DWPb+aSE626IhWbe34u2vYd3X3yab1+J8/PxrdcP8L4G7g7ehwisLdSe7DvXEHFjxr02mnmYQ/NpWMYLY+5G5MfW4B/h82VE
   </data>
  </layer>
- <objectgroup name="object">
+ <objectgroup name="object" visible="0">
   <object id="1" name="transfer" type="1" x="32" y="0" width="128" height="32">
    <properties>
     <property name="direction" value="1"/>
@@ -319,7 +319,7 @@
    <ellipse/>
   </object>
  </objectgroup>
- <layer name="sky" width="32" height="24">
+ <layer name="sky" width="32" height="24" visible="0">
   <data encoding="base64" compression="zlib">
    eJzt1GkKglAYheFLapCltY0Go21k0zpsspXkSmoj0bCNLK0l9AYFEkVXEqnwwAP+UI9e76cQWbJkyRI/bu79OXtFCB8HHBEgVJLp9yT6C6oQOooowYCpJtMvkypdNdTRgIVmiv1tumx00EUP/RT7HbqGGGGMCaYp9t+zZq9ssMVOYt8knYDOECecH/pl5ujTGMyciTIqD/N3nSNf49to8e8re41FZx8DtG79i8h76/n43c9iv3ieKZ0uPMwS+v98W+aR9XQ4Hqa8z5cSfas/XftfzQWe4R2O
   </data>

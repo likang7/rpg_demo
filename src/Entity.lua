@@ -502,7 +502,6 @@ function Entity:init(data)
 
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     spriteFrameCache:addSpriteFrames(self.texturePlist)
-    spriteFrameCache:addSpriteFrames('3000.plist')
     
     spriteFrameCache:addSpriteFrames(effectPath)
 

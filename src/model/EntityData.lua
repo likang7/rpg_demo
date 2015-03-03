@@ -228,7 +228,7 @@ end
 function EntityData:setBornPoint(p, resetPos)
     self.bornPoint = p
     if self.pos == nil or resetPos == true then
-        self.pos = p
+        self.pos = cc.p(p.x, p.y)
     end
 end
 

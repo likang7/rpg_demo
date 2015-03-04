@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" nextobjectid="37">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
+  <image source="tileset.png" width="1024" height="2048"/>
+ </tileset>
+ <layer name="floor-1" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJz7xMrA8GkUj+JRPIpH8SgmAu9npB4e6faPdDyDjXQ8av+o/aP2UwcDAN+zjuo=
+  </data>
+ </layer>
+ <layer name="floor-2" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJxjZmBgYCYBm7EzLNgFpF2ZGBjWM1COlUnEIPtvAenzQHwbSiPj20ji9TjUIGNSAch+MrRRDWCzP42dgSEdiDPYSTdPg4UhgVL724D2tgNxBxn2q1PB/mVAe5cD8Qoy7Fejgv3UBInATJYExcnMmPJMtLQcCBqR7GzGYr8Sje0nBAZj/htp9guyMTDAsCEQGyFhYyQ5EBZCw4JomBz7qekfXP7A56fhBAjVz8gAVF8Cwz+Blu4hVCc3YSmT6Ak4Bth+9gG2/zitK6BBbv9Ah/9zKvsfAJa8QNE=
+  </data>
+ </layer>
+ <layer name="block-1" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJy1lkluFDEUhu2qrmqBgAU7wqrTYRIL2IQ96URMl+ghisR4hwQkphMkEKkDSWDBBQjNIoNYcYEMLJLQYc8J+IxdxHGqytWt5kmfXLZfv//5eVALkW+TUogGNKX+DhlbgS8ePhnyfDqwUBLioKTbBYK/g/dwC63b8AymYcZ8K/0t2IZapFuXcca/C81iKd1HsQOrzMeRbncJvgf78BytF/J4PW6URXsM3xq0Ij12Ck7DmaRmjF+jvQ4bJU+BezSlb/elk2Pg9H9H+fHuCVF/CK8hbf5SmdrEQqzBeqz1q1ZMn/7llBradhfdB/AqQ9+1QevfQfc+vOxT32c+/V5t0PpTcNEwlTKfzI3Ahf+g77MmtAyTRr9LG0lNmiVzyq9bQKNbcD0Ncfz+/dMsF4vh2jJvzQf4CGMpeVQCIYahCiMwin7y/qn366ZTg5o8fB997PSRb2h9T2Ss2R4/G+fHq8AwVHN8qsanYvSjMMfZMZ/vAfwqEGead3wGnvb4ns+yH3MWb2SxvAZhSvstrFjMy7/j7WS+HzsBJ2GX87gH+4Eed/ufif9VnUfoODnMmdxW8VuDR/AYnkCD3zehFRzVHQ/1+b/C91WQ9AMITS3tPnWu/2Cd22gMEWfTySGhVxvNuP+usb46tM+bNZwzOWxZdPrU/5lRb7s/q9d/5NypHIYsNrPezyB9PNEvU1+VQ179lakcOs6e23dA5bNotNx3zqdf1NQ+uHs+b+WwlKOVpa/aojmk6ds5fCPOOu2G+n9NLrEnn2T/l8JDbLPH1R1w77+bwx/hmbez
+  </data>
+ </layer>
+ <objectgroup name="object">
+  <object id="1" name="bornPoint" type="2" x="576" y="704" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="2" name="transfer" type="1" x="544" y="736" width="96" height="32">
+   <properties>
+    <property name="direction" value="1"/>
+   </properties>
+  </object>
+  <object id="3" name="3008" type="5" x="448" y="512" width="128" height="128">
+   <properties>
+    <property name="rangeID" value="1"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="4" name="1002" type="4" x="704" y="672" width="32" height="32">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+  </object>
+  <object id="5" name="3007" type="5" x="512" y="512" width="128" height="128">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="6" name="3008" type="5" x="576" y="512" width="128" height="128">
+   <properties>
+    <property name="rangeID" value="2"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="7" name="3010" type="5" x="512" y="288" width="160" height="160">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="8" name="3012" type="5" x="64" y="32" width="256" height="256">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="9" name="3011" type="5" x="0" y="256" width="160" height="160">
+   <properties>
+    <property name="rangeID" value="6"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="11" name="3007" type="5" x="256" y="480" width="96" height="96">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="12" name="3007" type="5" x="256" y="512" width="96" height="96">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="13" name="3008" type="5" x="256" y="640" width="128" height="128">
+   <properties>
+    <property name="rangeID" value="3"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="14" name="3009" type="5" x="0" y="576" width="192" height="192">
+   <properties>
+    <property name="rangeID" value="4"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="15" name="3010" type="5" x="512" y="352" width="96" height="96">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="16" name="3010" type="5" x="576" y="352" width="96" height="96">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="17" name="3010" type="5" x="608" y="160" width="128" height="128">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="18" name="3011" type="5" x="64" y="256" width="192" height="192">
+   <properties>
+    <property name="rangeID" value="7"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="19" name="3011" type="5" x="448" y="0" width="320" height="320">
+   <properties>
+    <property name="rangeID" value="5"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="20" name="1012" type="4" x="447" y="576" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="1"/>
+   </properties>
+  </object>
+  <object id="21" name="1008" type="4" x="668" y="593" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="2"/>
+   </properties>
+  </object>
+  <object id="22" name="3010" type="5" x="480" y="160" width="128" height="128">
+   <properties>
+    <property name="rangeID" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="23" name="1010" type="4" x="352" y="736" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="3"/>
+   </properties>
+  </object>
+  <object id="24" name="1011" type="4" x="320" y="736" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="3"/>
+   </properties>
+  </object>
+  <object id="25" name="1005" type="4" x="0" y="576" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="4"/>
+   </properties>
+  </object>
+  <object id="26" name="1012" type="4" x="32" y="704" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="4"/>
+   </properties>
+  </object>
+  <object id="27" name="1013" type="4" x="32" y="672" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="4"/>
+   </properties>
+  </object>
+  <object id="28" name="1013" type="4" x="736" y="96" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="5"/>
+   </properties>
+  </object>
+  <object id="29" name="1012" type="4" x="704" y="96" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="5"/>
+   </properties>
+  </object>
+  <object id="30" name="1011" type="4" x="672" y="96" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="5"/>
+   </properties>
+  </object>
+  <object id="31" name="1010" type="4" x="480" y="96" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="5"/>
+   </properties>
+  </object>
+  <object id="32" name="1009" type="4" x="448" y="96" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="5"/>
+   </properties>
+  </object>
+  <object id="33" name="1015" type="4" x="0" y="288" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="6"/>
+   </properties>
+  </object>
+  <object id="34" name="1018" type="4" x="32" y="288" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="6"/>
+   </properties>
+  </object>
+  <object id="35" name="1016" type="4" x="64" y="288" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="6"/>
+   </properties>
+  </object>
+  <object id="36" name="1019" type="4" x="224" y="288" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="7"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer name="sky-1" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzdlEtOwzAURR07OMxgAyAoILICBpUQailVB8AaAEXshIpl0BaYMocOaAtlyBr6Yx1cK44SQl7qhEYgrnTk51+u/RybMcaqDkvVrmTMlX6857AbalyNMzax6X5T1S26L8l/hLWNwQRMtf8KWM3p30zx/+Ydq49zelJycDYt7KsNOvoMxJL5/OUMe6HUg28fDH7JP67/5F8HUqPiGoIjTV2GfTYIbIvcvyfD+BJxFeWhppbtUwtXhWifYp0z8CGJASlqCsxFPq9RlhLyauFN40AAm/ttj+AJdMEm8mvjjpZQSpRbVtg/j2725X7RDvFuB+2uoOcGfer3UNtS1RYqbdABt+AO3Ft+H9djVTzjZutrCHpsQ/sPwZtu68GgH/lfXxEPdf0cF+DCNvM1lek+/qp6WH8fDHhyvaxzt49yjXgHHjTH4AScggrmV7nfHtU2zuw91uaJ9Hpc6wW8x/N0sOBzfiHyHa+byMsw1o2MDdZgkv8Ng5wnvXM/VTnjWTsF3Ufq3z/L6adyfyVCokpq1/fvOZ9bsfoEL0tJJA==
+  </data>
+ </layer>
+ <layer name="sky-2" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAP7IXSy1nJNIBCcBdKHx8g+0fBKBgFIwMsYmJgSEIqZ54xMzCwsTAwPGWE8JXQ6GdA+jlQzRMgfgrEK4H8VUC8mhFRblICjgDNPMpMvPqTQHtPAfFpRkS5CQMnoHQ7HvPwyREDXgLtfQXErxkx5V5QZjRRgBMYf1xAzM1EB8uGGFgIxIuA2AeIfYFYCZiulYE4DRhWGVjCy5SdYQG93KY2Gl80By1IYawKZHOMhvmIAgDCWBvH
+  </data>
+ </layer>
+</map>

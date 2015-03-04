@@ -7,6 +7,7 @@ require "model.DialogComp"
 require "Transfer"
 require "Item"
 require "GameMap"
+require("ShopLayer")
 
 local Direction = const.Direction
 local math = math
@@ -61,7 +62,6 @@ function GameLayer:initEntity(objectGroup)
     --先初始化玩家
     local object = objectGroup:getObject("bornPoint")
     local entityData = self.player:getHeroData() --EntityData:create(1)
-    entityData:setGameMap(self.gameMap)
     if px == nil or py == nil then
         entityData:setBornPoint(cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2), true)
     else
@@ -82,7 +82,7 @@ function GameLayer:initEntity(objectGroup)
             table.insert(self.transfers, transfer) 
         elseif otype == 3 then
             -- 初始化NPC
-            local entityData = EntityData:create(2, self.gameMap)
+            local entityData = EntityData:create(2)
             local px, py = object.x+const.TILESIZE/2, object.y+const.TILESIZE/2
             px, py = px+object.width/2, py+object.height/2
             entityData:setBornPoint(cc.p(px, py))
@@ -114,7 +114,7 @@ function GameLayer:initEntity(objectGroup)
             local viewx, viewy = object.x+object.width/2, object.y+object.height/2
             local hashId = tostring(self.gameMap:hashViewCoord(viewx, viewy))
             if self.deadMonsterIds[hashId] == nil then
-                local entityData = EntityData:create(2, self.gameMap)
+                local entityData = EntityData:create(2)
                 entityData:setBornPoint(cc.p(viewx, viewy))
                 entityData.rangeId = tonumber(object.rangeID)
                 entityData.detectRange = object.width/2
@@ -155,6 +155,7 @@ function GameLayer:clearAll()
     self.monsterEntity = {}
     self.transfers = {}
     self.gameMap = nil
+    Globals.gameMap = nil
     self.deadMonsterIds = {}
     self.deadItemIds = {}
 
@@ -170,13 +171,20 @@ function GameLayer:clearAll()
 end
 
 function GameLayer:initTileMap(tilemapPath)
-    local origin = cc.Director:getInstance():getVisibleOrigin()
+    local tilemap = cc.TMXTiledMap:create(tilemapPath)
+    self.gameMap = GameMap:create(tilemap)
+    Globals.gameMap = self.gameMap
 
-    self.gameMap = GameMap:create(tilemapPath)
-
-    local tilemap = self.gameMap.tilemap
-    -- tilemap:setPosition(origin.x, origin.y)
     self:addChild(tilemap)
+
+    -- 天空层
+    local skys = self.gameMap:getSkyLayers(tilemap)
+    for _, sky in ipairs(skys) do
+        sky:retain()
+        tilemap:removeChild(sky)
+        self:addChild(sky, const.DISPLAY_PRIORITY.Sky)
+        sky:release()
+    end
 
     local objects = tilemap:getObjectGroup("object")
     self:initEntity(objects)
@@ -241,7 +249,32 @@ function GameLayer:initUI()
 
     local panel = self.ui:getChildByName("InfoPanel")
     local saveRecordBtn = panel:getChildByName("saveRecordBtn")
-    saveRecordBtn:addTouchEventListener(function () self:saveRecord() end)
+
+    local responseLabel = panel:getChildByName("responseLabel")
+    local onSaveRecordClick = function ()
+        self:saveRecord()
+
+        responseLabel:setVisible(true)
+        responseLabel:setOpacity(255)
+
+        local tag = 22
+        responseLabel:stopActionByTag(tag)
+        local act = helper.createHintMsgAction(responseLabel)
+        act:setTag(tag)
+
+        responseLabel:runAction(act)
+    end
+    saveRecordBtn:addClickEventListener(onSaveRecordClick)
+
+    local returnBtn = panel:getChildByName("returnBtn")
+    returnBtn:setTitleText("回主界面")
+    local onReturnClick = function()
+        require "WelcomeScene"
+        self:clearAll()
+        local scene = WelcomeScene:create()
+        cc.Director:getInstance():replaceScene(scene)
+    end
+    returnBtn:addClickEventListener(onReturnClick)
 
     self:updateHeroInfo()    
 end
@@ -274,16 +307,16 @@ function GameLayer:init(dict)
         -- 更新玩家
         if self.playerEntity ~= nil and self.playerEntity:getLifeState() ~= const.LifeState.Die then
             self.playerEntity:step(dt)
-            local px, py = self.playerEntity:getPosition()
-            -- self:setViewPointCenter(px, py)   
-            if self.gameMap.skyLayer ~= nil then
-                local gid = self.gameMap.skyLayer:getTileGIDAt(cc.p(self.gameMap:convertToTiledSpace(px, py)))
-                if gid ~= 0 then
-                    self.playerEntity:setOpacity(200)
-                else
-                    self.playerEntity:setOpacity(255)
-                end 
-            end
+            -- local px, py = self.playerEntity:getPosition()
+            -- -- self:setViewPointCenter(px, py)   
+            -- if self.gameMap.skyLayer ~= nil then
+            --     local gid = self.gameMap.skyLayer:getTileGIDAt(cc.p(self.gameMap:convertToTiledSpace(px, py)))
+            --     if gid ~= 0 then
+            --         self.playerEntity:setOpacity(200)
+            --     else
+            --         self.playerEntity:setOpacity(255)
+            --     end 
+            -- end
         end
         -- 更新monster
         for k, monster in pairs(self.monsterEntity) do
@@ -317,7 +350,7 @@ function GameLayer:init(dict)
 
     local function onNodeEvent(event)
         if "exit" == event then
-           self:clearAll()
+
         end
     end
     self:registerScriptHandler(onNodeEvent)
@@ -327,10 +360,6 @@ function GameLayer:init(dict)
     self:initKeyboardEvent()
 
     self:initUI()
-
-    -- require("ShopLayer")
-    -- local shopLayer = ShopLayer:create()
-    -- self:addChild(shopLayer, const.DISPLAY_PRIORITY.UI - 1)
 end
 
 function GameLayer:saveRecord()
@@ -414,6 +443,11 @@ function GameLayer:initKeyboardEvent()
     end
 
     local function tryMoveOneStep()
+        if Globals.gameState ~= const.GAME_STATE.Playing then
+            self.playerEntity:stopRuning()
+            return
+        end
+
         local dir = getDirection(self.pressSum)
         local d = const.DirectionToVec
         self.playerEntity:runOneStep(dir)
@@ -432,21 +466,23 @@ function GameLayer:initKeyboardEvent()
     end
 
     local function onKeyPressed(keyCode, event)
-        -- TOFIX: 这里要偏移3才对的上，quick Lua的Bug?
-        -- keyCode = keyCode - 3
         -- cclog(string.format("Key with keycode %d pressed", keyCode))
-        if keyCode == cc.KeyCode.KEY_W or keyCode == cc.KeyCode.KEY_CAPITAL_W then
+        if keyCode == cc.KeyCode.KEY_W then
             self.pressSum = self.pressSum + KEYW
-        elseif keyCode == cc.KeyCode.KEY_A or keyCode == cc.KeyCode.KEY_CAPITAL_A then
+        elseif keyCode == cc.KeyCode.KEY_A then
             self.pressSum = self.pressSum + KEYA
-        elseif keyCode == cc.KeyCode.KEY_S or keyCode == cc.KeyCode.KEY_CAPITAL_S then
+        elseif keyCode == cc.KeyCode.KEY_S then
             self.pressSum = self.pressSum + KEYS
-        elseif keyCode == cc.KeyCode.KEY_D or keyCode == cc.KeyCode.KEY_CAPITAL_D then
+        elseif keyCode == cc.KeyCode.KEY_D then
             self.pressSum = self.pressSum + KEYD
+        end
+
+        if Globals.gameState ~= const.GAME_STATE.Playing then
+            return 
         end
         tryMoveOneStep()
 
-        if keyCode == cc.KeyCode.KEY_I or keyCode == cc.KeyCode.KEY_CAPITAL_I then
+        if keyCode == cc.KeyCode.KEY_I or keyCode == cc.KeyCode.KEY_CAPITAL_I or keyCode == cc.KeyCode.KEY_J then
             self:OnAttackPressed()
         elseif keyCode == cc.KeyCode.KEY_TAB then
             self:toggleShowDetectRange()
@@ -454,16 +490,19 @@ function GameLayer:initKeyboardEvent()
     end
 
     local function onKeyReleased(keyCode, event)
-        -- keyCode = keyCode - 3
         -- cclog(string.format("Key with keycode %d released", keyCode))
-        if keyCode == cc.KeyCode.KEY_W or keyCode == cc.KeyCode.KEY_CAPITAL_W then
+        if keyCode == cc.KeyCode.KEY_W then
             self.pressSum = self.pressSum - KEYW
-        elseif keyCode == cc.KeyCode.KEY_A or keyCode == cc.KeyCode.KEY_CAPITAL_A then
+        elseif keyCode == cc.KeyCode.KEY_A then
             self.pressSum = self.pressSum - KEYA
-        elseif keyCode == cc.KeyCode.KEY_S or keyCode == cc.KeyCode.KEY_CAPITAL_S then
+        elseif keyCode == cc.KeyCode.KEY_S then
             self.pressSum = self.pressSum - KEYS
-        elseif keyCode == cc.KeyCode.KEY_D or keyCode == cc.KeyCode.KEY_CAPITAL_D then
+        elseif keyCode == cc.KeyCode.KEY_D then
             self.pressSum = self.pressSum - KEYD
+        end
+
+        if Globals.gameState ~= const.GAME_STATE.Playing then
+            return 
         end
         tryMoveOneStep()
     end
@@ -496,7 +535,18 @@ function GameLayer:OnAttackPressed()
             return
         end
     end
-    -- 2. 检查NPC是否在前面
+
+    -- 2. 检查是否有商人在前面
+    local dir = self.playerEntity:getDir()
+    local r = self.playerEntity:getAtkRange()
+    local theta = 90
+    local shops = self.gameMap:searchTargetsInFan(px, py, dir, r, theta, self.npcs)
+    if next(shops) ~= nil then
+        local shopLayer = ShopLayer:create()
+        self:addChild(shopLayer, const.DISPLAY_PRIORITY.Shop)
+        return
+    end
+
     -- 3. 检查是否有道具 TODO: 可以优化，检查下脚下坐标里的是不是道具就可以了
     for k, item in pairs(self.items) do
         local rangeId = item.rangeId

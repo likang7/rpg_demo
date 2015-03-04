@@ -1,5 +1,5 @@
 <GameProjectFile>
-  <PropertyGroup Type="Scene" Name="conversationUI" ID="905d168a-7749-4c7e-ba82-29cd90fbc6f5" Version="2.1.0.0" />
+  <PropertyGroup Type="Scene" Name="conversationUI" ID="905d168a-7749-4c7e-ba82-29cd90fbc6f5" Version="2.1.2.0" />
   <Content ctype="GameProjectContent">
     <Content>
       <Animation Duration="0" Speed="1.0000" />
@@ -12,7 +12,7 @@
         <PrePosition X="0.0000" Y="0.0000" />
         <PreSize X="0.0000" Y="0.0000" />
         <Children>
-          <NodeObjectData Name="Image_1" ActionTag="1287704667" FrameEvent="" Tag="53" ObjectIndex="1" LeftMargin="387.2075" RightMargin="336.7925" TopMargin="321.5741" BottomMargin="296.4259" Scale9Enable="True" LeftEage="66" RightEage="38" TopEage="75" BottomEage="38" Scale9OriginX="66" Scale9OriginY="75" Scale9Width="154" Scale9Height="47" ctype="ImageViewObjectData">
+          <NodeObjectData Name="Image_1" ActionTag="1287704667" FrameEvent="" Tag="53" LeftMargin="387.2075" RightMargin="336.7925" TopMargin="321.5741" BottomMargin="296.4259" Scale9Enable="True" LeftEage="66" RightEage="38" TopEage="75" BottomEage="38" Scale9OriginX="66" Scale9OriginY="75" Scale9Width="154" Scale9Height="47" ObjectIndex="1" ctype="ImageViewObjectData">
             <Position X="537.2075" Y="371.4259" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />

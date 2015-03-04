@@ -63,6 +63,10 @@ function GameRecorder:updatePlayerInfo(info)
 end
 
 function GameRecorder:init()
+	self:initWithRecord()
+end
+
+function GameRecorder:initWithRecord()
 	local jsonStr = self:loadRecord()
 
 	self.record = json.decode(jsonStr)

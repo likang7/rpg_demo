@@ -18,15 +18,15 @@ end
 function Player:init()
 	self.recorder = GameRecorder:create()
 	if self.recorder.isNewPlayer then
-		self:initWithRecord()
+		self:_initWithRecord()
 	else
-		self:initWithRecord()
+		self:_initWithRecord()
 	end
 end
 
 function Player:initWithDefaultRecord()
 	self.recorder:initWithDefaultRecord()
-	self:initWithRecord()
+	self:_initWithRecord()
 end
 
 function Player:getPersistent()
@@ -40,6 +40,11 @@ function Player:getPersistent()
 end
 
 function Player:initWithRecord()
+	self.recorder:initWithRecord()
+	self:_initWithRecord()
+end
+
+function Player:_initWithRecord()
 	local playerInfo = self.recorder:getPlayerInfo()
 	if next(playerInfo) ~= nil then
 		self.name = playerInfo.name
@@ -111,4 +116,40 @@ end
 
 function Player:onUpgradeLevel()
 	self.level = self.level + 1
+end
+
+function Player:costCoin(num)
+	if self.coin < num then
+		return false
+	else
+		self.coin = self.coin - num
+		return true
+	end
+end
+
+function Player:buyAtk(price, addition)
+	if self:costCoin(price) then
+		self.heroData:setAtk(self.heroData.atk + addition)
+		return true
+	else
+		return false
+	end
+end
+
+function Player:buyDef(price, addition)
+	if self:costCoin(price) then
+		self.heroData:setDef(self.heroData.def + addition)
+		return true
+	else
+		return false
+	end
+end
+
+function Player:buyHp(price, addition)
+	if self:costCoin(price) then
+		self.heroData:setHp(self.heroData.hp + addition)
+		return true
+	else
+		return false
+	end
 end

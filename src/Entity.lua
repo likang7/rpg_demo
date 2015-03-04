@@ -474,6 +474,10 @@ function Entity:getData()
     return self._model
 end
 
+function Entity:getDir()
+    return self.dir
+end
+
 function Entity:getBornPoint()
     return self._model.bornPoint
 end

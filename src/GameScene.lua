@@ -35,13 +35,9 @@ function GameScene:init(dict)
 
     local function onNodeEvent(event)
         if "exit" == event then
-           self:clearAll()
+            -- local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+            -- spriteFrameCache:removeUnusedSpriteFrames()
         end
     end
     self:registerScriptHandler(onNodeEvent)
-end
-
-function clearAll()
-    local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-    spriteFrameCache:removeUnusedSpriteFrames()
 end

@@ -1,16 +1,16 @@
 <Solution>
-  <PropertyGroup Name="GameUILayer" Version="2.1.0.0" Type="CocosStudio" />
+  <PropertyGroup Name="GameUILayer" Version="2.1.2.0" Type="CocosStudio" />
   <SolutionFolder>
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
-        <Project Name="gameUI.csd" />
+        <Project Name="gameUI.csd" Type="Scene" />
         <Image Name="ui.png" />
         <Image Name="heroIcon.jpg" />
-        <Project Name="welcomeUI.csd" />
+        <Project Name="welcomeUI.csd" Type="Scene" />
         <Image Name="welcomeBg.jpg" />
-        <Project Name="shopUI.csd" />
+        <Project Name="shopUI.csd" Type="Scene" />
         <Image Name="shopUI.png" />
-        <Project Name="conversationUI.csd" />
+        <Project Name="conversationUI.csd" Type="Scene" />
         <Image Name="conversationUI.png" />
       </RootFolder>
     </Group>

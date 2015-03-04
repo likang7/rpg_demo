@@ -249,7 +249,32 @@ function GameLayer:initUI()
 
     local panel = self.ui:getChildByName("InfoPanel")
     local saveRecordBtn = panel:getChildByName("saveRecordBtn")
-    saveRecordBtn:addTouchEventListener(function () self:saveRecord() end)
+
+    local responseLabel = panel:getChildByName("responseLabel")
+    local onSaveRecordClick = function ()
+        self:saveRecord()
+
+        responseLabel:setVisible(true)
+        responseLabel:setOpacity(255)
+
+        local tag = 22
+        responseLabel:stopActionByTag(tag)
+        local act = helper.createHintMsgAction(responseLabel)
+        act:setTag(tag)
+
+        responseLabel:runAction(act)
+    end
+    saveRecordBtn:addClickEventListener(onSaveRecordClick)
+
+    local returnBtn = panel:getChildByName("returnBtn")
+    returnBtn:setTitleText("回主界面")
+    local onReturnClick = function()
+        require "WelcomeScene"
+        self:clearAll()
+        local scene = WelcomeScene:create()
+        cc.Director:getInstance():replaceScene(scene)
+    end
+    returnBtn:addClickEventListener(onReturnClick)
 
     self:updateHeroInfo()    
 end
@@ -325,7 +350,7 @@ function GameLayer:init(dict)
 
     local function onNodeEvent(event)
         if "exit" == event then
-           self:clearAll()
+
         end
     end
     self:registerScriptHandler(onNodeEvent)
@@ -418,6 +443,11 @@ function GameLayer:initKeyboardEvent()
     end
 
     local function tryMoveOneStep()
+        if Globals.gameState ~= const.GAME_STATE.Playing then
+            self.playerEntity:stopRuning()
+            return
+        end
+
         local dir = getDirection(self.pressSum)
         local d = const.DirectionToVec
         self.playerEntity:runOneStep(dir)

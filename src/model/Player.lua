@@ -18,15 +18,15 @@ end
 function Player:init()
 	self.recorder = GameRecorder:create()
 	if self.recorder.isNewPlayer then
-		self:initWithRecord()
+		self:_initWithRecord()
 	else
-		self:initWithRecord()
+		self:_initWithRecord()
 	end
 end
 
 function Player:initWithDefaultRecord()
 	self.recorder:initWithDefaultRecord()
-	self:initWithRecord()
+	self:_initWithRecord()
 end
 
 function Player:getPersistent()
@@ -40,6 +40,11 @@ function Player:getPersistent()
 end
 
 function Player:initWithRecord()
+	self.recorder:initWithRecord()
+	self:_initWithRecord()
+end
+
+function Player:_initWithRecord()
 	local playerInfo = self.recorder:getPlayerInfo()
 	if next(playerInfo) ~= nil then
 		self.name = playerInfo.name

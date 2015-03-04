@@ -26,14 +26,15 @@ function WelcomeScene:init()
     self:addChild(self.ui) 
 
     local ctnBtn = self.ui:getChildByName("ctnBtn")
-    ctnBtn:addTouchEventListener(function() self:onCtnJourneyTap() end)
+    ctnBtn:addClickEventListener(function() self:onCtnJourneyTap() end)
 
     local newBtn = self.ui:getChildByName("newJourneyBtn")
-    newBtn:addTouchEventListener(function() self:onNewJourneyTap() end)
+    newBtn:addClickEventListener(function() self:onNewJourneyTap() end)
 end
 
 function WelcomeScene:onCtnJourneyTap()
     local dict = {}
+    Globals.player:initWithRecord()
 	self:enterGameScene(dict)
 end
 

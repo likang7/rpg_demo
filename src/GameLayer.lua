@@ -1,4 +1,5 @@
 local const = require "const"
+local Globals = require "model.Globals"
 require "Entity"
 require "model.EntityData"
 require "model.AIComp"
@@ -236,7 +237,7 @@ end
 
 function GameLayer:initUI()
     self.ui = cc.CSLoader:createNode("gameUI.csb")
-    self:addChild(self.ui, 100)
+    self:addChild(self.ui, const.DISPLAY_PRIORITY.UI)
 
     local panel = self.ui:getChildByName("InfoPanel")
     local saveRecordBtn = panel:getChildByName("saveRecordBtn")
@@ -254,7 +255,7 @@ function GameLayer:init(dict)
     
     local tilemapPath = string.format("map/map-%d.tmx", dict.stageId)
 
-    self.player = dict.player
+    self.player = Globals.player
     self.stageId = dict.stageId
 
     self:initTileMap(tilemapPath)
@@ -326,6 +327,10 @@ function GameLayer:init(dict)
     self:initKeyboardEvent()
 
     self:initUI()
+
+    -- require("ShopLayer")
+    -- local shopLayer = ShopLayer:create()
+    -- self:addChild(shopLayer, const.DISPLAY_PRIORITY.UI - 1)
 end
 
 function GameLayer:saveRecord()
@@ -429,7 +434,7 @@ function GameLayer:initKeyboardEvent()
     local function onKeyPressed(keyCode, event)
         -- TOFIX: 这里要偏移3才对的上，quick Lua的Bug?
         -- keyCode = keyCode - 3
-        cclog(string.format("Key with keycode %d pressed", keyCode))
+        -- cclog(string.format("Key with keycode %d pressed", keyCode))
         if keyCode == cc.KeyCode.KEY_W or keyCode == cc.KeyCode.KEY_CAPITAL_W then
             self.pressSum = self.pressSum + KEYW
         elseif keyCode == cc.KeyCode.KEY_A or keyCode == cc.KeyCode.KEY_CAPITAL_A then

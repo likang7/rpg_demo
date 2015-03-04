@@ -20,7 +20,7 @@ local ANIMATE_TYPE = {idle=0, run=1, attack=2, hurt=3, die=4}
 local IDLE_DELAYTIME = 1
 local function onNodeEvent(tag)
     if tag == "exit" then
-        print("xxxxxxxxxxxxxxxxxxxxxx")
+        cclog("xxxxxxxxxxxxxxxxxxxxxx")
         -- self.runAnimationFrames:release()      
     end
 end
@@ -135,7 +135,7 @@ function Entity:_run(path, idx, cb_end, dir)
 
     -- 移动精灵，并递归走剩下的路径
     local distance = cc.pGetDistance(playerPos, path[idx])
-    -- print('t = ', distance/self.speed)
+    -- cclog('t = %f', distance/self.speed)
     local moveTo = cc.MoveTo:create(distance/self.speed, path[idx])
     local cb = cc.CallFunc:create(
         function() 
@@ -282,7 +282,7 @@ function Entity:showHurt(deltaHp, isCritial)
             self:setVisible(false)
             self:setStatus(Status.die)
         end
-        print('gua le')
+        cclog('gua le')
         self:setStatus(Status.dying)
         self:stopActionByTag(self.runAnimateTag)
         self:playAnimation(self.dyingAnimationFrames, cb, false, self.runAnimDelay)
@@ -483,13 +483,23 @@ function Entity:showDialog()
          -- 显示
         local fontSize = 22
         local msg = self._model.dialog
-        self.dialog = cc.Label:createWithSystemFont(msg, const.DEFAULT_FONT, fontSize)
-        self:addChild(self.dialog, 10)
+        self.label = cc.Label:createWithSystemFont(msg, const.DEFAULT_FONT, fontSize)
+        -- self:addChild(self.label, 10)
         local rect = self:getTextureRect()
-        self.dialog:setPosition(0 + const.TILESIZE/2, 0 + rect.height)
-        self.dialog:setAnchorPoint(cc.p(0, 0))
-        self.dialog:enableShadow()
-        self.dialog:setWidth(fontSize * 7)
+        self.label:setPosition(24, 5)
+        self.label:setAnchorPoint(cc.p(0, 0))
+        self.label:setColor(cc.c3b(0,0,0))
+        self.label:setWidth(fontSize * 6)
+        -- self.label:enableGlow(cc.c4b(0,0,255,255))
+
+        local labelBox = self.label:getBoundingBox()
+        self.dialog = ccui.Scale9Sprite:create(cc.rect(33,37.5,77,24), "conversationUI.png")
+        self.dialog:setAnchorPoint(cc.p(0,0))
+        self.dialog:setPreferredSize(cc.size(labelBox.width + 32, labelBox.height + 15))
+        self.dialog:setPosition(14+const.TILESIZE/2, rect.height - 50)
+
+        self.dialog:addChild(self.label)
+        self:addChild(self.dialog, 9)
     else
         self.dialog:setVisible(true)
     end

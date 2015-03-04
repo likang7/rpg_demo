@@ -195,7 +195,7 @@ function EntityData:onObtainItem(itemInfo)
     elseif itemInfo.block ~= nil then
         self.antiCriRate = self.antiCriRate + itemInfo.block / 100.0
     elseif itemInfo.coin ~= nil then
-        print('coin should not be controled by me')
+        cclog('coin should not be controled by me')
     end
     return s
 end

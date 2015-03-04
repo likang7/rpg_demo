@@ -429,7 +429,7 @@ function GameLayer:initKeyboardEvent()
     local function onKeyPressed(keyCode, event)
         -- TOFIX: 这里要偏移3才对的上，quick Lua的Bug?
         -- keyCode = keyCode - 3
-        cclog(string.format("Key with keycode %d pressed", keyCode))
+        -- cclog(string.format("Key with keycode %d pressed", keyCode))
         if keyCode == cc.KeyCode.KEY_W or keyCode == cc.KeyCode.KEY_CAPITAL_W then
             self.pressSum = self.pressSum + KEYW
         elseif keyCode == cc.KeyCode.KEY_A or keyCode == cc.KeyCode.KEY_CAPITAL_A then

@@ -170,14 +170,20 @@ function GameLayer:clearAll()
 end
 
 function GameLayer:initTileMap(tilemapPath)
-    local origin = cc.Director:getInstance():getVisibleOrigin()
-
-    self.gameMap = GameMap:create(tilemapPath)
+    local tilemap = cc.TMXTiledMap:create(tilemapPath)
+    self.gameMap = GameMap:create(tilemap)
     Globals.gameMap = self.gameMap
 
-    local tilemap = self.gameMap.tilemap
-    -- tilemap:setPosition(origin.x, origin.y)
     self:addChild(tilemap)
+
+    -- 天空层
+    local skys = self.gameMap:getSkyLayers(tilemap)
+    for _, sky in ipairs(skys) do
+        sky:retain()
+        tilemap:removeChild(sky)
+        self:addChild(sky, const.DISPLAY_PRIORITY.Sky)
+        sky:release()
+    end
 
     local objects = tilemap:getObjectGroup("object")
     self:initEntity(objects)
@@ -275,16 +281,16 @@ function GameLayer:init(dict)
         -- 更新玩家
         if self.playerEntity ~= nil and self.playerEntity:getLifeState() ~= const.LifeState.Die then
             self.playerEntity:step(dt)
-            local px, py = self.playerEntity:getPosition()
-            -- self:setViewPointCenter(px, py)   
-            if self.gameMap.skyLayer ~= nil then
-                local gid = self.gameMap.skyLayer:getTileGIDAt(cc.p(self.gameMap:convertToTiledSpace(px, py)))
-                if gid ~= 0 then
-                    self.playerEntity:setOpacity(200)
-                else
-                    self.playerEntity:setOpacity(255)
-                end 
-            end
+            -- local px, py = self.playerEntity:getPosition()
+            -- -- self:setViewPointCenter(px, py)   
+            -- if self.gameMap.skyLayer ~= nil then
+            --     local gid = self.gameMap.skyLayer:getTileGIDAt(cc.p(self.gameMap:convertToTiledSpace(px, py)))
+            --     if gid ~= 0 then
+            --         self.playerEntity:setOpacity(200)
+            --     else
+            --         self.playerEntity:setOpacity(255)
+            --     end 
+            -- end
         end
         -- 更新monster
         for k, monster in pairs(self.monsterEntity) do

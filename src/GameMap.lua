@@ -3,9 +3,9 @@ local const = require("const")
 local helper = require("utils.helper")
 GameMap = class("GameMap")
 
-function GameMap:create(tilemapPath)
+function GameMap:create(tilemap)
     local gameMap = GameMap.new()
-    gameMap:init(tilemapPath)
+    gameMap:init(tilemap)
 
     return gameMap
 end
@@ -13,10 +13,9 @@ end
 function GameMap:ctor()
 end
 
-function GameMap:init(tilemapPath)
-    self.tilemap = cc.TMXTiledMap:create(tilemapPath)
-    self.mapSize = self.tilemap:getMapSize()
-    self.tileSize = self.tilemap:getTileSize()
+function GameMap:init(tilemap)
+    self.mapSize = tilemap:getMapSize()
+    self.tileSize = tilemap:getTileSize()
 
     self.map = {}
     for x = 0, self.mapSize.width - 1 do
@@ -29,7 +28,7 @@ function GameMap:init(tilemapPath)
     -- 有可能有多个block层，全部读取
     local idx = 1
     while true do
-        local blockLayer = self.tilemap:getLayer("block-" .. idx)
+        local blockLayer = tilemap:getLayer("block-" .. idx)
         if blockLayer == nil then
             break
         end
@@ -44,16 +43,35 @@ function GameMap:init(tilemapPath)
         end
     end
 
-    local skyLayer = self.tilemap:getLayer("sky")
+    -- local skyLayer = tilemap:getLayer("sky")
     -- tilemap:removeChild(skyLayer)
     -- self:addChild(skyLayer, 10)
     -- skyLayer:setPosition(origin.x, origin.y)
     -- skyLayer:setVisible(false)
 
-    self.skyLayer = skyLayer
+    -- self.skyLayer = skyLayer
 
     self.map_w = self.mapSize.width * self.tileSize.width
     self.map_h = self.mapSize.height * self.tileSize.height
+end
+
+function GameMap:getSkyLayers(tilemap)
+    local skys = {}
+    local sky = tilemap:getLayer("sky") 
+    if sky ~= nil then
+        table.insert(skys, sky)
+    end
+
+    local idx = 1
+    while true do 
+        sky = tilemap:getLayer("sky-" .. idx)
+        if sky == nil then
+            break
+        end
+        table.insert(skys, sky)
+        idx = idx + 1
+    end
+    return skys
 end
 
 function GameMap:hashViewCoord(vx,  vy)

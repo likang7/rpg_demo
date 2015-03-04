@@ -8,6 +8,10 @@
         <Image Name="heroIcon.jpg" />
         <Project Name="welcomeUI.csd" />
         <Image Name="welcomeBg.jpg" />
+        <Project Name="shopUI.csd" />
+        <Image Name="shopUI.png" />
+        <Project Name="conversationUI.csd" />
+        <Image Name="conversationUI.png" />
       </RootFolder>
     </Group>
   </SolutionFolder>

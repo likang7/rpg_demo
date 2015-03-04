@@ -2,6 +2,8 @@
   <OpenedDocuments>
     <FilePathData Path="gameUI.csd" />
     <FilePathData Path="welcomeUI.csd" />
+    <FilePathData Path="shopUI.csd" />
+    <FilePathData Path="conversationUI.csd" />
   </OpenedDocuments>
-  <ActiveDocument Path="gameUI.csd" />
+  <ActiveDocument Path="conversationUI.csd" />
 </UserData>

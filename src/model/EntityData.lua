@@ -1,5 +1,6 @@
 local helper = require "utils.helper"
 local const = require "const"
+local Globals = require "model.Globals"
 local Direction = const.Direction
 local DirectionToVec = const.DirectionToVec
 local math = math
@@ -14,13 +15,13 @@ function EntityData:ctor()
 
 end
 
-function EntityData:createWithDict(dict, gameMap)
+function EntityData:createWithDict(dict)
     local data = EntityData.new()
-    data:init(dict, gameMap)
+    data:init(dict)
     return data
 end
 
-function EntityData:create(eid, gameMap)
+function EntityData:create(eid)
     local dict
     if eid == 1 then
         dict = {name='bgj', displayName='白晶晶', speed=200, dir=Direction.S, criRate=0.5, antiCriRate=0.5,
@@ -31,7 +32,7 @@ function EntityData:create(eid, gameMap)
                 camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5, level=3}
     end
 
-    return self:createWithDict(dict, gameMap)
+    return self:createWithDict(dict)
 end
 
 function EntityData:setPath(path)
@@ -102,7 +103,7 @@ function EntityData:updatePositionKeyboard(dt)
     end
 
     local newx, newy = self.pos.x + dx, self.pos.y + dy
-    if self.gameMap:isValidViewPoint(newx, newy) then
+    if Globals.gameMap:isValidViewPoint(newx, newy) then
         self.pos.x, self.pos.y = newx, newy
     end
 end
@@ -141,7 +142,7 @@ end
 function EntityData:attack(enemys, skillId)
     --TODO: 应该根据skillId来初始化
     skillData = {theta=90, r=self.atkRange, rate=1, additional=0}
-    local targets = self.gameMap:searchTargetsInFan(self.pos.x, self.pos.y, self.dir, skillData.r, skillData.theta, enemys)
+    local targets = Globals.gameMap:searchTargetsInFan(self.pos.x, self.pos.y, self.dir, skillData.r, skillData.theta, enemys)
     for _, target in pairs(targets) do
         if target._model.lifeState == const.LifeState.Alive then
             local hurt, isCritial = self:calHurt(target._model, skillData)
@@ -221,10 +222,6 @@ function EntityData:getPersistent()
     }
 end
 
-function EntityData:setGameMap( gameMap )
-    self.gameMap = gameMap
-end
-
 function EntityData:setBornPoint(p, resetPos)
     self.bornPoint = p
     if self.pos == nil or resetPos == true then
@@ -232,7 +229,7 @@ function EntityData:setBornPoint(p, resetPos)
     end
 end
 
-function EntityData:init(dict, gameMap)
+function EntityData:init(dict)
     self.name = dict.name
     self.displayName = dict.displayName
     self.speed = dict.speed
@@ -270,8 +267,6 @@ function EntityData:init(dict, gameMap)
     self.runTimeTotal = 0
     self.startPos = cc.p(0, 0)
     self.deltaPos = cc.p(0, 0)
-
-    self.gameMap = gameMap
 
     self.dialog = "放弃吧！你走不出我的手掌心的！"
     

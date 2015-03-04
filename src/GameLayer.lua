@@ -61,7 +61,6 @@ function GameLayer:initEntity(objectGroup)
     --先初始化玩家
     local object = objectGroup:getObject("bornPoint")
     local entityData = self.player:getHeroData() --EntityData:create(1)
-    entityData:setGameMap(self.gameMap)
     if px == nil or py == nil then
         entityData:setBornPoint(cc.p(object.x+const.TILESIZE/2, object.y+const.TILESIZE/2), true)
     else
@@ -82,7 +81,7 @@ function GameLayer:initEntity(objectGroup)
             table.insert(self.transfers, transfer) 
         elseif otype == 3 then
             -- 初始化NPC
-            local entityData = EntityData:create(2, self.gameMap)
+            local entityData = EntityData:create(2)
             local px, py = object.x+const.TILESIZE/2, object.y+const.TILESIZE/2
             px, py = px+object.width/2, py+object.height/2
             entityData:setBornPoint(cc.p(px, py))
@@ -114,7 +113,7 @@ function GameLayer:initEntity(objectGroup)
             local viewx, viewy = object.x+object.width/2, object.y+object.height/2
             local hashId = tostring(self.gameMap:hashViewCoord(viewx, viewy))
             if self.deadMonsterIds[hashId] == nil then
-                local entityData = EntityData:create(2, self.gameMap)
+                local entityData = EntityData:create(2)
                 entityData:setBornPoint(cc.p(viewx, viewy))
                 entityData.rangeId = tonumber(object.rangeID)
                 entityData.detectRange = object.width/2
@@ -155,6 +154,7 @@ function GameLayer:clearAll()
     self.monsterEntity = {}
     self.transfers = {}
     self.gameMap = nil
+    Globals.gameMap = nil
     self.deadMonsterIds = {}
     self.deadItemIds = {}
 
@@ -173,6 +173,7 @@ function GameLayer:initTileMap(tilemapPath)
     local origin = cc.Director:getInstance():getVisibleOrigin()
 
     self.gameMap = GameMap:create(tilemapPath)
+    Globals.gameMap = self.gameMap
 
     local tilemap = self.gameMap.tilemap
     -- tilemap:setPosition(origin.x, origin.y)

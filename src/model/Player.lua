@@ -112,3 +112,39 @@ end
 function Player:onUpgradeLevel()
 	self.level = self.level + 1
 end
+
+function Player:costCoin(num)
+	if self.coin < num then
+		return false
+	else
+		self.coin = self.coin - num
+		return true
+	end
+end
+
+function Player:buyAtk(price, addition)
+	if self:costCoin(price) then
+		self.heroData:setAtk(self.heroData.atk + addition)
+		return true
+	else
+		return false
+	end
+end
+
+function Player:buyDef(price, addition)
+	if self:costCoin(price) then
+		self.heroData:setDef(self.heroData.def + addition)
+		return true
+	else
+		return false
+	end
+end
+
+function Player:buyHp(price, addition)
+	if self:costCoin(price) then
+		self.heroData:setHp(self.heroData.hp + addition)
+		return true
+	else
+		return false
+	end
+end

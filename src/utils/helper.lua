@@ -111,10 +111,22 @@ local function jumpMsg(parent, msg, color, pos, fontSize)
     label:runAction(seq)
 end
 
+local function createHintMsgAction(target)
+    local delay = cc.DelayTime:create(1)
+    local fadeOut = cc.FadeOut:create(1)
+    local callback = cc.CallFunc:create(function ()
+        target:setVisible(false)
+    end)
+    local seq = cc.Sequence:create(delay, fadeOut, callback)
+
+    return seq
+end
+
 return {
 	isPointInCircularSector = isPointInCircularSector,
 	getDirection = getDirection,
     getItemInfoByItemId = getItemInfoByItemId,
     getRewardInfoByItemInfo = getRewardInfoByItemInfo,
     jumpMsg = jumpMsg,
+    createHintMsgAction = createHintMsgAction,
 }

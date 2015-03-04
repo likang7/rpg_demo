@@ -7,6 +7,7 @@ require "model.DialogComp"
 require "Transfer"
 require "Item"
 require "GameMap"
+require("ShopLayer")
 
 local Direction = const.Direction
 local math = math
@@ -334,10 +335,6 @@ function GameLayer:init(dict)
     self:initKeyboardEvent()
 
     self:initUI()
-
-    -- require("ShopLayer")
-    -- local shopLayer = ShopLayer:create()
-    -- self:addChild(shopLayer, const.DISPLAY_PRIORITY.UI - 1)
 end
 
 function GameLayer:saveRecord()
@@ -439,21 +436,23 @@ function GameLayer:initKeyboardEvent()
     end
 
     local function onKeyPressed(keyCode, event)
-        -- TOFIX: 这里要偏移3才对的上，quick Lua的Bug?
-        -- keyCode = keyCode - 3
         -- cclog(string.format("Key with keycode %d pressed", keyCode))
-        if keyCode == cc.KeyCode.KEY_W or keyCode == cc.KeyCode.KEY_CAPITAL_W then
+        if keyCode == cc.KeyCode.KEY_W then
             self.pressSum = self.pressSum + KEYW
-        elseif keyCode == cc.KeyCode.KEY_A or keyCode == cc.KeyCode.KEY_CAPITAL_A then
+        elseif keyCode == cc.KeyCode.KEY_A then
             self.pressSum = self.pressSum + KEYA
-        elseif keyCode == cc.KeyCode.KEY_S or keyCode == cc.KeyCode.KEY_CAPITAL_S then
+        elseif keyCode == cc.KeyCode.KEY_S then
             self.pressSum = self.pressSum + KEYS
-        elseif keyCode == cc.KeyCode.KEY_D or keyCode == cc.KeyCode.KEY_CAPITAL_D then
+        elseif keyCode == cc.KeyCode.KEY_D then
             self.pressSum = self.pressSum + KEYD
+        end
+
+        if Globals.gameState ~= const.GAME_STATE.Playing then
+            return 
         end
         tryMoveOneStep()
 
-        if keyCode == cc.KeyCode.KEY_I or keyCode == cc.KeyCode.KEY_CAPITAL_I then
+        if keyCode == cc.KeyCode.KEY_I or keyCode == cc.KeyCode.KEY_CAPITAL_I or keyCode == cc.KeyCode.KEY_J then
             self:OnAttackPressed()
         elseif keyCode == cc.KeyCode.KEY_TAB then
             self:toggleShowDetectRange()
@@ -461,16 +460,19 @@ function GameLayer:initKeyboardEvent()
     end
 
     local function onKeyReleased(keyCode, event)
-        -- keyCode = keyCode - 3
         -- cclog(string.format("Key with keycode %d released", keyCode))
-        if keyCode == cc.KeyCode.KEY_W or keyCode == cc.KeyCode.KEY_CAPITAL_W then
+        if keyCode == cc.KeyCode.KEY_W then
             self.pressSum = self.pressSum - KEYW
-        elseif keyCode == cc.KeyCode.KEY_A or keyCode == cc.KeyCode.KEY_CAPITAL_A then
+        elseif keyCode == cc.KeyCode.KEY_A then
             self.pressSum = self.pressSum - KEYA
-        elseif keyCode == cc.KeyCode.KEY_S or keyCode == cc.KeyCode.KEY_CAPITAL_S then
+        elseif keyCode == cc.KeyCode.KEY_S then
             self.pressSum = self.pressSum - KEYS
-        elseif keyCode == cc.KeyCode.KEY_D or keyCode == cc.KeyCode.KEY_CAPITAL_D then
+        elseif keyCode == cc.KeyCode.KEY_D then
             self.pressSum = self.pressSum - KEYD
+        end
+
+        if Globals.gameState ~= const.GAME_STATE.Playing then
+            return 
         end
         tryMoveOneStep()
     end
@@ -503,7 +505,18 @@ function GameLayer:OnAttackPressed()
             return
         end
     end
-    -- 2. 检查NPC是否在前面
+
+    -- 2. 检查是否有商人在前面
+    local dir = self.playerEntity:getDir()
+    local r = self.playerEntity:getAtkRange()
+    local theta = 90
+    local shops = self.gameMap:searchTargetsInFan(px, py, dir, r, theta, self.npcs)
+    if next(shops) ~= nil then
+        local shopLayer = ShopLayer:create()
+        self:addChild(shopLayer, const.DISPLAY_PRIORITY.Shop)
+        return
+    end
+
     -- 3. 检查是否有道具 TODO: 可以优化，检查下脚下坐标里的是不是道具就可以了
     for k, item in pairs(self.items) do
         local rangeId = item.rangeId

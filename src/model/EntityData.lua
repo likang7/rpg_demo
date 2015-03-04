@@ -229,6 +229,18 @@ function EntityData:setBornPoint(p, resetPos)
     end
 end
 
+function EntityData:setAtk(atk)
+    self.atk = atk
+end
+
+function EntityData:setDef(def)
+    self.def = def
+end
+
+function EntityData:setHp(hp)
+    self.hp = hp
+end
+
 function EntityData:init(dict)
     self.name = dict.name
     self.displayName = dict.displayName

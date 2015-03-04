@@ -1,5 +1,6 @@
 require "model.Player"
 require "GameScene"
+local Globals = require "model.Globals"
 
 WelcomeScene = class("WelcomeScene",
     function()
@@ -17,6 +18,10 @@ function WelcomeScene:create()
 end
 
 function WelcomeScene:init()
+    if Globals.player == nil then
+        Globals.player = Player:create()
+    end
+
     self.ui = cc.CSLoader:createNode("welcomeUI.csb")
     self:addChild(self.ui) 
 
@@ -28,17 +33,14 @@ function WelcomeScene:init()
 end
 
 function WelcomeScene:onCtnJourneyTap()
-    local player = Player:create()
-    local dict = {['player']=player}
-
+    local dict = {}
 	self:enterGameScene(dict)
 end
 
 function WelcomeScene:onNewJourneyTap()
-    local player = Player:create()
-    player:initWithDefaultRecord()
+    Globals.player:initWithDefaultRecord()
 
-    local dict = {['player']=player}
+    local dict = {}
     self:enterGameScene(dict)
 end
 

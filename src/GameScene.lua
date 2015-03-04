@@ -11,7 +11,7 @@ GameScene.__index = GameScene
 
 function GameScene:createGameLayer()
     local curStageId = self.player:getCurStageId()
-    local dict = {stageId = curStageId, player = self.player}
+    local dict = {stageId = curStageId}
     local gameLayer = GameLayer:create(dict)
     return gameLayer
 end
@@ -25,7 +25,7 @@ function GameScene:create(dict)
 end
 
 function GameScene:init(dict)
-    self.player = dict.player
+    self.player = Globals.player
 
     local origin = cc.Director:getInstance():getVisibleOrigin()
     local gameLayer = self:createGameLayer()

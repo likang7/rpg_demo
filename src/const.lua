@@ -32,6 +32,6 @@ const.RECORD_DIR = "record"
 const.RECORD_PATH = const.RECORD_DIR .. "/record.json"
 const.DEFAULT_RECORD = "res/default_record.json"
 
-const.DISPLAY_PRIORITY = {JumpWord=10}
+const.DISPLAY_PRIORITY = {UI=128, JumpWord=10}
 
 return const

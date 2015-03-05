@@ -10,12 +10,12 @@
  </layer>
  <layer name="floor-2" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYGBguMSEiukNPjGh4lEwCkbBwAEftoGz25+VgSGHDUIPFMgaQP+PglGADwxk3uwC5klfNgg9EGC0bBgFo4C6AADiHAxK
+   eJxjYGBguMSEiukNPjGh4lEwCkbBwAEftoGz25+VgSGHDUIPFMgaQP+PglGADwxk3uwC5klfNgg9EIBQ2UCPMmOolQ0TmAfW/g0j3P7BDgAUCQ6X
   </data>
  </layer>
  <layer name="block-1" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJy9lEtOwzAQhqNE8RK4Rhwbeg3og14DAqLX6GPBOcoCrgGCBeIkiAtgKzPqZOpHLDUZ6VeciePPv+3xd54dxY8jF4qL0p+vzFg6b581SMHT5n8drL8Af+b4FuNbSWBK4OKczhz/PgT4547+IT76rQibzsfFXwX4TaJ/9Iz7oPLunFz8Zwfj1eTejBaJfMX4NfHu858aIb4mftF7FfF/Sj76VcQznn09Ar8ifMnYtn1p+lwRVaL9txbdfEiTAF+ymqP7YdsL0+eW6Br4U3HILUW3D9cywq+Zf7wTlOMs3wG/EYfcShz36xN4/jXxi5Ie/ikDz7/Ou7WvyRqMxa/Z2uP70Hxae4qs+2ORZZuiX/257vy+fNxrXHNk34N4/YWUWpsTUv+UvQX2zGhta8iMtynjorXZp/+27NYaZ0uo/6dIfYfuhti9QO+8hrHtfFLCdTfEQjPv70Xb3sO7Lz7Nt6/E+fn41usHeF8DdwfvQwTWFmpP9p1riJibcW+Mph7m0HwMPG8vjLkbiT/vsQb/M7RmAg==
+   eJy9lFtOwzAQRaNEzR+028jDNNsolNJt0IDoNvr46DpAQLcB4ilWgtgAY2VGnbgTO5GSjHQVx3FyfB1ff/veUf0IfbYaDar7I/iW8otrgkrxqvt/BdafhT8Vnrn4WjEyY+TSnE6Fd28s/KEw3sYnvxFj8/lI/KWFnzf0T57pP6R+eU4SfycwnqFvD5o15KcGP2Heq/w3LRtfMb/kPXL4b5NPflPmmfa+6oEfMX5ssHX7DMaMmaKweDcJy/02ZRZ+bGSO/w/dnsGYK6YJ8i/CQ988LI8xNXfwE8M/nQmpsJevkZ+Hh75leDyuTtH+V8wvKa7gt1m0/5Vfzr5ia9AXPzHWnu675vPspWzdbwPPWwf18ied+XX59K9pzYm9QJn5s6lpNjOWf87eIHsKWukMwffWA7d4NuuM34A+gPEZyOwY83/nyLftbOA6F84FfublBlvPp0lJZ4OrlLHuL0HRvsf7qnqDZ+8N56fr0cjUDr2+ovcVcrd432Y9IftE5wo0BI2Y14WgLkrpXIHGoKyC2yWfSu+3PejBYG574l/C978c/v8B7t1ndQ==
   </data>
  </layer>
  <objectgroup name="object">
@@ -157,7 +157,7 @@
     <property name="rangeID" value=""/>
    </properties>
   </object>
-  <object id="76" name="2001" type="3" x="550" y="548" width="160" height="96"/>
+  <object id="76" name="2001" type="3" x="576" y="576" width="32" height="32"/>
   <object id="77" name="3002" type="5" x="128" y="576" width="64" height="64">
    <properties>
     <property name="rangeID" value=""/>
@@ -321,7 +321,7 @@
  </objectgroup>
  <layer name="sky" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJzt1GkKglAYheFLapCltY0Go21k0zpsspXkSmoj0bCNLK0l9AYFEkVXEqnwwAP+UI9e76cQWbJkyRI/bu79OXtFCB8HHBEgVJLp9yT6C6oQOooowYCpJtMvkypdNdTRgIVmiv1tumx00EUP/RT7HbqGGGGMCaYp9t+zZq9ssMVOYt8knYDOECecH/pl5ujTGMyciTIqD/N3nSNf49to8e8re41FZx8DtG79i8h76/n43c9iv3ieKZ0uPMwS+v98W+aR9XQ4Hqa8z5cSfas/XftfzQWe4R2O
+   eJztlGkOwUAYQCe0EkW5hjWuYatz2MpJuIILcBGxXMPScgRPQtJIxExM68+85P1r+9Lp91UIg8FgUGea+n7NMS3ECc94wQDDtJ7+QqKftYRwMId5LKBr6enLUKZVwSrWsI6NBPstWm3sYBd76CXYH9Aa4gjHOEE/wf6LLbOywz0eJOZGNwHNEK94i/SZ4eVjj2Rm+RcK7JyLRSy97d+jfbL5Nrb6c2XvqdP0sI/NZ38VeWcno95Wwac5xQXONP1/PvGvWZs/W59mLW7WEq1NzGdvUOMObHAlLg==
   </data>
  </layer>
 </map>

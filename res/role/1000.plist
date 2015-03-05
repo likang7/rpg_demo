@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>bgj-die-10.tga</key>
+            <key>10005-10.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{325,266},{54,77}}</string>
@@ -17,7 +17,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-11.tga</key>
+            <key>10005-11.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{270,41},{64,83}}</string>
@@ -30,7 +30,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-12.tga</key>
+            <key>10005-12.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{975,318},{46,77}}</string>
@@ -43,7 +43,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-13.tga</key>
+            <key>10005-13.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{463,706},{52,69}}</string>
@@ -56,7 +56,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-14.tga</key>
+            <key>10005-14.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{957,476},{52,65}}</string>
@@ -69,7 +69,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-15.tga</key>
+            <key>10005-15.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{822,656},{48,61}}</string>
@@ -82,7 +82,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-16.tga</key>
+            <key>10005-16.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{395,908},{72,53}}</string>
@@ -95,7 +95,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-17.tga</key>
+            <key>10005-17.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{88,47}}</string>
@@ -108,7 +108,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-18.tga</key>
+            <key>10005-18.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{182,2},{86,47}}</string>
@@ -121,7 +121,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-19.tga</key>
+            <key>10005-19.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{92,45},{86,47}}</string>
@@ -134,7 +134,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-30.tga</key>
+            <key>10005-30.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{940,600},{52,75}}</string>
@@ -147,7 +147,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-31.tga</key>
+            <key>10005-31.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{385,708},{50,71}}</string>
@@ -160,7 +160,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-32.tga</key>
+            <key>10005-32.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{682,656},{48,69}}</string>
@@ -173,7 +173,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-33.tga</key>
+            <key>10005-33.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{603,706},{52,61}}</string>
@@ -186,7 +186,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-34.tga</key>
+            <key>10005-34.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{959,827},{58,59}}</string>
@@ -199,7 +199,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-35.tga</key>
+            <key>10005-35.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{844,830},{68,59}}</string>
@@ -212,7 +212,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-36.tga</key>
+            <key>10005-36.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{717,760},{70,61}}</string>
@@ -225,7 +225,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-37.tga</key>
+            <key>10005-37.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{780,759},{70,59}}</string>
@@ -238,7 +238,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-38.tga</key>
+            <key>10005-38.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{721,904},{70,57}}</string>
@@ -251,7 +251,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-39.tga</key>
+            <key>10005-39.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{390,834},{72,55}}</string>
@@ -264,7 +264,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-50.tga</key>
+            <key>10005-50.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{80,566},{54,75}}</string>
@@ -277,7 +277,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-51.tga</key>
+            <key>10005-51.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{778,56},{64,79}}</string>
@@ -290,7 +290,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-52.tga</key>
+            <key>10005-52.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{543,658},{46,67}}</string>
@@ -303,7 +303,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-53.tga</key>
+            <key>10005-53.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{619,652},{52,61}}</string>
@@ -316,7 +316,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-54.tga</key>
+            <key>10005-54.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{666,706},{52,55}}</string>
@@ -329,7 +329,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-55.tga</key>
+            <key>10005-55.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{795,706},{48,51}}</string>
@@ -342,7 +342,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-56.tga</key>
+            <key>10005-56.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{498,760},{72,45}}</string>
@@ -355,7 +355,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-57.tga</key>
+            <key>10005-57.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{92,2},{88,41}}</string>
@@ -368,7 +368,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-58.tga</key>
+            <key>10005-58.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{270,2},{86,37}}</string>
@@ -381,7 +381,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-59.tga</key>
+            <key>10005-59.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,51},{86,41}}</string>
@@ -394,7 +394,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-70.tga</key>
+            <key>10005-70.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{708,554},{52,75}}</string>
@@ -407,7 +407,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-71.tga</key>
+            <key>10005-71.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{528,48},{50,81}}</string>
@@ -420,7 +420,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-72.tga</key>
+            <key>10005-72.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{753,656},{48,67}}</string>
@@ -433,7 +433,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-73.tga</key>
+            <key>10005-73.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{534,706},{52,67}}</string>
@@ -446,7 +446,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-74.tga</key>
+            <key>10005-74.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{899,761},{58,67}}</string>
@@ -459,7 +459,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-75.tga</key>
+            <key>10005-75.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{905,706},{68,53}}</string>
@@ -472,7 +472,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-76.tga</key>
+            <key>10005-76.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{780,904},{70,53}}</string>
@@ -485,7 +485,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-77.tga</key>
+            <key>10005-77.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{658,904},{70,61}}</string>
@@ -498,7 +498,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-78.tga</key>
+            <key>10005-78.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{723,706},{70,51}}</string>
@@ -511,7 +511,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-die-79.tga</key>
+            <key>10005-79.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{447,834},{72,53}}</string>
@@ -524,7 +524,7 @@
                 <key>sourceSize</key>
                 <string>{130,107}</string>
             </dict>
-            <key>bgj-hit-10.tga</key>
+            <key>10004-10.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{782,831},{60,69}}</string>
@@ -537,7 +537,7 @@
                 <key>sourceSize</key>
                 <string>{84,89}</string>
             </dict>
-            <key>bgj-hit-11.tga</key>
+            <key>10004-11.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{158,541},{64,75}}</string>
@@ -550,7 +550,7 @@
                 <key>sourceSize</key>
                 <string>{84,89}</string>
             </dict>
-            <key>bgj-hit-30.tga</key>
+            <key>10004-30.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{815,330},{56,77}}</string>
@@ -563,7 +563,7 @@
                 <key>sourceSize</key>
                 <string>{84,89}</string>
             </dict>
-            <key>bgj-hit-31.tga</key>
+            <key>10004-31.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{891,945},{64,57}}</string>
@@ -576,7 +576,7 @@
                 <key>sourceSize</key>
                 <string>{84,89}</string>
             </dict>
-            <key>bgj-hit-50.tga</key>
+            <key>10004-50.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{736,272},{60,77}}</string>
@@ -589,7 +589,7 @@
                 <key>sourceSize</key>
                 <string>{84,89}</string>
             </dict>
-            <key>bgj-hit-51.tga</key>
+            <key>10004-51.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{959,761},{64,63}}</string>
@@ -602,7 +602,7 @@
                 <key>sourceSize</key>
                 <string>{84,89}</string>
             </dict>
-            <key>bgj-hit-70.tga</key>
+            <key>10004-70.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{905,887},{56,67}}</string>
@@ -615,7 +615,7 @@
                 <key>sourceSize</key>
                 <string>{84,89}</string>
             </dict>
-            <key>bgj-hit-71.tga</key>
+            <key>10004-71.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{817,266},{62,77}}</string>
@@ -628,7 +628,7 @@
                 <key>sourceSize</key>
                 <string>{84,89}</string>
             </dict>
-            <key>bgj-run-00.tga</key>
+            <key>10002-00.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{841,759},{56,69}}</string>
@@ -641,7 +641,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-01.tga</key>
+            <key>10002-01.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{392,538},{46,75}}</string>
@@ -654,7 +654,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-02.tga</key>
+            <key>10002-02.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{232,763},{48,73}}</string>
@@ -667,7 +667,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-03.tga</key>
+            <key>10002-03.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{282,763},{46,73}}</string>
@@ -680,7 +680,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-04.tga</key>
+            <key>10002-04.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{288,838},{38,73}}</string>
@@ -693,7 +693,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-05.tga</key>
+            <key>10002-05.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{314,540},{46,75}}</string>
@@ -706,7 +706,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-06.tga</key>
+            <key>10002-06.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{112,893},{62,73}}</string>
@@ -719,7 +719,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-07.tga</key>
+            <key>10002-07.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,592},{54,75}}</string>
@@ -732,7 +732,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-10.tga</key>
+            <key>10002-10.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{939,654},{50,75}}</string>
@@ -745,7 +745,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-11.tga</key>
+            <key>10002-11.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{558,833},{50,71}}</string>
@@ -758,7 +758,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-12.tga</key>
+            <key>10002-12.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{785,554},{52,75}}</string>
@@ -771,7 +771,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-13.tga</key>
+            <key>10002-13.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{608,906},{48,71}}</string>
@@ -784,7 +784,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-14.tga</key>
+            <key>10002-14.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,970},{52,73}}</string>
@@ -797,7 +797,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-15.tga</key>
+            <key>10002-15.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{696,976},{44,69}}</string>
@@ -810,7 +810,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-16.tga</key>
+            <key>10002-16.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{610,833},{44,71}}</string>
@@ -823,7 +823,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-17.tga</key>
+            <key>10002-17.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{77,968},{54,73}}</string>
@@ -836,7 +836,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-20.tga</key>
+            <key>10002-20.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{611,66},{60,79}}</string>
@@ -849,7 +849,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-21.tga</key>
+            <key>10002-21.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{709,498},{54,75}}</string>
@@ -862,7 +862,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-22.tga</key>
+            <key>10002-22.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{973,397},{48,77}}</string>
@@ -875,7 +875,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-23.tga</key>
+            <key>10002-23.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{631,532},{54,75}}</string>
@@ -888,7 +888,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-24.tga</key>
+            <key>10002-24.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{46,893},{64,73}}</string>
@@ -901,7 +901,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-25.tga</key>
+            <key>10002-25.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{502,834},{54,71}}</string>
@@ -914,7 +914,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-26.tga</key>
+            <key>10002-26.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{285,913},{40,73}}</string>
@@ -927,7 +927,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-27.tga</key>
+            <key>10002-27.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{178,787},{52,73}}</string>
@@ -940,7 +940,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-30.tga</key>
+            <key>10002-30.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{526,100},{56,79}}</string>
@@ -953,7 +953,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-31.tga</key>
+            <key>10002-31.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{242,309},{54,77}}</string>
@@ -966,7 +966,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-32.tga</key>
+            <key>10002-32.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{87,94},{50,83}}</string>
@@ -979,7 +979,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-33.tga</key>
+            <key>10002-33.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{358,2},{68,83}}</string>
@@ -992,7 +992,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-34.tga</key>
+            <key>10002-34.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{894,380},{56,77}}</string>
@@ -1005,7 +1005,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-35.tga</key>
+            <key>10002-35.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{896,318},{60,77}}</string>
@@ -1018,7 +1018,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-36.tga</key>
+            <key>10002-36.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{410,260},{56,77}}</string>
@@ -1031,7 +1031,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-37.tga</key>
+            <key>10002-37.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{607,128},{54,79}}</string>
@@ -1044,7 +1044,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-40.tga</key>
+            <key>10002-40.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{692,100},{56,79}}</string>
@@ -1057,7 +1057,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-41.tga</key>
+            <key>10002-41.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{169,171},{46,79}}</string>
@@ -1070,7 +1070,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-42.tga</key>
+            <key>10002-42.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{443,52},{48,81}}</string>
@@ -1083,7 +1083,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-43.tga</key>
+            <key>10002-43.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{443,2},{48,83}}</string>
@@ -1096,7 +1096,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-44.tga</key>
+            <key>10002-44.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{355,72},{38,81}}</string>
@@ -1109,7 +1109,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-45.tga</key>
+            <key>10002-45.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{84,204},{46,79}}</string>
@@ -1122,7 +1122,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-46.tga</key>
+            <key>10002-46.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{613,2},{62,81}}</string>
@@ -1135,7 +1135,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-47.tga</key>
+            <key>10002-47.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{180,51},{54,83}}</string>
@@ -1148,7 +1148,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-50.tga</key>
+            <key>10002-50.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{473,536},{50,75}}</string>
@@ -1161,7 +1161,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-51.tga</key>
+            <key>10002-51.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{162,315},{50,77}}</string>
@@ -1174,7 +1174,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-52.tga</key>
+            <key>10002-52.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{438,102},{54,79}}</string>
@@ -1187,7 +1187,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-53.tga</key>
+            <key>10002-53.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{254,161},{48,79}}</string>
@@ -1200,7 +1200,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-54.tga</key>
+            <key>10002-54.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{336,112},{52,79}}</string>
@@ -1213,7 +1213,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-55.tga</key>
+            <key>10002-55.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{82,348},{44,77}}</string>
@@ -1226,7 +1226,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-56.tga</key>
+            <key>10002-56.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{528,2},{44,83}}</string>
@@ -1239,7 +1239,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-57.tga</key>
+            <key>10002-57.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,94},{54,83}}</string>
@@ -1252,7 +1252,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-60.tga</key>
+            <key>10002-60.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{116,794},{60,73}}</string>
@@ -1265,7 +1265,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-61.tga</key>
+            <key>10002-61.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{545,760},{54,71}}</string>
@@ -1278,7 +1278,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-62.tga</key>
+            <key>10002-62.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{238,838},{48,73}}</string>
@@ -1291,7 +1291,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-63.tga</key>
+            <key>10002-63.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{786,498},{54,75}}</string>
@@ -1304,7 +1304,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-64.tga</key>
+            <key>10002-64.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{657,254},{64,77}}</string>
@@ -1317,7 +1317,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-65.tga</key>
+            <key>10002-65.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{863,546},{54,75}}</string>
@@ -1330,7 +1330,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-66.tga</key>
+            <key>10002-66.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,206},{40,79}}</string>
@@ -1343,7 +1343,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-67.tga</key>
+            <key>10002-67.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{862,602},{52,75}}</string>
@@ -1356,7 +1356,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-70.tga</key>
+            <key>10002-70.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{494,908},{56,71}}</string>
@@ -1369,7 +1369,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-71.tga</key>
+            <key>10002-71.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{835,902},{54,69}}</string>
@@ -1382,7 +1382,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-72.tga</key>
+            <key>10002-72.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{601,760},{50,71}}</string>
@@ -1395,7 +1395,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-73.tga</key>
+            <key>10002-73.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{46,818},{68,73}}</string>
@@ -1408,7 +1408,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-74.tga</key>
+            <key>10002-74.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{152,968},{54,73}}</string>
@@ -1421,7 +1421,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-75.tga</key>
+            <key>10002-75.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{176,869},{60,73}}</string>
@@ -1434,7 +1434,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-76.tga</key>
+            <key>10002-76.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{227,944},{56,73}}</string>
@@ -1447,7 +1447,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-run-77.tga</key>
+            <key>10002-77.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{552,907},{54,71}}</string>
@@ -1460,7 +1460,7 @@
                 <key>sourceSize</key>
                 <string>{80,91}</string>
             </dict>
-            <key>bgj-skill1-100.tga</key>
+            <key>10003-100.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{933,156},{52,78}}</string>
@@ -1473,7 +1473,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-101.tga</key>
+            <key>10003-101.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{688,158},{54,78}}</string>
@@ -1486,7 +1486,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-102.tga</key>
+            <key>10003-102.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{80,394},{60,76}}</string>
@@ -1499,7 +1499,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-103.tga</key>
+            <key>10003-103.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,352},{68,76}}</string>
@@ -1512,7 +1512,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-104.tga</key>
+            <key>10003-104.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{482,328},{58,76}}</string>
@@ -1525,7 +1525,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-105.tga</key>
+            <key>10003-105.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{233,651},{60,74}}</string>
@@ -1538,7 +1538,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-106.tga</key>
+            <key>10003-106.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{79,622},{62,74}}</string>
@@ -1551,7 +1551,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-107.tga</key>
+            <key>10003-107.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{235,583},{66,74}}</string>
@@ -1564,7 +1564,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-108.tga</key>
+            <key>10003-108.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{543,600},{56,74}}</string>
@@ -1577,7 +1577,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-109.tga</key>
+            <key>10003-109.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{859,98},{56,78}}</string>
@@ -1590,7 +1590,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-110.tga</key>
+            <key>10003-110.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{404,318},{62,76}}</string>
@@ -1603,7 +1603,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-111.tga</key>
+            <key>10003-111.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,648},{62,74}}</string>
@@ -1616,7 +1616,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-112.tga</key>
+            <key>10003-112.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,422},{60,76}}</string>
@@ -1629,7 +1629,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-113.tga</key>
+            <key>10003-113.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{399,382},{58,76}}</string>
@@ -1642,7 +1642,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-114.tga</key>
+            <key>10003-114.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{321,322},{62,76}}</string>
@@ -1655,7 +1655,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-115.tga</key>
+            <key>10003-115.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{933,210},{52,78}}</string>
@@ -1668,7 +1668,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-300.tga</key>
+            <key>10003-300.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{397,442},{48,76}}</string>
@@ -1681,7 +1681,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-301.tga</key>
+            <key>10003-301.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{645,320},{54,76}}</string>
@@ -1694,7 +1694,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-302.tga</key>
+            <key>10003-302.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{309,652},{52,74}}</string>
@@ -1707,7 +1707,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-303.tga</key>
+            <key>10003-303.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,774},{42,74}}</string>
@@ -1720,7 +1720,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-304.tga</key>
+            <key>10003-304.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{450,908},{42,72}}</string>
@@ -1733,7 +1733,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-305.tga</key>
+            <key>10003-305.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{552,980},{42,70}}</string>
@@ -1746,7 +1746,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-306.tga</key>
+            <key>10003-306.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{624,979},{42,70}}</string>
@@ -1759,7 +1759,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-307.tga</key>
+            <key>10003-307.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{653,760},{62,70}}</string>
@@ -1772,7 +1772,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-308.tga</key>
+            <key>10003-308.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{390,760},{56,72}}</string>
@@ -1785,7 +1785,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-309.tga</key>
+            <key>10003-309.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{328,838},{60,72}}</string>
@@ -1798,7 +1798,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-310.tga</key>
+            <key>10003-310.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{550,536},{62,74}}</string>
@@ -1811,7 +1811,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-311.tga</key>
+            <key>10003-311.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{879,438},{52,76}}</string>
@@ -1824,7 +1824,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-312.tga</key>
+            <key>10003-312.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{448,760},{48,72}}</string>
@@ -1837,7 +1837,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-313.tga</key>
+            <key>10003-313.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{78,748},{44,74}}</string>
@@ -1850,7 +1850,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-314.tga</key>
+            <key>10003-314.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{319,386},{58,76}}</string>
@@ -1863,7 +1863,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-315.tga</key>
+            <key>10003-315.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{317,446},{48,76}}</string>
@@ -1876,7 +1876,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-500.tga</key>
+            <key>10003-500.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{794,444},{52,76}}</string>
@@ -1889,7 +1889,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-501.tga</key>
+            <key>10003-501.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{560,332},{54,76}}</string>
@@ -1902,7 +1902,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-502.tga</key>
+            <key>10003-502.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{155,675},{60,74}}</string>
@@ -1915,7 +1915,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-503.tga</key>
+            <key>10003-503.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{950,530},{68,72}}</string>
@@ -1928,7 +1928,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-504.tga</key>
+            <key>10003-504.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{330,760},{58,72}}</string>
@@ -1941,7 +1941,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-505.tga</key>
+            <key>10003-505.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{720,832},{60,70}}</string>
@@ -1954,7 +1954,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-506.tga</key>
+            <key>10003-506.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{656,832},{62,70}}</string>
@@ -1967,7 +1967,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-507.tga</key>
+            <key>10003-507.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{327,913},{66,72}}</string>
@@ -1980,7 +1980,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-508.tga</key>
+            <key>10003-508.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{467,648},{56,74}}</string>
@@ -1993,7 +1993,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-509.tga</key>
+            <key>10003-509.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{87,146},{56,80}}</string>
@@ -2006,7 +2006,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-510.tga</key>
+            <key>10003-510.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{172,107},{62,80}}</string>
@@ -2019,7 +2019,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-511.tga</key>
+            <key>10003-511.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,248},{62,78}}</string>
@@ -2032,7 +2032,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-512.tga</key>
+            <key>10003-512.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{78,686},{60,74}}</string>
@@ -2045,7 +2045,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-513.tga</key>
+            <key>10003-513.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{239,429},{58,76}}</string>
@@ -2058,7 +2058,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-514.tga</key>
+            <key>10003-514.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{241,365},{62,76}}</string>
@@ -2071,7 +2071,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-515.tga</key>
+            <key>10003-515.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{872,492},{52,76}}</string>
@@ -2084,7 +2084,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-700.tga</key>
+            <key>10003-700.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{236,489},{48,76}}</string>
@@ -2097,7 +2097,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-701.tga</key>
+            <key>10003-701.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{723,334},{54,76}}</string>
@@ -2110,7 +2110,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-702.tga</key>
+            <key>10003-702.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{477,388},{52,76}}</string>
@@ -2123,7 +2123,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-703.tga</key>
+            <key>10003-703.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{702,608},{42,74}}</string>
@@ -2136,7 +2136,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-704.tga</key>
+            <key>10003-704.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{778,608},{42,74}}</string>
@@ -2149,7 +2149,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-705.tga</key>
+            <key>10003-705.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,818},{42,74}}</string>
@@ -2162,7 +2162,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-706.tga</key>
+            <key>10003-706.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,894},{42,74}}</string>
@@ -2175,7 +2175,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-707.tga</key>
+            <key>10003-707.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{626,588},{62,74}}</string>
@@ -2188,7 +2188,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-708.tga</key>
+            <key>10003-708.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{387,650},{56,74}}</string>
@@ -2201,7 +2201,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-709.tga</key>
+            <key>10003-709.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,712},{60,74}}</string>
@@ -2214,7 +2214,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-710.tga</key>
+            <key>10003-710.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{391,586},{62,74}}</string>
@@ -2227,7 +2227,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-711.tga</key>
+            <key>10003-711.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{309,706},{52,74}}</string>
@@ -2240,7 +2240,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-712.tga</key>
+            <key>10003-712.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{231,713},{48,74}}</string>
@@ -2253,7 +2253,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-713.tga</key>
+            <key>10003-713.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,544},{46,76}}</string>
@@ -2266,7 +2266,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-714.tga</key>
+            <key>10003-714.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{158,431},{58,76}}</string>
@@ -2279,7 +2279,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-skill1-715.tga</key>
+            <key>10003-715.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{158,491},{48,76}}</string>
@@ -2292,7 +2292,7 @@
                 <key>sourceSize</key>
                 <string>{82,84}</string>
             </dict>
-            <key>bgj-stand-00.tga</key>
+            <key>10001-00.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{475,442},{46,76}}</string>
@@ -2305,7 +2305,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-01.tga</key>
+            <key>10001-01.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{631,486},{44,76}}</string>
@@ -2318,7 +2318,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-02.tga</key>
+            <key>10001-02.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{80,456},{58,76}}</string>
@@ -2331,7 +2331,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-03.tga</key>
+            <key>10001-03.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{489,260},{66,76}}</string>
@@ -2344,7 +2344,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-04.tga</key>
+            <key>10001-04.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,484},{58,76}}</string>
@@ -2357,7 +2357,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-05.tga</key>
+            <key>10001-05.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{161,367},{62,76}}</string>
@@ -2370,7 +2370,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-06.tga</key>
+            <key>10001-06.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{80,516},{48,76}}</string>
@@ -2383,7 +2383,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-10.tga</key>
+            <key>10001-10.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{860,2},{50,80}}</string>
@@ -2396,7 +2396,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-11.tga</key>
+            <key>10001-11.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{942,2},{50,80}}</string>
@@ -2409,7 +2409,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-12.tga</key>
+            <key>10001-12.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{254,107},{52,80}}</string>
@@ -2422,7 +2422,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-13.tga</key>
+            <key>10001-13.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{860,54},{42,80}}</string>
@@ -2435,7 +2435,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-14.tga</key>
+            <key>10001-14.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{942,54},{42,80}}</string>
@@ -2448,7 +2448,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-15.tga</key>
+            <key>10001-15.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{696,56},{42,80}}</string>
@@ -2461,7 +2461,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-16.tga</key>
+            <key>10001-16.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,150},{54,80}}</string>
@@ -2474,7 +2474,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-20.tga</key>
+            <key>10001-20.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{696,2},{52,80}}</string>
@@ -2487,7 +2487,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-21.tga</key>
+            <key>10001-21.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{848,212},{52,78}}</string>
@@ -2500,7 +2500,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-22.tga</key>
+            <key>10001-22.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{577,184},{48,78}}</string>
@@ -2513,7 +2513,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-23.tga</key>
+            <key>10001-23.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{577,234},{34,78}}</string>
@@ -2526,7 +2526,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-24.tga</key>
+            <key>10001-24.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,312},{38,78}}</string>
@@ -2539,7 +2539,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-25.tga</key>
+            <key>10001-25.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{245,265},{42,78}}</string>
@@ -2552,7 +2552,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-26.tga</key>
+            <key>10001-26.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{939,98},{56,78}}</string>
@@ -2565,7 +2565,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-30.tga</key>
+            <key>10001-30.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{475,490},{44,76}}</string>
@@ -2578,7 +2578,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-31.tga</key>
+            <key>10001-31.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{553,490},{44,76}}</string>
@@ -2591,7 +2591,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-32.tga</key>
+            <key>10001-32.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{638,376},{54,76}}</string>
@@ -2604,7 +2604,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-33.tga</key>
+            <key>10001-33.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{801,388},{54,76}}</string>
@@ -2617,7 +2617,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-34.tga</key>
+            <key>10001-34.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{555,388},{52,76}}</string>
@@ -2630,7 +2630,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-35.tga</key>
+            <key>10001-35.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{633,432},{52,76}}</string>
@@ -2643,7 +2643,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-36.tga</key>
+            <key>10001-36.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{711,446},{50,76}}</string>
@@ -2656,7 +2656,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-40.tga</key>
+            <key>10001-40.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{553,442},{46,76}}</string>
@@ -2669,7 +2669,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-41.tga</key>
+            <key>10001-41.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{395,492},{44,76}}</string>
@@ -2682,7 +2682,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-42.tga</key>
+            <key>10001-42.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{567,270},{60,76}}</string>
@@ -2695,7 +2695,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-43.tga</key>
+            <key>10001-43.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{157,607},{66,74}}</string>
@@ -2708,7 +2708,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-44.tga</key>
+            <key>10001-44.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{467,588},{58,74}}</string>
@@ -2721,7 +2721,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-45.tga</key>
+            <key>10001-45.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{311,588},{62,74}}</string>
@@ -2734,7 +2734,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-46.tga</key>
+            <key>10001-46.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{154,737},{48,74}}</string>
@@ -2747,7 +2747,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-50.tga</key>
+            <key>10001-50.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{165,219},{50,78}}</string>
@@ -2760,7 +2760,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-51.tga</key>
+            <key>10001-51.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{82,252},{50,78}}</string>
@@ -2773,7 +2773,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-52.tga</key>
+            <key>10001-52.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{928,264},{52,78}}</string>
@@ -2786,7 +2786,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-53.tga</key>
+            <key>10001-53.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{314,496},{42,76}}</string>
@@ -2799,7 +2799,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-54.tga</key>
+            <key>10001-54.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{236,539},{42,76}}</string>
@@ -2812,7 +2812,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-55.tga</key>
+            <key>10001-55.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{162,271},{42,78}}</string>
@@ -2825,7 +2825,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-56.tga</key>
+            <key>10001-56.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{853,156},{54,78}}</string>
@@ -2838,7 +2838,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-60.tga</key>
+            <key>10001-60.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{778,2},{52,80}}</string>
@@ -2851,7 +2851,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-61.tga</key>
+            <key>10001-61.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{417,158},{52,78}}</string>
@@ -2864,7 +2864,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-62.tga</key>
+            <key>10001-62.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{497,210},{48,78}}</string>
@@ -2877,7 +2877,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-63.tga</key>
+            <key>10001-63.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{737,236},{34,78}}</string>
@@ -2890,7 +2890,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-64.tga</key>
+            <key>10001-64.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{657,214},{38,78}}</string>
@@ -2903,7 +2903,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-65.tga</key>
+            <key>10001-65.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{82,304},{42,78}}</string>
@@ -2916,7 +2916,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-66.tga</key>
+            <key>10001-66.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{773,122},{56,78}}</string>
@@ -2929,7 +2929,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-70.tga</key>
+            <key>10001-70.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{330,220},{44,78}}</string>
@@ -2942,7 +2942,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-71.tga</key>
+            <key>10001-71.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{415,212},{46,78}}</string>
@@ -2955,7 +2955,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-72.tga</key>
+            <key>10001-72.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{716,390},{54,76}}</string>
@@ -2968,7 +2968,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-73.tga</key>
+            <key>10001-73.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{335,166},{52,78}}</string>
@@ -2981,7 +2981,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-74.tga</key>
+            <key>10001-74.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{768,180},{54,78}}</string>
@@ -2994,7 +2994,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-75.tga</key>
+            <key>10001-75.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{250,211},{52,78}}</string>
@@ -3007,7 +3007,7 @@
                 <key>sourceSize</key>
                 <string>{78,80}</string>
             </dict>
-            <key>bgj-stand-76.tga</key>
+            <key>10001-76.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{497,158},{50,78}}</string>
@@ -3026,13 +3026,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>bgj.png</string>
+            <string>1000.png</string>
             <key>size</key>
             <string>{1024,1024}</string>
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:26f9b9c07d931905746d899531117fd9:c6b1d48b163d40365c5041da9e0616d2:bd1f36f2c1ae33e0b50d790a439f3a5e$</string>
             <key>textureFileName</key>
-            <string>bgj.png</string>
+            <string>1000.png</string>
         </dict>
     </dict>
 </plist>

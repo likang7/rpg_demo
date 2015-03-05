@@ -24,12 +24,15 @@ end
 function EntityData:create(eid)
     local dict
     if eid == 1 then
-        dict = {name='bgj', displayName='白晶晶', speed=200, dir=Direction.S, criRate=0.5, antiCriRate=0.5,
+        dict = {name='1000', displayName='白晶晶', speed=200, dir=Direction.S, criRate=0.5, antiCriRate=0.5,
                 camp=0, atk=100, def=10, hp=20000, maxhp=20000, controlType=const.ControlType.Keyboard,
-                atkRange=40, atkDelay=0.5, level=1}
+                atkRange=40, atkDelay=0.5, level=1, standDirs=8, runDirs=8}
+    elseif eid == 2 then
+        dict = {name='3001', displayName='恶魔随从',speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,
+                camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5, level=3, standDirs=4, runDirs=4}
     else
-        dict = {name='3000', displayName='恶魔随从',speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,
-                camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5, level=3}
+        dict = {name='3013', displayName='恶魔随从',speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,
+                camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5, level=3, standDirs=4, runDirs=4}
     end
 
     return self:createWithDict(dict)
@@ -281,5 +284,8 @@ function EntityData:init(dict)
     self.deltaPos = cc.p(0, 0)
 
     self.dialog = "放弃吧！你走不出我的手掌心的！"
+
+    self.standDirs = dict.standDirs
+    self.runDirs = dict.runDirs
     
 end

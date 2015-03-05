@@ -16,7 +16,7 @@ Entity = class("Entity",
 
 Entity.__index = Entity
 
-local ANIMATE_TYPE = {idle=0, run=1, attack=2, hurt=3, die=4}
+local ANIMATE_TYPE = {idle=1, run=2, attack=3, hurt=4, die=5}
 local IDLE_DELAYTIME = 1
 local function onNodeEvent(tag)
     if tag == "exit" then
@@ -35,7 +35,7 @@ end
 function Entity:ctor()
 end
 
-function Entity:createAnimationFrames(isFullDir, pname, prefix, num)
+function Entity:createAnimationFrames(isFullDir, pname, type, num)
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     local frames = {}
 
@@ -51,9 +51,9 @@ function Entity:createAnimationFrames(isFullDir, pname, prefix, num)
         for i = 0, num-1 do 
             local name
             if num > 10 then
-                name = string.format("%s-%s-%d%02d.tga", pname, prefix, dir, i)
+                name = string.format("%s%s-%d%02d.tga", pname, type, dir, i)
             else
-                name = string.format("%s-%s-%d%d.tga", pname, prefix, dir, i)
+                name = string.format("%s%s-%d%d.tga", pname, type, dir, i)
             end
             table.insert(frames[dir], spriteFrameCache:getSpriteFrame(name))
         end
@@ -91,7 +91,8 @@ end
 
 function Entity:setStandDirection(dir)
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-    local frame = spriteFrameCache:getSpriteFrame(string.format(self.name .. "-stand-%d0.tga", dir))
+    dir = self:getAnimDir(dir, ANIMATE_TYPE.idle)
+    local frame = spriteFrameCache:getSpriteFrame(string.format(self.name .. ANIMATE_TYPE.idle .. "-%d0.tga", dir))
     self:setSpriteFrame(frame)
 end
 
@@ -149,8 +150,9 @@ function Entity:_run(path, idx, cb_end, dir)
     -- 播放奔跑动画
     if dir ~= self.dir or self:getActionByTag(self.runAnimateTag) == nil then
         self:stopActionByTag(self.runAnimateTag)
+        local tDir = self:getAnimDir(dir, ANIMATE_TYPE.run)
         local repeatForever = cc.RepeatForever:create(
-        cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[dir], self.runAnimDelay)))
+            cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[tDir], self.runAnimDelay)))
         repeatForever:setTag(self.runAnimateTag)
         self:runAction(repeatForever)
     end
@@ -196,8 +198,9 @@ function Entity:setStatus(status)
         if self:getActionByTag(self.idleActionTag) == nil and self.idleScheduleID == nil then
             local cb = function ()
                 if self.status == Status.idle and self:getActionByTag(self.idleActionTag) == nil then
+                    local _dir = self:getAnimDir(self.dir, ANIMATE_TYPE.idle)
                     local repeatForever = cc.RepeatForever:create(cc.Animate:create(
-                        cc.Animation:createWithSpriteFrames(self.idleAnimationFrames[self.dir], self.runAnimDelay)))
+                        cc.Animation:createWithSpriteFrames(self.idleAnimationFrames[_dir], self.runAnimDelay)))
                     repeatForever:setTag(self.idleActionTag)
                     self:runAction(repeatForever)
                     local scheduler = cc.Director:getInstance():getScheduler()
@@ -317,9 +320,10 @@ function Entity:updatePosition()
         -- 播放奔跑动画
         if self._model.dir ~= self.dir or self:getActionByTag(self.runAnimateTag) == nil then
             self.dir = self._model.dir
+            local dir = self:getAnimDir(self.dir, ANIMATE_TYPE.run)
             self:stopActionByTag(self.runAnimateTag)
             local repeatForever = cc.RepeatForever:create(
-            cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[self.dir], self.runAnimDelay)))
+                cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[dir], self.runAnimDelay)))
             repeatForever:setTag(self.runAnimateTag)
             self:runAction(repeatForever)
         end
@@ -519,6 +523,24 @@ function Entity:isRunning()
     return self._model.runFlag
 end
 
+function Entity:getAnimDir(dir, anim_type)
+    if anim_type == ANIMATE_TYPE.run then
+        if self._model.runDirs == 4 then
+            return const.FullToDiagDir[dir]
+        else
+            return dir
+        end
+    elseif anim_type == ANIMATE_TYPE.idle then
+        if self._model.standDirs == 4 then
+            return const.FullToDiagDir[dir]
+        else
+            return dir
+        end
+    else
+        return const.FullToDiagDir[dir]
+    end
+end
+
 function Entity:init(data)
     self._model = data
     self.name = data.name
@@ -548,17 +570,17 @@ function Entity:init(data)
     
     spriteFrameCache:addSpriteFrames(effectPath)
 
-    self.runAnimationFrames = self:createAnimationFrames(true, self.name, 'run', 8)
+    self.runAnimationFrames = self:createAnimationFrames(self._model.runDirs == 8, self.name, ANIMATE_TYPE.run, 8)
 
-    self.attackAnimationFrames = self:createAnimationFrames(false, self.name, 'skill1', 16)
+    self.attackAnimationFrames = self:createAnimationFrames(false, self.name, ANIMATE_TYPE.attack, 16)
 
-    self.hitAnimationFrames = self:createAnimationFrames(false, self.name, 'hit', 2)
+    self.hitAnimationFrames = self:createAnimationFrames(false, self.name, ANIMATE_TYPE.hurt, 2)
 
-    self.dyingAnimationFrames = self:createAnimationFrames(false, self.name, 'die', 10)
+    self.dyingAnimationFrames = self:createAnimationFrames(false, self.name, ANIMATE_TYPE.die, 10)
 
-    self.idleAnimationFrames = self:createAnimationFrames(true, self.name, 'stand', 8)
+    self.idleAnimationFrames = self:createAnimationFrames(self._model.runDirs == 8, self.name, ANIMATE_TYPE.idle, 8)
 
-    self.atkEffectAnimationFrames = self:createAnimationFrames(true, 'effect', 'skill1', 8)
+    self.atkEffectAnimationFrames = self:createAnimationFrames(true, 'effect', '-skill1', 8)
 
     self:setStandDirection(self.dir)
 

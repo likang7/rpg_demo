@@ -82,7 +82,7 @@ function GameLayer:initEntity(objectGroup)
             table.insert(self.transfers, transfer) 
         elseif otype == 3 then
             -- 初始化NPC
-            local entityData = EntityData:create(2)
+            local entityData = EntityData:create(3)
             local px, py = object.x+const.TILESIZE/2, object.y+const.TILESIZE/2
             px, py = px+object.width/2, py+object.height/2
             entityData:setBornPoint(cc.p(px, py))

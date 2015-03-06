@@ -114,7 +114,7 @@ function GameLayer:initEntity(objectGroup)
             local viewx, viewy = object.x+object.width/2, object.y+object.height/2
             local hashId = tostring(self.gameMap:hashViewCoord(viewx, viewy))
             if self.deadMonsterIds[hashId] == nil then
-                local entityData = EntityData:create(2)
+                local entityData = EntityData:create(tonumber(object.name))
                 entityData:setBornPoint(cc.p(viewx, viewy))
                 entityData.rangeId = tonumber(object.rangeID)
                 entityData.detectRange = object.width/2
@@ -219,7 +219,7 @@ function GameLayer:updateHeroInfo()
         local targetData = target:getData()
         self:updateEntityInfo(monsterInfoPanel, targetData)
         local heroNameLabel = monsterInfoPanel:getChildByName("heroName")
-        heroNameLabel:setString(targetData.displayName)
+        heroNameLabel:setString(targetData.name)
         local heroLevelLabel = monsterInfoPanel:getChildByName("heroLevel")
         heroLevelLabel:setString('Lv.' .. targetData.level)
         monsterInfoPanel:setVisible(true)

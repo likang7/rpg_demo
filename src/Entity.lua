@@ -1,5 +1,6 @@
 local const = require "const"
 local helper = require "utils.helper"
+local flashData = require "data.flashData"
 
 local Direction = const.Direction
 local DiagDirection = const.DiagDirection
@@ -92,6 +93,9 @@ end
 function Entity:setStandDirection(dir)
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     dir = self:getAnimDir(dir, ANIMATE_TYPE.idle)
+    if self.idleFrameCnt > 10 then
+        dir = dir .. '0'
+    end
     local frame = spriteFrameCache:getSpriteFrame(string.format(self.name .. ANIMATE_TYPE.idle .. "-%d0.tga", dir))
     self:setSpriteFrame(frame)
 end
@@ -228,7 +232,6 @@ function Entity:showHurt(deltaHp, isCritial)
         isCritial = false
     end
     -- self:stopRuning()
-    self:setStatus(Status.hurt)
     
     -- 飘血
     local fontSize = 24
@@ -289,18 +292,17 @@ function Entity:showHurt(deltaHp, isCritial)
         self:setStatus(Status.dying)
         self:stopActionByTag(self.runAnimateTag)
         self:playAnimation(self.dyingAnimationFrames, cb, false, self.runAnimDelay)
-    else
+    elseif deltaHp > 0 then
         local cb = function ()
             if self.status == Status.hurt then
                 self:setStatus(Status.idle)
                 self:setStandDirection(self.dir)
             end
         end
-        if self.status == Status.hurt then
-            --TODO:这里最好还是取消上一次的击中回调吧
-            -- 避免受伤到一半状态就被取消了
-            self:playAnimation(self.hitAnimationFrames, cb, false, self.runAnimDelay * 0.5)
-        end
+        self:setStatus(Status.hurt)
+        --TODO:这里最好还是取消上一次的击中回调吧
+        -- 避免受伤到一半状态就被取消了
+        self:playAnimation(self.hitAnimationFrames, cb, false, self.runAnimDelay * 0.5)
     end
 end
 
@@ -543,7 +545,7 @@ end
 
 function Entity:init(data)
     self._model = data
-    self.name = data.name
+    self.name = data.roleID
     self.dir = data.dir
     self:setScale(0.8)
 
@@ -570,15 +572,21 @@ function Entity:init(data)
     
     spriteFrameCache:addSpriteFrames(effectPath)
 
-    self.runAnimationFrames = self:createAnimationFrames(self._model.runDirs == 8, self.name, ANIMATE_TYPE.run, 8)
+    local runAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.run)]
+    self.runAnimationFrames = self:createAnimationFrames(runAnimData.direction == 8, self.name, ANIMATE_TYPE.run, runAnimData.count)
 
-    self.attackAnimationFrames = self:createAnimationFrames(false, self.name, ANIMATE_TYPE.attack, 16)
+    local attackAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.attack)]
+    self.attackAnimationFrames = self:createAnimationFrames(attackAnimData.direction == 8, self.name, ANIMATE_TYPE.attack, attackAnimData.count)
 
-    self.hitAnimationFrames = self:createAnimationFrames(false, self.name, ANIMATE_TYPE.hurt, 2)
+    local hitAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.hurt)]
+    self.hitAnimationFrames = self:createAnimationFrames(hitAnimData.direction == 8, self.name, ANIMATE_TYPE.hurt, hitAnimData.count)
 
-    self.dyingAnimationFrames = self:createAnimationFrames(false, self.name, ANIMATE_TYPE.die, 10)
+    local dyingAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.die)]
+    self.dyingAnimationFrames = self:createAnimationFrames(dyingAnimData.direction == 8, self.name, ANIMATE_TYPE.die, dyingAnimData.count)
 
-    self.idleAnimationFrames = self:createAnimationFrames(self._model.runDirs == 8, self.name, ANIMATE_TYPE.idle, 8)
+    local idleAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.idle)]
+    self.idleFrameCnt = idleAnimData.count
+    self.idleAnimationFrames = self:createAnimationFrames(idleAnimData.direction == 8, self.name, ANIMATE_TYPE.idle, idleAnimData.count)
 
     self.atkEffectAnimationFrames = self:createAnimationFrames(true, 'effect', '-skill1', 8)
 

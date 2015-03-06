@@ -39,4 +39,6 @@ const.GAME_STATE = {Playing=0, Shopping=1}
 const.SHOP_PRICE = 30
 const.SHOP_ITEM = {Atk=5, Def=5, Hp=100}
 
+const.HERO_ID = 1000
+
 return const

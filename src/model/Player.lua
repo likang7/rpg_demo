@@ -1,5 +1,6 @@
 require ("Entity")
 require ("model.GameRecorder")
+local const = require "const"
 
 Player = class("Player")
 
@@ -72,7 +73,8 @@ end
 
 function Player:initHeroData(info)
 	if next(info) == nil then
-		local heroData = EntityData:create(1)
+		local heroData = EntityData:create(const.HERO_ID)
+		heroData.camp = 0
 		self.heroData = heroData
 	else
 		self.heroData = EntityData:createWithDict(info)

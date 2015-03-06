@@ -6,7 +6,7 @@ local assert = assert
 local string = string
 local io = io
 
--- 返回table，注意不能有嵌套，除分割符号外不能有额外的','
+-- 返回table，注意不能有嵌套，除分割符号外不能有额外的';'
 local function str2table(s)
     local t = {}
     local function repl(w)
@@ -15,7 +15,7 @@ local function str2table(s)
         end
         table.insert(t, w)
     end
-    string.gsub(s,  '[^,%[%]]+', repl)
+    string.gsub(s,  '[^;%[%]]+', repl)
     return t
 end
 
@@ -65,7 +65,7 @@ local function unmarshal_value(value)
     elseif val_type == 'table' then
         str = {}
         for i = 1, #value do
-            str[i] = u_unmarshal_value(value[i])
+            str[i] = unmarshal_value(value[i])
         end
         str = '{' .. table.concat(str, ', ') .. '}'
     end

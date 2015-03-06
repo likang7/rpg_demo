@@ -1,6 +1,7 @@
 local helper = require "utils.helper"
 local const = require "const"
 local Globals = require "model.Globals"
+local roleData = require "data.roleData"
 local Direction = const.Direction
 local DirectionToVec = const.DirectionToVec
 local math = math
@@ -23,16 +24,23 @@ end
 
 function EntityData:create(eid)
     local dict
-    if eid == 1 then
-        dict = {name='1000', displayName='白晶晶', speed=200, dir=Direction.S, criRate=0.5, antiCriRate=0.5,
-                camp=0, atk=100, def=10, hp=20000, maxhp=20000, controlType=const.ControlType.Keyboard,
-                atkRange=40, atkDelay=0.5, level=1, standDirs=8, runDirs=8}
-    elseif eid == 2 then
-        dict = {name='3001', displayName='恶魔随从',speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,
+    if eid == const.HERO_ID then
+        dict = roleData[eid]
+        dict.level = 1
+        dict.standDirs = 8
+        dict.runDirs = 8
+
+        -- dict = {roleID=1000, name='白晶晶', speed=200, dir=Direction.S, criRate=50, antiCriRate=50,
+        --         camp=0, atk=100, def=10, hp=20000, maxhp=20000, controlType=const.ControlType.Keyboard,
+        --         atkRange=40, atkDelay=0.5, level=1, standDirs=8, runDirs=8}
+    elseif eid == 3 then
+        dict = {roleID=3013, name='恶魔随从',speed=100, dir=Direction.S, criRate=30, antiCriRate=20,
                 camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5, level=3, standDirs=4, runDirs=4}
     else
-        dict = {name='3013', displayName='恶魔随从',speed=100, dir=Direction.S, criRate=0.3, antiCriRate=0.2,
-                camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5, level=3, standDirs=4, runDirs=4}
+        -- dict = {roleID=3001, name='恶魔随从',speed=100, dir=Direction.S, criRate=30, antiCriRate=20,
+        --         camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5, level=3, standDirs=4, runDirs=4}
+        dict = roleData[eid]
+        dict.level=1
     end
 
     return self:createWithDict(dict)
@@ -149,10 +157,12 @@ function EntityData:attack(enemys, skillId)
     for _, target in pairs(targets) do
         if target._model.lifeState == const.LifeState.Alive then
             local hurt, isCritial = self:calHurt(target._model, skillData)
-            target._model.hp = target._model.hp - hurt
-            if target._model.hp <= 0 then
-                target._model.hp = 0
-                target._model.lifeState = const.LifeState.Die
+            if hurt > 0 then
+                target._model.hp = target._model.hp - hurt
+                if target._model.hp <= 0 then
+                    target._model.hp = 0
+                    target._model.lifeState = const.LifeState.Die
+                end
             end
             target:showHurt(hurt, isCritial)
         end
@@ -206,6 +216,7 @@ end
 
 function EntityData:getPersistent()
     return {
+        roleID = self.roleID,
         name = self.name,
         speed = self.speed,
         dir = self.dir,
@@ -221,7 +232,9 @@ function EntityData:getPersistent()
         pos = self.pos,
         texturePath = self.texturePath,
         effectPath = self.effectPath,
-        atkDelay = self.atkDelay
+        atkDelay = self.atkDelay,
+        standDirs = self.standDirs,
+        runDirs = self.runDirs,
     }
 end
 
@@ -245,23 +258,30 @@ function EntityData:setHp(hp)
 end
 
 function EntityData:init(dict)
+    self.roleID = dict.roleID
     self.name = dict.name
-    self.displayName = dict.displayName
     self.speed = dict.speed
     self.dir = dict.dir
     self.camp = dict.camp
+    if dict.camp == nil then
+        self.camp = 1
+    end
     self.atk = dict.atk
     self.def = dict.def
     self.hp = dict.hp
-    self.criRate = dict.criRate
-    self.antiCriRate = dict.antiCriRate
-    self.maxhp = dict.maxhp
-    self.atkRange = dict.atkRange
+    self.criRate = dict.criRate / 100.0
+    self.antiCriRate = dict.antiCriRate / 100.0
+    if dict.maxhp == nil then
+        self.maxhp = dict.hp
+    else
+        self.maxhp = dict.maxhp
+    end
+    self.atkRange = 40--dict.atkRange
     self.detectRange = dict.detectRange
-    self.texturePath = self.name .. '.plist'
+    self.texturePath = self.roleID .. '.plist'
     self.effectPath = 'effect.plist'
     self.lifeState = const.LifeState.Alive
-    self.atkDelay = dict.atkDelay
+    self.atkDelay = 0.6--dict.atkDelay
     self.atkLock = false
     self.level = dict.level
 
@@ -286,6 +306,12 @@ function EntityData:init(dict)
     self.dialog = "放弃吧！你走不出我的手掌心的！"
 
     self.standDirs = dict.standDirs
+    if dict.standDirs == nil then
+        self.standDirs = 4
+    end
+
     self.runDirs = dict.runDirs
-    
+    if dict.runDirs == nil then
+        self.runDirs = 4
+    end
 end

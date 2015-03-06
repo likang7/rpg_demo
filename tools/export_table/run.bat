@@ -12,4 +12,5 @@ lua csv2lua.lua %CSV_ROOT%shop.csv %LUA_ROOT%shopData.lua shopID
 
 lua csv2lua.lua %CSV_ROOT%goods.csv %LUA_ROOT%goodsData.lua goodsID
 
+python ansi2utf8.py %LUA_ROOT%
 pause

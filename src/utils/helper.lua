@@ -122,6 +122,11 @@ local function createHintMsgAction(target)
     return seq
 end
 
+local function getDisplayText(s)
+    local new_str = string.gsub(s, '#r', '\n')
+    return new_str
+end
+
 return {
 	isPointInCircularSector = isPointInCircularSector,
 	getDirection = getDirection,
@@ -129,4 +134,5 @@ return {
     getRewardInfoByItemInfo = getRewardInfoByItemInfo,
     jumpMsg = jumpMsg,
     createHintMsgAction = createHintMsgAction,
+    getDisplayText = getDisplayText,
 }

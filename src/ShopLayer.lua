@@ -49,7 +49,7 @@ function ShopLayer:initUI(dict)
 	local data = shopData[self.shopID]
 
 	local contentLabel = panel:getChildByName("contentLabel")
-	contentLabel:setString(data['content'])
+	contentLabel:setString(helper.getDisplayText(data['content']))
 	contentLabel:setTextAreaSize(cc.size(528, 72))
 
 	local goodsList = data['shopList']

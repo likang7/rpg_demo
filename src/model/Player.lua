@@ -118,6 +118,12 @@ end
 
 function Player:onUpgradeLevel()
 	self.level = self.level + 1
+	local heroData = self.heroData
+	heroData:setAtk(heroData.atk + 5)
+	heroData:setDef(heroData.atk + 5)
+	heroData:setHp(heroData.hp + 100)
+	heroData:setCriRate(heroData.criRate + 0.005)
+	heroData:setAntiCriRate(heroData.antiCriRate + 0.003)
 end
 
 function Player:costCoin(num)
@@ -125,6 +131,15 @@ function Player:costCoin(num)
 		return false
 	else
 		self.coin = self.coin - num
+		return true
+	end
+end
+
+function Player:costExp(num)
+	if self.exp < num then
+		return false
+	else
+		self.exp = self.exp - num
 		return true
 	end
 end
@@ -153,5 +168,45 @@ function Player:buyHp(price, addition)
 		return true
 	else
 		return false
+	end
+end
+
+function Player:buyGoods(goodsID)
+	local goodsData = require("data.goodsData")
+	local data = goodsData[goodsID]
+	if data.costType == const.COST_TYPE.Coin then
+		if self:costCoin(data.cost) then
+			self:promoteWithGoodsData(data)
+			return true
+		else
+			return false
+		end
+	elseif data.costType == const.COST_TYPE.Exp then
+		if self:costExp(data.cost) then
+			self:promoteWithGoodsData(data)
+			return true
+		else
+			return false
+		end
+	else
+		error('undefined goods cost type')
+	end
+	return false
+end
+
+function Player:promoteWithGoodsData(data)
+	local goodsType = data['function']
+	local heroData = self.heroData
+
+	if goodsType == const.GOODS_FUNC.Level then
+		self:onUpgradeLevel()
+	elseif goodsType == const.GOODS_FUNC.Atk then
+		heroData:setAtk(heroData.atk + data.attack)
+	elseif goodsType == const.GOODS_FUNC.Def then
+		heroData:setDef(heroData.def + data.defense)
+	elseif goodsType == const.GOODS_FUNC.Hp then
+		heroData:setHp(heroData.hp + data.hp)
+	else
+		error('undefined goods function type')
 	end
 end

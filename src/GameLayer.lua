@@ -74,15 +74,15 @@ function GameLayer:initEntity(objectGroup)
     local objects = objectGroup:getObjects()
     for _, object in pairs(objects) do
         local otype = tonumber(object['type'])
-        if otype == 1 then
+        if otype == const.TILEMAP_TYPE.Transfer then
             -- 初始化传送点
             local x, y, w, h = object.x, object.y, object.width, object.height
             local dict = {rect = cc.rect(x, y, w, h), dir = object.direction}
             local transfer = Transfer:create(dict)
             table.insert(self.transfers, transfer) 
-        elseif otype == 3 then
+        elseif otype == const.TILEMAP_TYPE.NPC then
             -- 初始化NPC
-            local entityData = EntityData:create(3)
+            local entityData = EntityData:create(tonumber(object.name))
             local px, py = object.x+const.TILESIZE/2, object.y+const.TILESIZE/2
             px, py = px+object.width/2, py+object.height/2
             entityData:setBornPoint(cc.p(px, py))
@@ -99,7 +99,7 @@ function GameLayer:initEntity(objectGroup)
             }
             local dialogComp = DialogComp:create(dict, true)
             npc:setDialogComp(dialogComp)
-        elseif otype == 4 then
+        elseif otype == const.TILEMAP_TYPE.Item then
             -- 初始化道具
             local viewx, viewy = object.x, object.y
             local hashId = tostring(self.gameMap:hashViewCoord(viewx, viewy))
@@ -109,7 +109,7 @@ function GameLayer:initEntity(objectGroup)
                 self:addChild(item, 1)
                 self.items[hashId] = item
             end
-        elseif otype == 5 then
+        elseif otype == const.TILEMAP_TYPE.Monster then
             -- 初始化monster
             local viewx, viewy = object.x+object.width/2, object.y+object.height/2
             local hashId = tostring(self.gameMap:hashViewCoord(viewx, viewy))
@@ -286,6 +286,8 @@ end
 function GameLayer:init(dict)
     self:clearAll()
     
+    Globals.gameState = const.GAME_STATE.Playing
+
     local tilemapPath = string.format("map/map-%d.tmx", dict.stageId)
 
     self.player = Globals.player
@@ -540,11 +542,16 @@ function GameLayer:OnAttackPressed()
     local dir = self.playerEntity:getDir()
     local r = self.playerEntity:getAtkRange()
     local theta = 90
-    local shops = self.gameMap:searchTargetsInFan(px, py, dir, r, theta, self.npcs)
-    if next(shops) ~= nil then
-        local shopLayer = ShopLayer:create()
-        self:addChild(shopLayer, const.DISPLAY_PRIORITY.Shop)
-        return
+    local npcs = self.gameMap:searchTargetsInFan(px, py, dir, r, theta, self.npcs)
+    if next(npcs) ~= nil then
+        for _, npc in ipairs(npcs) do
+            local funcType = npc:getFuncionType()
+            if funcType ~= nil then
+                local shopLayer = ShopLayer:create({shopID=funcType})
+                self:addChild(shopLayer, const.DISPLAY_PRIORITY.Shop)
+                return
+            end
+        end
     end
 
     -- 3. 检查是否有道具 TODO: 可以优化，检查下脚下坐标里的是不是道具就可以了

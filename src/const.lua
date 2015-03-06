@@ -32,13 +32,25 @@ const.RECORD_DIR = "record"
 const.RECORD_PATH = const.RECORD_DIR .. "/record.json"
 const.DEFAULT_RECORD = "res/default_record.json"
 
-const.DISPLAY_PRIORITY = {UI=128, Shop=64, JumpWord=30, Sky=20}
+const.DISPLAY_PRIORITY = {UI=80, Shop=64, JumpWord=30, Sky=20}
 
 const.GAME_STATE = {Playing=0, Shopping=1}
 
 const.SHOP_PRICE = 30
 const.SHOP_ITEM = {Atk=5, Def=5, Hp=100}
 
+const.ITEM_TYPE = {Undefined=0, Atk=1, Def=2, Hp=3, Critial=4, Block=5, Coin=6}
+
+const.TILEMAP_TYPE = {Transfer=1, Hero=2, NPC=3, Item=4, Monster=5}
+
+const.ENTITY_TYPE = {Hero=1, NPC=2, Monster=3}
+
+const.SHOP_TYPE = {CoinShop=1, ExpShop=2}
+
 const.HERO_ID = 1000
+
+const.COST_TYPE = {Coin=1, Exp=2}
+
+const.GOODS_FUNC = {Level=0, Atk=1, Def=2, Hp=3}
 
 return const

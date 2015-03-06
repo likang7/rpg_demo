@@ -1,10 +1,4 @@
 <UserData>
-  <OpenedDocuments>
-    <FilePathData Path="gameUI.csd" />
-    <FilePathData Path="welcomeUI.csd" />
-    <FilePathData Path="conversationUI.csd" />
-  </OpenedDocuments>
-  <ActiveDocument Path="gameUI.csd" />
   <Properties>
     <Item Key="PackageParamsKey">
       <Value ctype="PackageParams">
@@ -20,6 +14,9 @@
         <PublishSetting Value="Resource" />
         <FrameworkVersion Value="cocos2d-x-3.4" />
         <IsDebugKeystore Value="True" />
+        <KeystorePassword Value="" />
+        <KeystoreAliasName Value="" />
+        <KeystoreAliasPassword Value="" />
       </Value>
     </Item>
   </Properties>

@@ -8,4 +8,8 @@ lua csv2lua.lua %CSV_ROOT%role.csv %LUA_ROOT%roleData.lua roleID
 
 lua csv2lua.lua %CSV_ROOT%flash.csv %LUA_ROOT%flashData.lua flashID 
 
+lua csv2lua.lua %CSV_ROOT%shop.csv %LUA_ROOT%shopData.lua shopID 
+
+lua csv2lua.lua %CSV_ROOT%goods.csv %LUA_ROOT%goodsData.lua goodsID
+
 pause

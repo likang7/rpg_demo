@@ -33,14 +33,18 @@ function EntityData:create(eid)
         -- dict = {roleID=1000, name='白晶晶', speed=200, dir=Direction.S, criRate=50, antiCriRate=50,
         --         camp=0, atk=100, def=10, hp=20000, maxhp=20000, controlType=const.ControlType.Keyboard,
         --         atkRange=40, atkDelay=0.5, level=1, standDirs=8, runDirs=8}
-    elseif eid == 3 then
-        dict = {roleID=3013, name='恶魔随从',speed=100, dir=Direction.S, criRate=30, antiCriRate=20,
-                camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5, level=3, standDirs=4, runDirs=4}
+    -- elseif eid == 3 then
+    --     dict = {roleID=3013, name='恶魔随从',speed=100, dir=Direction.S, criRate=30, antiCriRate=20,
+    --             camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5, level=3, standDirs=4, runDirs=4}
     else
         -- dict = {roleID=3001, name='恶魔随从',speed=100, dir=Direction.S, criRate=30, antiCriRate=20,
         --         camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5, level=3, standDirs=4, runDirs=4}
         dict = roleData[eid]
         dict.level=1
+    end
+
+    if dict.dir == nil then
+        dict.dir = math.random(0,7)
     end
 
     return self:createWithDict(dict)
@@ -49,7 +53,7 @@ end
 function EntityData:setPath(path)
     self.pathIdx = 1
     self.path = path
-    if #path >= 1 then
+    if next(path) ~= nil then
         self.runFlag = true
     else
         self.runFlag = false
@@ -147,7 +151,7 @@ function EntityData:calHurt(target, skillData)
         hurt = 2 * hurt
     end
 
-    return hurt, isCritial
+    return math.max(0, hurt), isCritial
 end
 
 function EntityData:attack(enemys, skillId)
@@ -257,12 +261,21 @@ function EntityData:setHp(hp)
     self.hp = hp
 end
 
+function EntityData:setCriRate(criRate)
+    self.criRate = math.min(1, math.max(0, criRate))
+end
+
+function EntityData:setAntiCriRate(antiCriRate)
+    self.antiCriRate = math.min(1, math.max(0, antiCriRate))
+end
+
 function EntityData:init(dict)
     self.roleID = dict.roleID
     self.name = dict.name
     self.speed = dict.speed
     self.dir = dict.dir
     self.camp = dict.camp
+    self.type = dict.type
     if dict.camp == nil then
         self.camp = 1
     end
@@ -279,7 +292,7 @@ function EntityData:init(dict)
     self.atkRange = 40--dict.atkRange
     self.detectRange = dict.detectRange
     self.texturePath = self.roleID .. '.plist'
-    self.effectPath = 'effect.plist'
+    self.effectPath = dict.effectPath
     self.lifeState = const.LifeState.Alive
     self.atkDelay = 0.6--dict.atkDelay
     self.atkLock = false
@@ -314,4 +327,6 @@ function EntityData:init(dict)
     if dict.runDirs == nil then
         self.runDirs = 4
     end
+
+    self.funcType = dict['function']
 end

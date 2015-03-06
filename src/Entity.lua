@@ -36,25 +36,29 @@ end
 function Entity:ctor()
 end
 
-function Entity:createAnimationFrames(isFullDir, pname, type, num)
+function Entity:createAnimationFrames(dNum, prefix, frameNum)
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     local frames = {}
 
     local directions
-    if isFullDir then
+    if dNum == 8 then
         directions = Direction
-    else
+    elseif dNum == 4 then
         directions = DiagDirection
+    elseif dNum == 1 then
+        directions = {self.dir}
+    else
+        error('undefined direction number')
     end
 
     for _, dir in pairs(directions) do
         frames[dir] = {}
-        for i = 0, num-1 do 
+        for i = 0, frameNum-1 do 
             local name
-            if num > 10 then
-                name = string.format("%s%s-%d%02d.tga", pname, type, dir, i)
+            if frameNum > 10 then
+                name = string.format("%s-%d%02d.tga", prefix, dir, i)
             else
-                name = string.format("%s%s-%d%d.tga", pname, type, dir, i)
+                name = string.format("%s-%d%d.tga", prefix, dir, i)
             end
             table.insert(frames[dir], spriteFrameCache:getSpriteFrame(name))
         end
@@ -255,22 +259,22 @@ function Entity:showHurt(deltaHp, isCritial)
     helper.jumpMsg(self:getParent(), msg, color, pos, fontSize)
 
     -- 击中特效
-    local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-    local frames = {}
-    for i = 0, 4 do 
-        local name = string.format("%s-%s-%03d.tga", 'effect', 'hit', i)
-        table.insert(frames, spriteFrameCache:getSpriteFrame(name))
-    end 
-    local effect = cc.Sprite:create()
-    local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(frames, self.runAnimDelay))
-    local callFunc = cc.CallFunc:create(function ()
-        effect:removeFromParent()
-    end)
-    local seq = cc.Sequence:create(animate, callFunc)
-    effect:setScale(0.2)
-    effect:runAction(seq)
-    effect:setPosition(rect.width * 0.8, rect.height * 0.67)
-    self:addChild(effect)
+    -- local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+    -- local frames = {}
+    -- for i = 0, 4 do 
+    --     local name = string.format("%s-%s-%03d.tga", 'effect', 'hit', i)
+    --     table.insert(frames, spriteFrameCache:getSpriteFrame(name))
+    -- end 
+    -- local effect = cc.Sprite:create()
+    -- local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(frames, self.runAnimDelay))
+    -- local callFunc = cc.CallFunc:create(function ()
+    --     effect:removeFromParent()
+    -- end)
+    -- local seq = cc.Sequence:create(animate, callFunc)
+    -- effect:setScale(0.2)
+    -- effect:runAction(seq)
+    -- effect:setPosition(rect.width * 0.8, rect.height * 0.67)
+    -- self:addChild(effect)
 
     -- 死亡
     if self:getLifeState() == const.LifeState.Die then
@@ -403,19 +407,21 @@ function Entity:playAtkAnimate()
     self:playAnimation(self.attackAnimationFrames, cb, false, self.atkAnimDelay, self, self.atkAnimateTag)
 
     --技能特效
-    local rect = self:getTextureRect()
-    local effect = cc.Sprite:create()
-    local cb = function ()
-        effect:removeFromParent(true)
+    if self.atkEffectAnimationFrames ~= nil then
+        local rect = self:getTextureRect()
+        local effect = cc.Sprite:create()
+        local cb = function ()
+            effect:removeFromParent(true)
+        end
+        self:playAnimation(self.atkEffectAnimationFrames, cb, true, self.runAnimDelay, effect)
+        local v = DirectionToVec[self.dir]
+        local r = const.TILESIZE * 0.8
+        local dx, dy = v[1] * r, v[2] * r -- * INVSQRT2
+        local moveBy = cc.MoveBy:create(0.3, cc.p(dx, dy))
+        effect:runAction(moveBy)
+        self:addChild(effect,-1)
+        effect:setPosition(rect.width * 0.8 + 0.5 * r * v[1], rect.height * 0.5 + 0.5 * r * v[2])
     end
-    self:playAnimation(self.atkEffectAnimationFrames, cb, true, self.runAnimDelay, effect)
-    local v = DirectionToVec[self.dir]
-    local r = const.TILESIZE * 0.8
-    local dx, dy = v[1] * r, v[2] * r -- * INVSQRT2
-    local moveBy = cc.MoveBy:create(0.3, cc.p(dx, dy))
-    effect:runAction(moveBy)
-    self:addChild(effect,-1)
-    effect:setPosition(rect.width * 0.8 + 0.5 * r * v[1], rect.height * 0.5 + 0.5 * r * v[2])
 end
 
 function Entity:findTarget(enemys)
@@ -543,6 +549,10 @@ function Entity:getAnimDir(dir, anim_type)
     end
 end
 
+function Entity:getFuncionType()
+    return self._model.funcType
+end
+
 function Entity:init(data)
     self._model = data
     self.name = data.roleID
@@ -552,7 +562,7 @@ function Entity:init(data)
     self.texturePlist = data.texturePath
     local pos = self._model.pos
     self:setPosition(pos.x, pos.y)
-    local effectPath = data.effectPath
+    
 
     self.runAnimDelay = 0.1
     self.runActionTag = 10
@@ -569,26 +579,31 @@ function Entity:init(data)
 
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     spriteFrameCache:addSpriteFrames(self.texturePlist)
-    
-    spriteFrameCache:addSpriteFrames(effectPath)
 
-    local runAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.run)]
-    self.runAnimationFrames = self:createAnimationFrames(runAnimData.direction == 8, self.name, ANIMATE_TYPE.run, runAnimData.count)
+    if self._model.type ~= const.ENTITY_TYPE.NPC then
+        local runAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.run)]
+        self.runAnimationFrames = self:createAnimationFrames(runAnimData.direction, self.name .. ANIMATE_TYPE.run, runAnimData.count)
 
-    local attackAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.attack)]
-    self.attackAnimationFrames = self:createAnimationFrames(attackAnimData.direction == 8, self.name, ANIMATE_TYPE.attack, attackAnimData.count)
+        local attackAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.attack)]
+        self.attackAnimationFrames = self:createAnimationFrames(attackAnimData.direction, self.name .. ANIMATE_TYPE.attack, attackAnimData.count)
 
-    local hitAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.hurt)]
-    self.hitAnimationFrames = self:createAnimationFrames(hitAnimData.direction == 8, self.name, ANIMATE_TYPE.hurt, hitAnimData.count)
+        local hitAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.hurt)]
+        self.hitAnimationFrames = self:createAnimationFrames(hitAnimData.direction, self.name .. ANIMATE_TYPE.hurt, hitAnimData.count)
 
-    local dyingAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.die)]
-    self.dyingAnimationFrames = self:createAnimationFrames(dyingAnimData.direction == 8, self.name, ANIMATE_TYPE.die, dyingAnimData.count)
+        local dyingAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.die)]
+        self.dyingAnimationFrames = self:createAnimationFrames(dyingAnimData.direction, self.name .. ANIMATE_TYPE.die, dyingAnimData.count)
+    end
 
     local idleAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.idle)]
     self.idleFrameCnt = idleAnimData.count
-    self.idleAnimationFrames = self:createAnimationFrames(idleAnimData.direction == 8, self.name, ANIMATE_TYPE.idle, idleAnimData.count)
+    self.idleAnimationFrames = self:createAnimationFrames(idleAnimData.direction, self.name .. ANIMATE_TYPE.idle, idleAnimData.count)
 
-    self.atkEffectAnimationFrames = self:createAnimationFrames(true, 'effect', '-skill1', 8)
+    local effectPath = data.effectPath
+    self.atkEffectAnimationFrames = nil
+    if effectPath ~= nil then
+        spriteFrameCache:addSpriteFrames(effectPath)
+        self.atkEffectAnimationFrames = self:createAnimationFrames(8, 'effect-skill1', 8)
+    end
 
     self:setStandDirection(self.dir)
 

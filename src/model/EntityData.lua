@@ -239,6 +239,7 @@ function EntityData:getPersistent()
         atkDelay = self.atkDelay,
         standDirs = self.standDirs,
         runDirs = self.runDirs,
+        headIcon = self.headIcon,
     }
 end
 
@@ -329,4 +330,5 @@ function EntityData:init(dict)
     end
 
     self.funcType = dict['function']
+    self.headIcon = dict['headIcon']
 end

@@ -53,4 +53,6 @@ const.COST_TYPE = {Coin=1, Exp=2}
 
 const.GOODS_FUNC = {Level=0, Atk=1, Def=2, Hp=3}
 
+const.HEAD_ICON_PLIST = 'headIcon.plist'
+
 return const

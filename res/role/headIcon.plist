@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>1000.tga</key>
+            <key>h1000.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{670,175},{223,187}}</string>
@@ -17,7 +17,7 @@
                 <key>sourceSize</key>
                 <string>{223,187}</string>
             </dict>
-            <key>2000.tga</key>
+            <key>h2000.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{492,175},{176,182}}</string>
@@ -30,7 +30,7 @@
                 <key>sourceSize</key>
                 <string>{176,182}</string>
             </dict>
-            <key>2001.tga</key>
+            <key>h2001.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{895,175},{152,200}}</string>
@@ -43,7 +43,7 @@
                 <key>sourceSize</key>
                 <string>{152,200}</string>
             </dict>
-            <key>2002.tga</key>
+            <key>h2002.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{1049,175},{136,211}}</string>
@@ -56,7 +56,7 @@
                 <key>sourceSize</key>
                 <string>{136,211}</string>
             </dict>
-            <key>3000.tga</key>
+            <key>h3000.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{190,175},{154,174}}</string>
@@ -69,7 +69,7 @@
                 <key>sourceSize</key>
                 <string>{154,174}</string>
             </dict>
-            <key>3001.tga</key>
+            <key>h3001.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{382,2},{174,144}}</string>
@@ -82,7 +82,7 @@
                 <key>sourceSize</key>
                 <string>{174,144}</string>
             </dict>
-            <key>3002.tga</key>
+            <key>h3002.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{151,140}}</string>
@@ -95,7 +95,7 @@
                 <key>sourceSize</key>
                 <string>{151,140}</string>
             </dict>
-            <key>3003.tga</key>
+            <key>h3003.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{155,2},{225,143}}</string>
@@ -108,7 +108,7 @@
                 <key>sourceSize</key>
                 <string>{225,143}</string>
             </dict>
-            <key>3004.tga</key>
+            <key>h3004.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{719,2},{203,151}}</string>
@@ -121,7 +121,7 @@
                 <key>sourceSize</key>
                 <string>{203,151}</string>
             </dict>
-            <key>3005.tga</key>
+            <key>h3005.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{1187,175},{191,213}}</string>
@@ -134,7 +134,7 @@
                 <key>sourceSize</key>
                 <string>{191,213}</string>
             </dict>
-            <key>3006.png</key>
+            <key>h3006.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1586,175},{201,282}}</string>
@@ -147,7 +147,7 @@
                 <key>sourceSize</key>
                 <string>{201,282}</string>
             </dict>
-            <key>3007.tga</key>
+            <key>h3007.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{924,2},{220,155}}</string>
@@ -160,7 +160,7 @@
                 <key>sourceSize</key>
                 <string>{220,155}</string>
             </dict>
-            <key>3008.tga</key>
+            <key>h3008.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{1146,2},{274,163}}</string>
@@ -173,7 +173,7 @@
                 <key>sourceSize</key>
                 <string>{274,163}</string>
             </dict>
-            <key>3009.tga</key>
+            <key>h3009.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,175},{186,172}}</string>
@@ -186,7 +186,7 @@
                 <key>sourceSize</key>
                 <string>{186,172}</string>
             </dict>
-            <key>3010.tga</key>
+            <key>h3010.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{1380,175},{204,247}}</string>
@@ -199,7 +199,7 @@
                 <key>sourceSize</key>
                 <string>{204,247}</string>
             </dict>
-            <key>3011.tga</key>
+            <key>h3011.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{1422,2},{212,171}}</string>
@@ -212,7 +212,7 @@
                 <key>sourceSize</key>
                 <string>{212,171}</string>
             </dict>
-            <key>3012.tga</key>
+            <key>h3012.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{558,2},{159,146}}</string>
@@ -225,7 +225,7 @@
                 <key>sourceSize</key>
                 <string>{159,146}</string>
             </dict>
-            <key>3013.tga</key>
+            <key>h3013.tga</key>
             <dict>
                 <key>frame</key>
                 <string>{{346,175},{144,181}}</string>

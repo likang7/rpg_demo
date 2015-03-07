@@ -5,6 +5,7 @@ def ansi2utf8(dirPath):
 	filenames = os.listdir(dirPath)
 	for filename in filenames:
 		filePath = os.path.join(dirPath, filename)
+		print('converting ' +  filename)
 		with open(filePath, 'r') as f:
 			s = f.read().decode('gb2312').encode('utf-8')
 			f.close()

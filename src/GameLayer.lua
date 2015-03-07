@@ -227,6 +227,9 @@ function GameLayer:updateHeroInfo()
 end
 
 function GameLayer:updateEntityInfo(panel, info)
+    local heroHead = panel:getChildByName("heroHead")
+    heroHead:loadTexture(info.headIcon, ccui.TextureResType.plistType)
+
     local attackLabel = panel:getChildByName("attackLabel")
     attackLabel:setString(info.atk)
 
@@ -275,6 +278,9 @@ function GameLayer:initUI()
         cc.Director:getInstance():replaceScene(scene)
     end
     returnBtn:addClickEventListener(onReturnClick)
+
+    local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+    spriteFrameCache:addSpriteFrames(const.HEAD_ICON_PLIST)
 
     self:updateHeroInfo()    
 end

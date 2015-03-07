@@ -1,11 +1,4 @@
 <UserData>
-  <OpenedDocuments>
-    <FilePathData Path="gameUI.csd" />
-    <FilePathData Path="welcomeUI.csd" />
-    <FilePathData Path="conversationUI.csd" />
-    <FilePathData Path="shopUI.csd" />
-  </OpenedDocuments>
-  <ActiveDocument Path="shopUI.csd" />
   <Properties>
     <Item Key="PackageParamsKey">
       <Value ctype="PackageParams">

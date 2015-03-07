@@ -1,9 +1,9 @@
 <GameProjectFile>
-  <PropertyGroup Type="Scene" Name="shopUI" ID="62938c72-5225-4a5e-8af3-9ec127d02e11" Version="2.1.2.0" />
+  <PropertyGroup Type="Layer" Name="shopUI" ID="62938c72-5225-4a5e-8af3-9ec127d02e11" Version="2.1.2.0" />
   <Content ctype="GameProjectContent">
     <Content>
       <Animation Duration="0" Speed="1.0000" />
-      <ObjectData Name="Scene" FrameEvent="" Tag="42" ctype="SingleNodeObjectData">
+      <ObjectData Name="Layer" FrameEvent="" Tag="42" ctype="LayerObjectData">
         <Position X="0.0000" Y="0.0000" />
         <Scale ScaleX="1.0000" ScaleY="1.0000" />
         <AnchorPoint />
@@ -12,7 +12,7 @@
         <PrePosition X="0.0000" Y="0.0000" />
         <PreSize X="0.0000" Y="0.0000" />
         <Children>
-          <NodeObjectData Name="shopPanel" CanEdit="False" ActionTag="-709294039" FrameEvent="" Tag="46" LeftMargin="-1.0000" RightMargin="1.0000" TopMargin="1.0001" BottomMargin="-1.0001" TouchEnable="True" BackColorAlpha="76" ComboBoxIndex="1" ColorAngle="90.0000" ctype="PanelObjectData">
+          <NodeObjectData Name="shopPanel" ActionTag="-709294039" FrameEvent="" Tag="46" LeftMargin="-1.0000" RightMargin="1.0000" TopMargin="1.0001" BottomMargin="-1.0001" TouchEnable="True" BackColorAlpha="76" ComboBoxIndex="1" ColorAngle="90.0000" ctype="PanelObjectData">
             <Position X="-1.0000" Y="-1.0001" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <AnchorPoint />
@@ -171,7 +171,7 @@
                 <ColorVector ScaleY="1.0000" />
               </NodeObjectData>
             </Children>
-            <SingleColor A="255" R="155" G="155" B="155" />
+            <SingleColor A="255" R="0" G="0" B="0" />
             <FirstColor A="255" R="150" G="200" B="255" />
             <EndColor A="255" R="255" G="255" B="255" />
             <ColorVector ScaleY="1.0000" />

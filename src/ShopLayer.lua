@@ -93,11 +93,15 @@ function ShopLayer:showResultHint(ret)
 	hintLabel:runAction(act)
 end
 
+function ShopLayer:closeShop()
+	Globals.gameState = const.GAME_STATE.Playing
+	self:removeFromParent()
+end
+
 function ShopLayer:initKeyboardEvent()
 	local function onKeyPressed(keyCode, event)
 		if keyCode == cc.KeyCode.KEY_ESCAPE then
-			Globals.gameState = const.GAME_STATE.Playing
-			self:removeFromParent()
+			self:closeShop()
 		end
 	end
 

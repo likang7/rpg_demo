@@ -1,5 +1,6 @@
 require "GameLayer"
 require "model.Player"
+require "GameUILayer"
 local Globals = require "model.Globals"
 
 GameScene = class("GameScene",
@@ -20,10 +21,11 @@ end
 
 function GameScene:create(dict)
     local scene = GameScene.new()
-    scene:init(dict)
 
     Globals.gameScene = scene
-    
+
+    scene:init(dict)
+
     return scene
 end
 
@@ -42,11 +44,36 @@ function GameScene:init(dict)
     gameLayer:setTag(self.gameLayerTag)
     self:addChild(gameLayer)
 
+    local gameUILayer = GameUILayer:create()
+    self:addChild(gameUILayer)
+
+    local tick = function(dt)
+        gameLayer:step(dt)
+        gameUILayer:step(dt)
+    end
+
+    local scheduler = cc.Director:getInstance():getScheduler()
+    local schedulerTickID = scheduler:scheduleScriptFunc(tick, 0, false)
+
     local function onNodeEvent(event)
         if "exit" == event then
+            gameLayer:clearAll()
+            cc.Director:getInstance():getScheduler():unscheduleScriptEntry(schedulerTickID)
             -- local spriteFrameCache = cc.SpriteFrameCache:getInstance()
             -- spriteFrameCache:removeUnusedSpriteFrames()
         end
     end
     self:registerScriptHandler(onNodeEvent)
+end
+
+function GameScene:popConversation(conversationID)
+    require "ConversationLayer"
+    local layer = ConversationLayer:create({['conversationID']=conversationID})
+    self:addChild(layer, const.DISPLAY_PRIORITY.Conversation)
+end
+
+function GameScene:popShopLayer(shopID)
+    require "ShopLayer"
+    local shopLayer = ShopLayer:create({['shopID']=shopID})
+    self:addChild(shopLayer, const.DISPLAY_PRIORITY.Shop)
 end

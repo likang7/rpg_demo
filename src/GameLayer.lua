@@ -7,7 +7,6 @@ require "model.DialogComp"
 require "Transfer"
 require "Item"
 require "GameMap"
-require("ShopLayer")
 
 local Direction = const.Direction
 local math = math
@@ -160,11 +159,6 @@ function GameLayer:clearAll()
         self.tryMoveOneStepID = nil
     end
 
-    if self.schedulerTickID ~= nil then
-        scheduler:unscheduleScriptEntry(self.schedulerTickID)
-        self.schedulerTickID = nil
-    end
-
     self.playerEntity = nil
     self.monsterEntity = {}
     self.transfers = {}
@@ -180,8 +174,7 @@ function GameLayer:clearAll()
     self:removeAllChildren()
 
     local eventDispatcher = self:getEventDispatcher()
-    eventDispatcher:removeAllEventListeners()
-
+    eventDispatcher:removeEventListenersForTarget(self, true)
 end
 
 function GameLayer:initTileMap(tilemapPath)
@@ -202,103 +195,6 @@ function GameLayer:initTileMap(tilemapPath)
 
     local objects = tilemap:getObjectGroup("object")
     self:initEntity(objects)
-end
-
-function GameLayer:updateHeroInfo()
-    local ui = self.ui
-
-    local panel = ui:getChildByName("InfoPanel")
-    local heroInfoPanel = panel:getChildByName("heroInfo")
-
-    local heroNameLabel = heroInfoPanel:getChildByName("heroName")
-    heroNameLabel:setString(self.player.name)
-
-    local heroLevelLabel = heroInfoPanel:getChildByName("heroLevel")
-    heroLevelLabel:setString('Lv.' .. self.player.level)
-
-    local expLabel = heroInfoPanel:getChildByName("expLabel")
-    expLabel:setString(self.player.exp)
-
-    local coinLabel = heroInfoPanel:getChildByName("coinLabel")
-    coinLabel:setString(self.player.coin)
-
-    local heroData = self.player:getHeroData()
-    self:updateEntityInfo(heroInfoPanel, heroData)
-   
-    local monsterInfoPanel = panel:getChildByName("monsterInfo")
-    local target = self.playerEntity:getTarget()
-    if target == nil then
-        monsterInfoPanel:setVisible(false)
-    else 
-        local targetData = target:getData()
-        self:updateEntityInfo(monsterInfoPanel, targetData)
-        local heroNameLabel = monsterInfoPanel:getChildByName("heroName")
-        heroNameLabel:setString(targetData.name)
-        local heroLevelLabel = monsterInfoPanel:getChildByName("heroLevel")
-        heroLevelLabel:setString('Lv.' .. targetData.level)
-        monsterInfoPanel:setVisible(true)
-    end
-end
-
-function GameLayer:updateEntityInfo(panel, info)
-    local heroHead = panel:getChildByName("heroHead")
-    heroHead:loadTexture(info.headIcon, ccui.TextureResType.plistType)
-
-    local attackLabel = panel:getChildByName("attackLabel")
-    attackLabel:setString(math.floor(info.atk))
-
-    local defenseLabel = panel:getChildByName("defenseLabel")
-    defenseLabel:setString(math.floor(info.def))
-
-    local hpLabel = panel:getChildByName("hpLabel")
-    hpLabel:setString(math.floor(info.hp))
-
-    local criticalLabel = panel:getChildByName("criticalLabel")
-    criticalLabel:setString(math.floor(info.criRate * 100) .. '%')
-
-    local antiCriticalLabel = panel:getChildByName("antiCriticalLabel")
-    antiCriticalLabel:setString(math.floor(info.antiCriRate * 100) .. '%')
-end
-
-function GameLayer:initUI()
-    self.ui = cc.CSLoader:createNode("gameUI.csb")
-    self:addChild(self.ui, const.DISPLAY_PRIORITY.UI)
-
-    local panel = self.ui:getChildByName("InfoPanel")
-    local saveRecordBtn = panel:getChildByName("saveRecordBtn")
-
-    local responseLabel = panel:getChildByName("responseLabel")
-    local onSaveRecordClick = function ()
-        self:saveRecord()
-
-        responseLabel:setVisible(true)
-        responseLabel:setOpacity(255)
-
-        local tag = 22
-        responseLabel:stopActionByTag(tag)
-        local act = helper.createHintMsgAction(responseLabel)
-        act:setTag(tag)
-
-        responseLabel:runAction(act)
-    end
-    saveRecordBtn:addClickEventListener(onSaveRecordClick)
-
-    local returnBtn = panel:getChildByName("returnBtn")
-    returnBtn:setTitleText("回主界面")
-    local onReturnClick = function()
-        require "WelcomeScene"
-        self:clearAll()
-        local scene = WelcomeScene:create()
-        cc.Director:getInstance():replaceScene(scene)
-    end
-    returnBtn:addClickEventListener(onReturnClick)
-
-    local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-    spriteFrameCache:addSpriteFrames(const.HEAD_ICON_PLIST)
-
-    self:updateHeroInfo() 
-
-    -- self:popConversation(1000)
 end
 
 function GameLayer:toggleShowDetectRange(  )
@@ -327,67 +223,46 @@ function GameLayer:init(dict)
     -- bg:setPosition(origin.x, origin.y + self.gameMap.map_h - bg:getTextureRect().height)
     -- self:addChild(bg, -1)
 
-    local function tick(dt)
-        self:updateHeroInfo()
-
-        if Globals.gameState ~= const.GAME_STATE.Playing then
-            return
-        end
-
-        -- 更新玩家
-        if self.playerEntity ~= nil and self.playerEntity:getLifeState() ~= const.LifeState.Die then
-            self.playerEntity:step(dt)
-            -- local px, py = self.playerEntity:getPosition()
-            -- -- self:setViewPointCenter(px, py)   
-            -- if self.gameMap.skyLayer ~= nil then
-            --     local gid = self.gameMap.skyLayer:getTileGIDAt(cc.p(self.gameMap:convertToTiledSpace(px, py)))
-            --     if gid ~= 0 then
-            --         self.playerEntity:setOpacity(200)
-            --     else
-            --         self.playerEntity:setOpacity(255)
-            --     end 
-            -- end
-        end
-        -- 更新monster
-        for k, monster in pairs(self.monsterEntity) do
-            if monster.status == const.Status.die then
-                local rangeId = monster:getRangeId()
-                if rangeId ~= nil then
-                    self.rangeFlags[rangeId] = true
-                end
-                if self.playerEntity:getTarget() == monster then
-                    self.playerEntity:setTarget(nil)
-                end
-                self.monsterEntity[k] = nil
-                self:removeChild(monster, true)
-                self.deadMonsterIds[k] = true
-            else
-                monster:setDetectRangeShow(self.showDetectRange)
-                monster:step(dt)
-            end
-        end
-
-        -- 更新npc
-        for _, npc in ipairs(self.npcs) do
-            npc:step(dt)
-        end
-    end
-
-    local scheduler = cc.Director:getInstance():getScheduler()
-    self.schedulerTickID = scheduler:scheduleScriptFunc(tick, 0, false)
-
-    local function onNodeEvent(event)
-        if "exit" == event then
-
-        end
-    end
-    self:registerScriptHandler(onNodeEvent)
-
     self:initTouchEvent()
 
     self:initKeyboardEvent()
 
-    self:initUI()
+    -- self:initUI()
+end
+
+function GameLayer:step(dt)
+    if Globals.gameState ~= const.GAME_STATE.Playing then
+        return
+    end
+
+    -- 更新玩家
+    if self.playerEntity ~= nil and self.playerEntity:getLifeState() ~= const.LifeState.Die then
+        self.playerEntity:step(dt)
+    end
+
+    -- 更新monster
+    for k, monster in pairs(self.monsterEntity) do
+        if monster.status == const.Status.die then
+            local rangeId = monster:getRangeId()
+            if rangeId ~= nil then
+                self.rangeFlags[rangeId] = true
+            end
+            if self.playerEntity:getTarget() == monster then
+                self.playerEntity:setTarget(nil)
+            end
+            self.monsterEntity[k] = nil
+            self:removeChild(monster, true)
+            self.deadMonsterIds[k] = true
+        else
+            monster:setDetectRangeShow(self.showDetectRange)
+            monster:step(dt)
+        end
+    end
+
+    -- 更新npc
+    for _, npc in ipairs(self.npcs) do
+        npc:step(dt)
+    end
 end
 
 function GameLayer:saveRecord()
@@ -398,7 +273,6 @@ end
 function GameLayer:updateRecord()
     local gameInfo = {stageId=self.stageId, stageState=self:getStageState()}
     self.player:updateRecord(gameInfo)
-    -- self.player:saveRecord(gameInfo)
 end
 
 function GameLayer:onNextStage()
@@ -579,8 +453,7 @@ function GameLayer:OnAttackPressed()
         for _, npc in ipairs(npcs) do
             local funcType = npc:getFuncionType()
             if funcType ~= nil then
-                local shopLayer = ShopLayer:create({shopID=funcType})
-                self:addChild(shopLayer, const.DISPLAY_PRIORITY.Shop)
+                Globals.gameScene:popShopLayer(funcType)
                 return
             end
         end
@@ -631,12 +504,6 @@ function GameLayer:getStageState()
         ['deadItemIds'] = self.deadItemIds,
         ['heroPosition'] = {px, py}
     }
-end
-
-function GameLayer:popConversation(conversationID)
-    require "ConversationLayer"
-    local layer = ConversationLayer:create({['conversationID']=conversationID})
-    self:addChild(layer, const.DISPLAY_PRIORITY.Conversation)
 end
 
 function GameLayer:getPlayerEntity()

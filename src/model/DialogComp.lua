@@ -65,6 +65,6 @@ end
 
 function DialogComp:popConversation(conversationID)
 	if Globals.player:getCurStageId() == Globals.player:getMaxStageId() then
-		Globals.gameScene:getGameLayer():popConversation(conversationID)
+		Globals.gameScene:popConversation(conversationID)
 	end
 end

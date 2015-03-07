@@ -1,9 +1,9 @@
 <GameProjectFile>
-  <PropertyGroup Type="Scene" Name="welcomeUI" ID="e81e09d1-c98a-42e5-8863-a1f81626f577" Version="2.1.2.0" />
+  <PropertyGroup Type="Layer" Name="welcomeUI" ID="e81e09d1-c98a-42e5-8863-a1f81626f577" Version="2.1.2.0" />
   <Content ctype="GameProjectContent">
     <Content>
       <Animation Duration="0" Speed="1.0000" />
-      <ObjectData Name="Scene" FrameEvent="" Tag="39" ctype="SingleNodeObjectData">
+      <ObjectData Name="Layer" FrameEvent="" Tag="39" ctype="LayerObjectData">
         <Position X="0.0000" Y="0.0000" />
         <Scale ScaleX="1.0000" ScaleY="1.0000" />
         <AnchorPoint />

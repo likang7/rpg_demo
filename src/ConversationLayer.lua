@@ -20,6 +20,9 @@ end
 function ConversationLayer:init(dict)
 	Globals.gameState = const.GAME_STATE.Talking
 
+	local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+    spriteFrameCache:addSpriteFrames(const.HEAD_ICON_PLIST)
+
 	self.ui = cc.CSLoader:createNode("conversationUI.csb")
 	local ui = self.ui
 	self:addChild(ui)
@@ -31,10 +34,15 @@ function ConversationLayer:init(dict)
 	self.contentList = data['contentList']
 	self.idx = 1
 
-	local listener = cc.EventListenerKeyboard:create()
-	listener:registerScriptHandler(function(keyCode, event) self:_onKeyPressed(keyCode, event) end, cc.Handler.EVENT_KEYBOARD_PRESSED)
+	local listenerKeyBoard = cc.EventListenerKeyboard:create()
+	listenerKeyBoard:registerScriptHandler(function(keyCode, event) self:_onKeyPressed(keyCode, event) end, cc.Handler.EVENT_KEYBOARD_PRESSED)
+    
+	local listenerMouse = cc.EventListenerMouse:create()
+	listenerMouse:registerScriptHandler(function(event) self:showNextConversation() end, cc.Handler.EVENT_MOUSE_DOWN )
+
 	local eventDispatcher = self:getEventDispatcher()
-    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listenerKeyBoard, self)
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listenerMouse, self)
 
     self:showNextConversation()
 end

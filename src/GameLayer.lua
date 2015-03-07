@@ -70,7 +70,7 @@ function GameLayer:initEntity(objectGroup)
     end
     local playerEntity = Entity:create(entityData)
     self.playerEntity = playerEntity
-    self:addChild(playerEntity, 5)
+    self:addChild(playerEntity, const.DISPLAY_PRIORITY.Hero)
 
     local objects = objectGroup:getObjects()
     for _, object in pairs(objects) do
@@ -88,7 +88,7 @@ function GameLayer:initEntity(objectGroup)
             px, py = px+object.width/2, py+object.height/2
             entityData:setBornPoint(cc.p(px, py))
             local npc = Entity:create(entityData)
-            self:addChild(npc, 2)
+            self:addChild(npc, const.DISPLAY_PRIORITY.NPC)
             table.insert(self.npcs, npc)
             self.gameMap:addBlock(px, py, const.BLOCK_TYPE.NPC)
 
@@ -107,7 +107,7 @@ function GameLayer:initEntity(objectGroup)
             if self.deadItemIds[hashId] == nil then
                 local fakeDict = {itemId=tonumber(object.name), rangeId=tonumber(object.rangeID), x=object.x, y=object.y}
                 local item = Item:create(fakeDict)
-                self:addChild(item, 1)
+                self:addChild(item, const.DISPLAY_PRIORITY.Item)
                 self.items[hashId] = item
             end
         elseif otype == const.TILEMAP_TYPE.Monster then
@@ -123,7 +123,7 @@ function GameLayer:initEntity(objectGroup)
                     self.rangeFlags[entityData.rangeId] = false
                 end
                 local monster = Entity:create(entityData)
-                self:addChild(monster, 3)
+                self:addChild(monster, const.DISPLAY_PRIORITY.Monster)
                 self.monsterEntity[hashId] = monster
 
                 --ai
@@ -135,6 +135,19 @@ function GameLayer:initEntity(objectGroup)
                 }
                 local aiComp = AIComp:create(dict, true)
                 monster:setAIComp(aiComp)
+
+                --diag
+                if entityData.meetConversationID ~= nil or 
+                    entityData.dieConversationID ~= nil or
+                    entityData.dialog ~= nil then
+                    local dict = {
+                        ['entity'] = monster,
+                        ['target'] = self.playerEntity,
+                        ['detectRange'] = object.width/2,
+                    }
+                    local dialogComp = DialogComp:create(dict, true)
+                    monster:setDialogComp(dialogComp)
+                end
             end
         end
     end
@@ -320,7 +333,7 @@ function GameLayer:init(dict)
         if Globals.gameState ~= const.GAME_STATE.Playing then
             return
         end
-        
+
         -- 更新玩家
         if self.playerEntity ~= nil and self.playerEntity:getLifeState() ~= const.LifeState.Die then
             self.playerEntity:step(dt)

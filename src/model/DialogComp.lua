@@ -58,7 +58,7 @@ function DialogComp:step()
 		local dieConversationID = self.entity:getDieConversationID()
 		if self.everPopDie == false and dieConversationID ~= nil then
 			self.everPopDie = true
-			self.entity:popConversation(dieConversationID)
+			self:popConversation(dieConversationID)
 		end
 	end
 end

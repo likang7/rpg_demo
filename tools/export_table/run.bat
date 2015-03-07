@@ -1,6 +1,9 @@
 :: arg[1]:csv路径, arg[2]:lua输出路径, arg[3]:主键
+set XLSXFilePath=../../comment/gameCouple-p1.xlsx 
 set CSV_ROOT=../../comment/sheet/
 set LUA_ROOT=../../src/data/
+
+python xlsx2csv.py -a %XLSXFilePath% %CSV_ROOT%
 
 lua csv2lua.lua %CSV_ROOT%item.csv %LUA_ROOT%itemData.lua itemID
 
@@ -14,5 +17,5 @@ lua csv2lua.lua %CSV_ROOT%goods.csv %LUA_ROOT%goodsData.lua goodsID
 
 lua csv2lua.lua %CSV_ROOT%conversation.csv %LUA_ROOT%conversationData.lua conversationID
 
-python ansi2utf8.py %LUA_ROOT%
+::python ansi2utf8.py %LUA_ROOT%
 pause

@@ -253,8 +253,7 @@ function Entity:showHurt(deltaHp, isCritial)
         color = cc.c3b(255, 0, 0)
     end
 
-    local rect = self:getTextureRect()
-    local pos = cc.p(self:getPositionX(), self:getPositionY() + rect.height - const.TILESIZE/2)
+    local pos = cc.p(self:getPositionX(), self:getPositionY() + const.TILESIZE * 2)
 
     helper.jumpMsg(self:getParent(), msg, color, pos, fontSize)
 
@@ -389,7 +388,7 @@ function Entity:obtainItem(item)
     -- 显示
     local msg = helper.getRewardInfoByItemInfo(info)
     local rect = self:getTextureRect()
-    local pos = cc.p(self:getPositionX(), self:getPositionY() + rect.height - const.TILESIZE/2)
+    local pos = cc.p(self:getPositionX(), self:getPositionY() + const.TILESIZE * 2)
     helper.jumpMsg(self:getParent(), msg, cc.c3b(0, 255, 0), pos, 20)
 end
 
@@ -506,24 +505,29 @@ end
 function Entity:showDialog()
     if self.dialog == nil then
          -- 显示
-        local fontSize = 22
         local msg = self._model:getDialog()
+        if msg == nil then
+            return
+        end
+        local fontSize = 20
         self.label = cc.Label:createWithSystemFont(msg, const.DEFAULT_FONT, fontSize)
-        -- self:addChild(self.label, 10)
+
         local rect = self:getTextureRect()
         self.label:setPosition(24, 5)
         self.label:setAnchorPoint(cc.p(0, 0))
         self.label:setColor(cc.c3b(0,0,0))
-        self.label:setWidth(fontSize * 6)
+        self.label:setWidth(fontSize * 7)
         -- self.label:enableGlow(cc.c4b(0,0,255,255))
 
         local labelBox = self.label:getBoundingBox()
         self.dialog = ccui.Scale9Sprite:create(cc.rect(33,37.5,77,24), "conversationUI.png")
         self.dialog:setAnchorPoint(cc.p(0,0))
         self.dialog:setPreferredSize(cc.size(labelBox.width + 32, labelBox.height + 15))
-        self.dialog:setPosition(14+const.TILESIZE/2, rect.height - 50)
+        self.dialog:setPosition(const.TILESIZE, const.TILESIZE)
 
         self.dialog:addChild(self.label)
+        -- 字体缩放回去，不然太难看
+        self.dialog:setScale(1.0 / self:getScale())
         self:addChild(self.dialog, 9)
     else
         self.dialog:setVisible(true)
@@ -574,7 +578,9 @@ function Entity:init(data)
     self._model = data
     self.name = data.roleID
     self.dir = data.dir
-    self:setScale(0.8)
+
+    self.scale = 0.8
+    self:setScale(self.scale)
 
     self.texturePlist = data.texturePath
     local pos = self._model.pos

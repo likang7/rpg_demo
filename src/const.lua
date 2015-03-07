@@ -32,7 +32,7 @@ const.RECORD_DIR = "record"
 const.RECORD_PATH = const.RECORD_DIR .. "/record.json"
 const.DEFAULT_RECORD = "res/default_record.json"
 
-const.DISPLAY_PRIORITY = {UI=80, Conversation=70, Shop=64, JumpWord=30, Sky=20}
+const.DISPLAY_PRIORITY = {UI=80, Conversation=70, Shop=64, JumpWord=30, Sky=20, Hero=10, NPC=8, Monster=6, Item=4}
 
 const.GAME_STATE = {Playing=0, Shopping=1, Talking=2}
 

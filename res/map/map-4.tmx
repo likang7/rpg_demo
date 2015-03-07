@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" nextobjectid="39">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" nextobjectid="43">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
   <image source="tileset.png" width="1024" height="2048"/>
  </tileset>
- <layer name="floor-1" width="32" height="24">
+ <layer name="floor-1" width="32" height="24" visible="0">
   <data encoding="base64" compression="zlib">
    eJz7xMrA8GkUj+JRPIpH8SgmAu9npB4e6faPdDyDjXQ8av+o/aP2UwcDAN+zjuo=
   </data>
  </layer>
- <layer name="floor-2" width="32" height="24">
+ <layer name="floor-2" width="32" height="24" visible="0">
   <data encoding="base64" compression="zlib">
    eJxjZmBgYCYBm7EzLNgFpF2ZGBjWM1COlUnEIPtvAenzQHwbSiPj20ji9TjUIGNSAch+MrRRDWCzP42dgSEdiDPYSTdPg4UhgVL724D2tgNxBxn2q1PB/mVAe5cD8Qoy7Fejgv3UBInATJYExcnMmPJMtLQcCBqR7GzGYr8Sje0nBAZj/htp9guyMTDAsCEQGyFhYyQ5EBZCw4JomBz7qekfXP7A56fhBAjVz8gAVF8Cwz+Blu4hVCc3YSmT6Ak4Bth+9gG2/zitK6BBbv9Ah/9zKvsfAJa8QNE=
   </data>
@@ -52,7 +52,7 @@
   </object>
   <object id="7" name="3011" type="5" x="512" y="288" width="160" height="160">
    <properties>
-    <property name="rangeID" value=""/>
+    <property name="rangeID" value="6"/>
    </properties>
    <ellipse/>
   </object>
@@ -220,13 +220,33 @@
    </properties>
    <ellipse/>
   </object>
+  <object id="39" name="1008" type="4" x="448" y="128" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="5"/>
+   </properties>
+  </object>
+  <object id="40" name="1008" type="4" x="736" y="128" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="5"/>
+   </properties>
+  </object>
+  <object id="41" name="1008" type="4" x="512" y="384" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="6"/>
+   </properties>
+  </object>
+  <object id="42" name="1008" type="4" x="640" y="384" width="32" height="32">
+   <properties>
+    <property name="rangeID" value="6"/>
+   </properties>
+  </object>
  </objectgroup>
- <layer name="sky-1" width="32" height="24">
+ <layer name="sky-1" width="32" height="24" visible="0">
   <data encoding="base64" compression="zlib">
    eJzdlEtOwzAURR07OMxgAyAoILICBpUQailVB8AaAEXshIpl0BaYMocOaAtlyBr6Yx1cK44SQl7qhEYgrnTk51+u/RybMcaqDkvVrmTMlX6857AbalyNMzax6X5T1S26L8l/hLWNwQRMtf8KWM3p30zx/+Ydq49zelJycDYt7KsNOvoMxJL5/OUMe6HUg28fDH7JP67/5F8HUqPiGoIjTV2GfTYIbIvcvyfD+BJxFeWhppbtUwtXhWifYp0z8CGJASlqCsxFPq9RlhLyauFN40AAm/ttj+AJdMEm8mvjjpZQSpRbVtg/j2725X7RDvFuB+2uoOcGfer3UNtS1RYqbdABt+AO3Ft+H9djVTzjZutrCHpsQ/sPwZtu68GgH/lfXxEPdf0cF+DCNvM1lek+/qp6WH8fDHhyvaxzt49yjXgHHjTH4AScggrmV7nfHtU2zuw91uaJ9Hpc6wW8x/N0sOBzfiHyHa+byMsw1o2MDdZgkv8Ng5wnvXM/VTnjWTsF3Ufq3z/L6adyfyVCokpq1/fvOZ9bsfoEL0tJJA==
   </data>
  </layer>
- <layer name="sky-2" width="32" height="24">
+ <layer name="sky-2" width="32" height="24" visible="0">
   <data encoding="base64" compression="zlib">
    eJxjYCAP7IXSy1nJNIBCcBdKHx8g+0fBKBgFIwMsYmJgSEIqZ54xMzCwsTAwPGWE8JXQ6GdA+jlQzRMgfgrEK4H8VUC8mhFRblICjgDNPMpMvPqTQHtPAfFpRkS5CQMnoHQ7HvPwyREDXgLtfQXErxkx5V5QZjRRgBMYf1xAzM1EB8uGGFgIxIuA2AeIfYFYCZiulYE4DRhWGVjCy5SdYQG93KY2Gl80By1IYawKZHOMhvmIAgDCWBvH
   </data>

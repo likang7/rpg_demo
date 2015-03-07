@@ -9,6 +9,8 @@ if Globals == nil then
 
 	local const = require "const"
 	Globals.gameState = const.GAME_STATE.Playing
+
+	Globals.gameScene = nil
 end
 
 local Globals = Globals

@@ -562,6 +562,14 @@ function Entity:getFuncionType()
     return self._model.funcType
 end
 
+function Entity:getMeetConversationID()
+    return self._model.meetConversationID
+end
+
+function Entity:getDieConversationID()
+    return self._model.dieConversationID
+end
+
 function Entity:init(data)
     self._model = data
     self.name = data.roleID

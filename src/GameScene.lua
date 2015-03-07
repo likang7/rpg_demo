@@ -1,5 +1,6 @@
 require "GameLayer"
 require "model.Player"
+local Globals = require "model.Globals"
 
 GameScene = class("GameScene",
     function()
@@ -21,7 +22,13 @@ function GameScene:create(dict)
     local scene = GameScene.new()
     scene:init(dict)
 
+    Globals.gameScene = scene
+    
     return scene
+end
+
+function GameScene:getGameLayer()
+    return self:getChildByTag(self.gameLayerTag)
 end
 
 function GameScene:init(dict)
@@ -31,6 +38,8 @@ function GameScene:init(dict)
     local gameLayer = self:createGameLayer()
     gameLayer:setPosition(origin.x, origin.y)
     -- gameLayer:setScale(2)
+    self.gameLayerTag = 10
+    gameLayer:setTag(self.gameLayerTag)
     self:addChild(gameLayer)
 
     local function onNodeEvent(event)

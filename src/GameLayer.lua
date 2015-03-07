@@ -283,7 +283,9 @@ function GameLayer:initUI()
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     spriteFrameCache:addSpriteFrames(const.HEAD_ICON_PLIST)
 
-    self:updateHeroInfo()    
+    self:updateHeroInfo() 
+
+    -- self:popConversation(1000)
 end
 
 function GameLayer:toggleShowDetectRange(  )
@@ -313,6 +315,12 @@ function GameLayer:init(dict)
     -- self:addChild(bg, -1)
 
     local function tick(dt)
+        self:updateHeroInfo()
+
+        if Globals.gameState ~= const.GAME_STATE.Playing then
+            return
+        end
+        
         -- 更新玩家
         if self.playerEntity ~= nil and self.playerEntity:getLifeState() ~= const.LifeState.Die then
             self.playerEntity:step(dt)
@@ -350,8 +358,6 @@ function GameLayer:init(dict)
         for _, npc in ipairs(self.npcs) do
             npc:step(dt)
         end
-
-        self:updateHeroInfo()
     end
 
     local scheduler = cc.Director:getInstance():getScheduler()
@@ -608,5 +614,11 @@ function GameLayer:getStageState()
         ['deadItemIds'] = self.deadItemIds,
         ['heroPosition'] = {px, py}
     }
+end
+
+function GameLayer:popConversation(conversationID)
+    require "ConversationLayer"
+    local layer = ConversationLayer:create({['conversationID']=conversationID})
+    self:addChild(layer, const.DISPLAY_PRIORITY.Conversation)
 end
 

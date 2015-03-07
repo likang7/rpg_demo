@@ -108,6 +108,12 @@ function Player:getCurStageId()
     return curStageId
 end
 
+function Player:getMaxStageId()
+	local stageInfo = self.recorder:getStageInfo()
+    local maxStageId = stageInfo.maxStageId
+    return maxStageId
+end
+
 function Player:obtainCoin(num)
 	self.coin = self.coin + num
 end

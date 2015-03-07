@@ -251,6 +251,8 @@ function EntityData:getPersistent()
         ['type'] = self.type,
         coinDrop = self.coinDrop,
         expDrop = self.expDrop,
+        meetConversationID = self.meetConversationID,
+        dieConversationID = self.ConversationID,
     }
 end
 
@@ -352,4 +354,7 @@ function EntityData:init(dict)
     self.headIcon = dict['headIcon']
     self.coinDrop = dict.coinDrop
     self.expDrop = dict.expDrop
+
+    self.meetConversationID = dict.meetConversationID
+    self.dieConversationID = dict.dieConversationID
 end

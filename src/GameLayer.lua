@@ -16,6 +16,7 @@ local pairs = pairs
 local helper = require "utils.helper"
 local tonumber = tonumber
 local table = table
+local next = next
 
 GameLayer = class("GameLayer",
     function()
@@ -231,19 +232,19 @@ function GameLayer:updateEntityInfo(panel, info)
     heroHead:loadTexture(info.headIcon, ccui.TextureResType.plistType)
 
     local attackLabel = panel:getChildByName("attackLabel")
-    attackLabel:setString(info.atk)
+    attackLabel:setString(math.floor(info.atk))
 
     local defenseLabel = panel:getChildByName("defenseLabel")
-    defenseLabel:setString(info.def)
+    defenseLabel:setString(math.floor(info.def))
 
     local hpLabel = panel:getChildByName("hpLabel")
-    hpLabel:setString(info.hp)
+    hpLabel:setString(math.floor(info.hp))
 
     local criticalLabel = panel:getChildByName("criticalLabel")
-    criticalLabel:setString(info.criRate * 100 .. '%')
+    criticalLabel:setString(math.floor(info.criRate * 100) .. '%')
 
     local antiCriticalLabel = panel:getChildByName("antiCriticalLabel")
-    antiCriticalLabel:setString(info.antiCriRate * 100 .. '%')
+    antiCriticalLabel:setString(math.floor(info.antiCriRate * 100) .. '%')
 end
 
 function GameLayer:initUI()
@@ -494,6 +495,8 @@ function GameLayer:initKeyboardEvent()
             self:OnAttackPressed()
         elseif keyCode == cc.KeyCode.KEY_TAB then
             self:toggleShowDetectRange()
+        elseif keyCode == cc.KeyCode.KEY_H then
+            self.playerEntity:watchTarget(self.monsterEntity)
         end
     end
 

@@ -29,7 +29,7 @@ function EntityData:create(eid)
         dict.level = 1
         dict.standDirs = 8
         dict.runDirs = 8
-
+        dict.detectRange = const.TILESIZE * 5
         -- dict = {roleID=1000, name='白晶晶', speed=200, dir=Direction.S, criRate=50, antiCriRate=50,
         --         camp=0, atk=100, def=10, hp=20000, maxhp=20000, controlType=const.ControlType.Keyboard,
         --         atkRange=40, atkDelay=0.5, level=1, standDirs=8, runDirs=8}
@@ -159,13 +159,17 @@ function EntityData:attack(enemys, skillId)
     skillData = {theta=90, r=self.atkRange, rate=1, additional=0}
     local targets = Globals.gameMap:searchTargetsInFan(self.pos.x, self.pos.y, self.dir, skillData.r, skillData.theta, enemys)
     for _, target in pairs(targets) do
-        if target._model.lifeState == const.LifeState.Alive then
-            local hurt, isCritial = self:calHurt(target._model, skillData)
+        local targetData = target._model
+        if targetData.lifeState == const.LifeState.Alive then
+            local hurt, isCritial = self:calHurt(targetData, skillData)
             if hurt > 0 then
-                target._model.hp = target._model.hp - hurt
-                if target._model.hp <= 0 then
-                    target._model.hp = 0
-                    target._model.lifeState = const.LifeState.Die
+                targetData.hp = targetData.hp - hurt
+                if targetData.hp <= 0 then
+                    targetData.hp = 0
+                    targetData.lifeState = const.LifeState.Die
+                    if self.type == const.ENTITY_TYPE.Hero then
+                        Globals.player:onKillMonster(targetData)
+                    end
                 end
             end
             target:showHurt(hurt, isCritial)
@@ -173,17 +177,20 @@ function EntityData:attack(enemys, skillId)
     end
 end
 
-function EntityData:findTarget(enemys)
+function EntityData:findTarget(enemys, range)
+    if range == nil then
+        range = self.detectRange
+        if range == nil then
+            range = self.atkRange
+        end
+    end
+
     local targets = {}
     for _, enemy in pairs(enemys) do
         if enemy:getLifeState() == const.LifeState.Alive then
             ex, ey = enemy:getPosition()
             local dis = cc.pGetDistance(cc.p(ex, ey), self.pos)
-            local detectRange = self.detectRange
-            if detectRange == nil then
-                detectRange = self.atkRange
-            end
-            if dis < math.max(self.atkRange, detectRange) then
+            if dis < math.max(self.atkRange, range) then
                 table.insert(targets, {["target"]=enemy, ["dis"]=dis})
             end
         end
@@ -240,6 +247,10 @@ function EntityData:getPersistent()
         standDirs = self.standDirs,
         runDirs = self.runDirs,
         headIcon = self.headIcon,
+        dialog = self.dialog,
+        ['type'] = self.type,
+        coinDrop = self.coinDrop,
+        expDrop = self.expDrop,
     }
 end
 
@@ -268,6 +279,14 @@ end
 
 function EntityData:setAntiCriRate(antiCriRate)
     self.antiCriRate = math.min(1, math.max(0, antiCriRate))
+end
+
+function EntityData:getDialog()
+    if self.dialog ~= nil then
+        return self.dialog[1]
+    else
+        return nil
+    end
 end
 
 function EntityData:init(dict)
@@ -317,7 +336,7 @@ function EntityData:init(dict)
     self.startPos = cc.p(0, 0)
     self.deltaPos = cc.p(0, 0)
 
-    self.dialog = "放弃吧！你走不出我的手掌心的！"
+    self.dialog = dict.dialog--"放弃吧！你走不出我的手掌心的！"
 
     self.standDirs = dict.standDirs
     if dict.standDirs == nil then
@@ -331,4 +350,6 @@ function EntityData:init(dict)
 
     self.funcType = dict['function']
     self.headIcon = dict['headIcon']
+    self.coinDrop = dict.coinDrop
+    self.expDrop = dict.expDrop
 end

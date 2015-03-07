@@ -210,3 +210,13 @@ function Player:promoteWithGoodsData(data)
 		error('undefined goods function type')
 	end
 end
+
+function Player:onKillMonster(targetData)
+	if targetData.coinDrop ~= nil then
+		self:obtainCoin(targetData.coinDrop)
+	end
+
+	if targetData.expDrop ~= nil then
+		self:obtainExp(targetData.expDrop)
+	end
+end

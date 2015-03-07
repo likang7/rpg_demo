@@ -9,11 +9,11 @@ itemID,comment,plist,icon,function,attack,defense,hp,critical,block,coin
 1006,Ñª1,\item\item.plist,1006.tga,3,,,50,,,
 1007,Ñª2,\item\item.plist,1007.tga,3,,,100,,,
 1008,Ñª3,\item\item.plist,1008.tga,3,,,200,,,
-1009,Ç®1,\item\item.plist,1009.tga,6,,,,,,50
-1010,Ç®2,\item\item.plist,1010.tga,6,,,,,,100
-1011,Ç®3,\item\item.plist,1011.tga,6,,,,,,200
-1012,Ç®4,\item\item.plist,1012.tga,6,,,,,,300
-1013,Ç®5,\item\item.plist,1013.tga,6,,,,,,500
+1009,Ç®1,\item\item.plist,1009.tga,6,,,,,,10
+1010,Ç®2,\item\item.plist,1010.tga,6,,,,,,20
+1011,Ç®3,\item\item.plist,1011.tga,6,,,,,,50
+1012,Ç®4,\item\item.plist,1012.tga,6,,,,,,100
+1013,Ç®5,\item\item.plist,1013.tga,6,,,,,,200
 1014,±©»÷1,\item\item.plist,1014.tga,4,,,,2,,
 1015,±©»÷2,\item\item.plist,1015.tga,4,,,,4,,
 1016,±©»÷3,\item\item.plist,1016.tga,4,,,,6,,

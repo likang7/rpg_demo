@@ -425,7 +425,16 @@ function Entity:playAtkAnimate()
 end
 
 function Entity:findTarget(enemys)
-    return self._model:findTarget(enemys)
+    local range = self._model.detectRange
+    if self._model.type == const.ENTITY_TYPE.Hero then
+        range = self.atkRange
+    end
+    return self._model:findTarget(enemys, range)
+end
+
+function Entity:watchTarget(enemys)
+    local target = self._model:findTarget(enemys, self.detectRange)
+    self:setTarget(target)
 end
 
 function Entity:updateTarget(target)
@@ -498,7 +507,7 @@ function Entity:showDialog()
     if self.dialog == nil then
          -- 显示
         local fontSize = 22
-        local msg = self._model.dialog
+        local msg = self._model:getDialog()
         self.label = cc.Label:createWithSystemFont(msg, const.DEFAULT_FONT, fontSize)
         -- self:addChild(self.label, 10)
         local rect = self:getTextureRect()
@@ -614,7 +623,7 @@ function Entity:init(data)
     self:registerScriptHandler(onNodeEvent)
 
     self.drawNode = nil
-    self.showDetectRange = true
+    self.showDetectRange = false
 
     self.targetEntity = nil
 

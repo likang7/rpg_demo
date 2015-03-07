@@ -21,7 +21,7 @@
             <PrePosition X="-0.0010" Y="-0.0013" />
             <PreSize X="1.0000" Y="1.0000" />
             <Children>
-              <NodeObjectData Name="bg" CanEdit="False" ActionTag="1757461248" FrameEvent="" Tag="45" LeftMargin="127.0000" RightMargin="297.0000" TopMargin="193.0000" BottomMargin="325.0000" Scale9Enable="True" LeftEage="32" RightEage="32" TopEage="32" BottomEage="32" Scale9OriginX="32" Scale9OriginY="32" Scale9Width="32" Scale9Height="32" ctype="ImageViewObjectData">
+              <NodeObjectData Name="bg" ActionTag="1757461248" FrameEvent="" Tag="45" LeftMargin="127.0000" RightMargin="297.0000" TopMargin="193.0000" BottomMargin="325.0000" Scale9Enable="True" LeftEage="32" RightEage="32" TopEage="32" BottomEage="32" Scale9OriginX="32" Scale9OriginY="32" Scale9Width="32" Scale9Height="32" ctype="ImageViewObjectData">
                 <Position X="427.0000" Y="450.0000" />
                 <Scale ScaleX="1.0000" ScaleY="1.0000" />
                 <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />

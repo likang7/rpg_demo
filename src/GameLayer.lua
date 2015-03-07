@@ -521,6 +521,10 @@ function GameLayer:initKeyboardEvent()
 
     local function onKeyReleased(keyCode, event)
         -- cclog(string.format("Key with keycode %d released", keyCode))
+        if self.pressSum <= 0 then
+            return
+        end
+
         if keyCode == cc.KeyCode.KEY_W then
             self.pressSum = self.pressSum - KEYW
         elseif keyCode == cc.KeyCode.KEY_A then
@@ -569,7 +573,7 @@ function GameLayer:OnAttackPressed()
     -- 2. 检查是否有商人在前面
     local dir = self.playerEntity:getDir()
     local r = self.playerEntity:getAtkRange()
-    local theta = 90
+    local theta = 120
     local npcs = self.gameMap:searchTargetsInFan(px, py, dir, r, theta, self.npcs)
     if next(npcs) ~= nil then
         for _, npc in ipairs(npcs) do
@@ -633,5 +637,9 @@ function GameLayer:popConversation(conversationID)
     require "ConversationLayer"
     local layer = ConversationLayer:create({['conversationID']=conversationID})
     self:addChild(layer, const.DISPLAY_PRIORITY.Conversation)
+end
+
+function GameLayer:getPlayerEntity()
+    return self.playerEntity
 end
 

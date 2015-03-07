@@ -19,12 +19,8 @@ Entity.__index = Entity
 
 local ANIMATE_TYPE = {idle=1, run=2, attack=3, hurt=4, die=5}
 local IDLE_DELAYTIME = 1
-local function onNodeEvent(tag)
-    if tag == "exit" then
-        cclog("xxxxxxxxxxxxxxxxxxxxxx")
-        -- self.runAnimationFrames:release()      
-    end
-end
+local RunAnimDelay = 0.1
+local AtkAnimDelay = 0.03
 
 function Entity:create(data)
     local sprite = Entity.new()
@@ -100,7 +96,7 @@ function Entity:setStandDirection(dir)
     if self.idleFrameCnt > 10 then
         dir = dir .. '0'
     end
-    local frame = spriteFrameCache:getSpriteFrame(string.format(self.name .. ANIMATE_TYPE.idle .. "-%d0.tga", dir))
+    local frame = spriteFrameCache:getSpriteFrame(string.format(self.roleID .. ANIMATE_TYPE.idle .. "-%d0.tga", dir))
     self:setSpriteFrame(frame)
 end
 
@@ -109,9 +105,8 @@ function Entity:stopRuning()
         return
     end
     
-    self:stopActionByTag(self.runAnimateTag)
+    self:stopActionByTag(ANIMATE_TYPE.run)
     self:setStandDirection(self.dir)
-    -- self:setStatus(Status.idle)
 end
 
 function Entity:_run(path, idx, cb_end, dir)
@@ -156,12 +151,12 @@ function Entity:_run(path, idx, cb_end, dir)
     self:runAction(seq)
 
     -- 播放奔跑动画
-    if dir ~= self.dir or self:getActionByTag(self.runAnimateTag) == nil then
-        self:stopActionByTag(self.runAnimateTag)
+    if dir ~= self.dir or self:getActionByTag(ANIMATE_TYPE.run) == nil then
+        self:stopActionByTag(ANIMATE_TYPE.run)
         local tDir = self:getAnimDir(dir, ANIMATE_TYPE.run)
         local repeatForever = cc.RepeatForever:create(
-            cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[tDir], self.runAnimDelay)))
-        repeatForever:setTag(self.runAnimateTag)
+            cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[tDir], RunAnimDelay)))
+        repeatForever:setTag(ANIMATE_TYPE.run)
         self:runAction(repeatForever)
     end
     self.dir = dir
@@ -200,16 +195,16 @@ end
 function Entity:setStatus(status)
     if status == Status.idle then
         if self.status == Status.run then
-            self:stopActionByTag(self.runAnimateTag)
+            self:stopActionByTag(ANIMATE_TYPE.run)
             self:setStandDirection(self.dir)
         end
-        if self:getActionByTag(self.idleActionTag) == nil and self.idleScheduleID == nil then
+        if self:getActionByTag(ANIMATE_TYPE.idle) == nil and self.idleScheduleID == nil then
             local cb = function ()
-                if self.status == Status.idle and self:getActionByTag(self.idleActionTag) == nil then
+                if self.status == Status.idle and self:getActionByTag(ANIMATE_TYPE.idle) == nil then
                     local _dir = self:getAnimDir(self.dir, ANIMATE_TYPE.idle)
                     local repeatForever = cc.RepeatForever:create(cc.Animate:create(
-                        cc.Animation:createWithSpriteFrames(self.idleAnimationFrames[_dir], self.runAnimDelay)))
-                    repeatForever:setTag(self.idleActionTag)
+                        cc.Animation:createWithSpriteFrames(self.idleAnimationFrames[_dir], RunAnimDelay)))
+                    repeatForever:setTag(ANIMATE_TYPE.idle)
                     self:runAction(repeatForever)
                     local scheduler = cc.Director:getInstance():getScheduler()
                     scheduler:unscheduleScriptEntry(self.idleScheduleID)
@@ -220,14 +215,15 @@ function Entity:setStatus(status)
             self.idleScheduleID = scheduler:scheduleScriptFunc(cb, IDLE_DELAYTIME, false)
         end
     else
-        self:stopActionByTag(self.idleActionTag)
+        self:stopActionByTag(ANIMATE_TYPE.idle)
         if self.idleScheduleID ~= nil then
             local scheduler = cc.Director:getInstance():getScheduler()
             scheduler:unscheduleScriptEntry(self.idleScheduleID)
             self.idleScheduleID = nil
         end
     end
-    self:stopActionByTag(self.atkAnimateTag)
+    self:stopActionByTag(ANIMATE_TYPE.attack)
+    self:stopActionByTag(ANIMATE_TYPE.hurt)
     self.status = status
 end
 
@@ -257,24 +253,6 @@ function Entity:showHurt(deltaHp, isCritial)
 
     helper.jumpMsg(self:getParent(), msg, color, pos, fontSize)
 
-    -- 击中特效
-    -- local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-    -- local frames = {}
-    -- for i = 0, 4 do 
-    --     local name = string.format("%s-%s-%03d.tga", 'effect', 'hit', i)
-    --     table.insert(frames, spriteFrameCache:getSpriteFrame(name))
-    -- end 
-    -- local effect = cc.Sprite:create()
-    -- local animate = cc.Animate:create(cc.Animation:createWithSpriteFrames(frames, self.runAnimDelay))
-    -- local callFunc = cc.CallFunc:create(function ()
-    --     effect:removeFromParent()
-    -- end)
-    -- local seq = cc.Sequence:create(animate, callFunc)
-    -- effect:setScale(0.2)
-    -- effect:runAction(seq)
-    -- effect:setPosition(rect.width * 0.8, rect.height * 0.67)
-    -- self:addChild(effect)
-
     -- 死亡
     if self:getLifeState() == const.LifeState.Die then
         local cb = function ()
@@ -293,8 +271,8 @@ function Entity:showHurt(deltaHp, isCritial)
         end
         cclog('gua le')
         self:setStatus(Status.dying)
-        self:stopActionByTag(self.runAnimateTag)
-        self:playAnimation(self.dyingAnimationFrames, cb, false, self.runAnimDelay)
+        self:stopActionByTag(ANIMATE_TYPE.run)
+        self:playAnimation(self.dyingAnimationFrames, cb, false, RunAnimDelay)
     elseif deltaHp > 0 then
         local cb = function ()
             if self.status == Status.hurt then
@@ -303,9 +281,7 @@ function Entity:showHurt(deltaHp, isCritial)
             end
         end
         self:setStatus(Status.hurt)
-        --TODO:这里最好还是取消上一次的击中回调吧
-        -- 避免受伤到一半状态就被取消了
-        self:playAnimation(self.hitAnimationFrames, cb, false, self.runAnimDelay * 0.5)
+        self:playAnimation(self.hitAnimationFrames, cb, false, RunAnimDelay * 0.5, self, ANIMATE_TYPE.hurt)
     end
 end
 
@@ -323,18 +299,18 @@ function Entity:updatePosition()
         self:setPosition(p.x, p.y)
         self:setStatus(Status.run)
         -- 播放奔跑动画
-        if self._model.dir ~= self.dir or self:getActionByTag(self.runAnimateTag) == nil then
+        if self._model.dir ~= self.dir or self:getActionByTag(ANIMATE_TYPE.run) == nil then
             self.dir = self._model.dir
             local dir = self:getAnimDir(self.dir, ANIMATE_TYPE.run)
-            self:stopActionByTag(self.runAnimateTag)
+            self:stopActionByTag(ANIMATE_TYPE.run)
             local repeatForever = cc.RepeatForever:create(
-                cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[dir], self.runAnimDelay)))
-            repeatForever:setTag(self.runAnimateTag)
+                cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[dir], RunAnimDelay)))
+            repeatForever:setTag(ANIMATE_TYPE.run)
             self:runAction(repeatForever)
         end
     elseif self.status == Status.run then
         self:setStatus(Status.idle)
-        self:stopActionByTag(self.runAnimateTag)
+        self:stopActionByTag(ANIMATE_TYPE.run)
     end
 end
 
@@ -393,7 +369,7 @@ function Entity:obtainItem(item)
 end
 
 function Entity:playAtkAnimate()
-    self:stopActionByTag(self.runAnimateTag)
+    self:stopActionByTag(ANIMATE_TYPE.run)
     self._model.runFlag = false
     self:setStatus(Status.attack)
     local cb = function ()
@@ -403,7 +379,7 @@ function Entity:playAtkAnimate()
         end
     end
 
-    self:playAnimation(self.attackAnimationFrames, cb, false, self.atkAnimDelay, self, self.atkAnimateTag)
+    self:playAnimation(self.attackAnimationFrames, cb, false, AtkAnimDelay, self, ANIMATE_TYPE.attack)
 
     --技能特效
     if self.atkEffectAnimationFrames ~= nil then
@@ -412,7 +388,7 @@ function Entity:playAtkAnimate()
         local cb = function ()
             effect:removeFromParent(true)
         end
-        self:playAnimation(self.atkEffectAnimationFrames, cb, true, self.runAnimDelay, effect)
+        self:playAnimation(self.atkEffectAnimationFrames, cb, true, RunAnimDelay, effect)
         local v = DirectionToVec[self.dir]
         local r = const.TILESIZE * 0.8
         local dx, dy = v[1] * r, v[2] * r -- * INVSQRT2
@@ -425,12 +401,14 @@ end
 
 function Entity:findTarget(enemys)
     local range = self._model.detectRange
+    -- TODO: 若要拓展自动战斗，得改这里
     if self._model.type == const.ENTITY_TYPE.Hero then
         range = self.atkRange
     end
     return self._model:findTarget(enemys, range)
 end
 
+-- 设置洞察的怪物
 function Entity:watchTarget(enemys)
     local target = self._model:findTarget(enemys, self.detectRange)
     self:setTarget(target)
@@ -546,13 +524,13 @@ end
 
 function Entity:getAnimDir(dir, anim_type)
     if anim_type == ANIMATE_TYPE.run then
-        if self._model.runDirs == 4 then
+        if self.runDirs == 4 then
             return const.FullToDiagDir[dir]
         else
             return dir
         end
     elseif anim_type == ANIMATE_TYPE.idle then
-        if self._model.standDirs == 4 then
+        if self.standDirs == 4 then
             return const.FullToDiagDir[dir]
         else
             return dir
@@ -576,57 +554,21 @@ end
 
 function Entity:init(data)
     self._model = data
-    self.name = data.roleID
+    self.roleID = data.roleID
     self.dir = data.dir
+    self.status = Status.idle
 
-    self.scale = 0.8
-    self:setScale(self.scale)
+    -- 这里应该缩放资源的...但积重难返了
+    self:setScale(0.8)
 
-    self.texturePlist = data.texturePath
     local pos = self._model.pos
     self:setPosition(pos.x, pos.y)
     
-
-    self.runAnimDelay = 0.1
-    self.runActionTag = 10
-    self.runAnimateTag = 11
-    self.idleActionTag = 12
-    self.idleScheduleID = nil
-
-    self.atkAnimDelay = 0.03
-    self.atkAnimateTag = 13
-    
-    self.status = Status.idle
     self.aiComp = nil
     self.dialogComp = nil
 
-    local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-    spriteFrameCache:addSpriteFrames(self.texturePlist)
-
-    if self._model.type ~= const.ENTITY_TYPE.NPC then
-        local runAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.run)]
-        self.runAnimationFrames = self:createAnimationFrames(runAnimData.direction, self.name .. ANIMATE_TYPE.run, runAnimData.count)
-
-        local attackAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.attack)]
-        self.attackAnimationFrames = self:createAnimationFrames(attackAnimData.direction, self.name .. ANIMATE_TYPE.attack, attackAnimData.count)
-
-        local hitAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.hurt)]
-        self.hitAnimationFrames = self:createAnimationFrames(hitAnimData.direction, self.name .. ANIMATE_TYPE.hurt, hitAnimData.count)
-
-        local dyingAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.die)]
-        self.dyingAnimationFrames = self:createAnimationFrames(dyingAnimData.direction, self.name .. ANIMATE_TYPE.die, dyingAnimData.count)
-    end
-
-    local idleAnimData = flashData[tonumber(self.name .. ANIMATE_TYPE.idle)]
-    self.idleFrameCnt = idleAnimData.count
-    self.idleAnimationFrames = self:createAnimationFrames(idleAnimData.direction, self.name .. ANIMATE_TYPE.idle, idleAnimData.count)
-
-    local effectPath = data.effectPath
-    self.atkEffectAnimationFrames = nil
-    if effectPath ~= nil then
-        spriteFrameCache:addSpriteFrames(effectPath)
-        self.atkEffectAnimationFrames = self:createAnimationFrames(8, 'effect-skill1', 8)
-    end
+    -- 初始化动画相关资源
+    self:_initAnimData(data)
 
     self:setStandDirection(self.dir)
 
@@ -634,14 +576,46 @@ function Entity:init(data)
 
     self:setAnchorPoint(cc.p(0.5, 0.25))
 
-    self:registerScriptHandler(onNodeEvent)
-
+    -- 警戒范围
     self.drawNode = nil
     self.showDetectRange = false
 
     self.targetEntity = nil
+end
 
-    -- self:showDialog()
+function Entity:_initAnimData(data)
+    self.runActionTag = 10
+    self.idleScheduleID = nil
+
+    local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+    spriteFrameCache:addSpriteFrames(self._model.texturePath)
+
+    if self._model.type ~= const.ENTITY_TYPE.NPC then
+        local runAnimData = flashData[tonumber(self.roleID .. ANIMATE_TYPE.run)]
+        self.runDirs = runAnimData.direction
+        self.runAnimationFrames = self:createAnimationFrames(runAnimData.direction, self.roleID .. ANIMATE_TYPE.run, runAnimData.count)
+
+        local attackAnimData = flashData[tonumber(self.roleID .. ANIMATE_TYPE.attack)]
+        self.attackAnimationFrames = self:createAnimationFrames(attackAnimData.direction, self.roleID .. ANIMATE_TYPE.attack, attackAnimData.count)
+
+        local hitAnimData = flashData[tonumber(self.roleID .. ANIMATE_TYPE.hurt)]
+        self.hitAnimationFrames = self:createAnimationFrames(hitAnimData.direction, self.roleID .. ANIMATE_TYPE.hurt, hitAnimData.count)
+
+        local dyingAnimData = flashData[tonumber(self.roleID .. ANIMATE_TYPE.die)]
+        self.dyingAnimationFrames = self:createAnimationFrames(dyingAnimData.direction, self.roleID .. ANIMATE_TYPE.die, dyingAnimData.count)
+    end
+
+    local idleAnimData = flashData[tonumber(self.roleID .. ANIMATE_TYPE.idle)]
+    self.standDirs = idleAnimData.direction
+    self.idleFrameCnt = idleAnimData.count
+    self.idleAnimationFrames = self:createAnimationFrames(idleAnimData.direction, self.roleID .. ANIMATE_TYPE.idle, idleAnimData.count)
+
+    local effectPath = data.effectPath
+    self.atkEffectAnimationFrames = nil
+    if effectPath ~= nil then
+        spriteFrameCache:addSpriteFrames(effectPath)
+        self.atkEffectAnimationFrames = self:createAnimationFrames(8, 'effect-skill1', 8)
+    end
 end
 
 return Entity

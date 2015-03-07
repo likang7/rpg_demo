@@ -23,24 +23,14 @@ function EntityData:createWithDict(dict)
 end
 
 function EntityData:create(eid)
-    local dict
-    if eid == const.HERO_ID then
-        dict = roleData[eid]
+    local dict = roleData[eid]
+
+    if dict.level == nil then
         dict.level = 1
-        dict.standDirs = 8
-        dict.runDirs = 8
+    end
+
+    if eid == const.HERO_ID then
         dict.detectRange = const.TILESIZE * 5
-        -- dict = {roleID=1000, name='白晶晶', speed=200, dir=Direction.S, criRate=50, antiCriRate=50,
-        --         camp=0, atk=100, def=10, hp=20000, maxhp=20000, controlType=const.ControlType.Keyboard,
-        --         atkRange=40, atkDelay=0.5, level=1, standDirs=8, runDirs=8}
-    -- elseif eid == 3 then
-    --     dict = {roleID=3013, name='恶魔随从',speed=100, dir=Direction.S, criRate=30, antiCriRate=20,
-    --             camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5, level=3, standDirs=4, runDirs=4}
-    else
-        -- dict = {roleID=3001, name='恶魔随从',speed=100, dir=Direction.S, criRate=30, antiCriRate=20,
-        --         camp=1, atk=80, def=10, hp=200, maxhp=200, atkRange=40, atkDelay=0.5, level=3, standDirs=4, runDirs=4}
-        dict = roleData[eid]
-        dict.level=1
     end
 
     if dict.dir == nil then
@@ -244,8 +234,6 @@ function EntityData:getPersistent()
         texturePath = self.texturePath,
         effectPath = self.effectPath,
         atkDelay = self.atkDelay,
-        standDirs = self.standDirs,
-        runDirs = self.runDirs,
         headIcon = self.headIcon,
         dialog = self.dialog,
         ['type'] = self.type,
@@ -339,16 +327,6 @@ function EntityData:init(dict)
     self.deltaPos = cc.p(0, 0)
 
     self.dialog = dict.dialog--"放弃吧！你走不出我的手掌心的！"
-
-    self.standDirs = dict.standDirs
-    if dict.standDirs == nil then
-        self.standDirs = 4
-    end
-
-    self.runDirs = dict.runDirs
-    if dict.runDirs == nil then
-        self.runDirs = 4
-    end
 
     self.funcType = dict['function']
     self.headIcon = dict['headIcon']

@@ -105,18 +105,18 @@ function GameUILayer:updateEntityInfo(panel, info)
     heroHead:loadTexture(info.headIcon, ccui.TextureResType.plistType)
 
     local attackLabel = panel:getChildByName("attackLabel")
-    attackLabel:setString(math.floor(info.atk))
+    attackLabel:setString(math.floor(info.atk + 0.5))
 
     local defenseLabel = panel:getChildByName("defenseLabel")
-    defenseLabel:setString(math.floor(info.def))
+    defenseLabel:setString(math.floor(info.def + 0.5))
 
     local hpLabel = panel:getChildByName("hpLabel")
-    hpLabel:setString(math.floor(info.hp))
+    hpLabel:setString(math.floor(info.hp + 0.5))
 
     local criticalLabel = panel:getChildByName("criticalLabel")
-    criticalLabel:setString(math.floor(info.criRate * 100) .. '%')
+    criticalLabel:setString(string.format('%.1f%%', info.criRate))
 
     local antiCriticalLabel = panel:getChildByName("antiCriticalLabel")
-    antiCriticalLabel:setString(math.floor(info.antiCriRate * 100) .. '%')
+    antiCriticalLabel:setString(string.format('%.1f%%', info.antiCriRate))
 end
 

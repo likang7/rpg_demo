@@ -251,8 +251,8 @@ function GameLayer:step(dt)
                 self.playerEntity:setTarget(nil)
             end
             self.monsterEntity[k] = nil
+            self.deadMonsterIds[k] = monster:getRoleID()
             self:removeChild(monster, true)
-            self.deadMonsterIds[k] = true
         else
             monster:setDetectRangeShow(self.showDetectRange)
             monster:step(dt)

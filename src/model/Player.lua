@@ -126,7 +126,7 @@ function Player:onUpgradeLevel()
 	self.level = self.level + 1
 	local heroData = self.heroData
 	heroData:setAtk(heroData.atk + 5)
-	heroData:setDef(heroData.atk + 5)
+	heroData:setDef(heroData.def + 5)
 	heroData:setHp(heroData.hp + 100)
 	heroData:setCriRate(heroData.criRate + 0.005)
 	heroData:setAntiCriRate(heroData.antiCriRate + 0.003)

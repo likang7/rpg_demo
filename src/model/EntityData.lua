@@ -135,7 +135,7 @@ function EntityData:calHurt(target, skillData)
     local base = self.atk - target.def
     local hurt = base * skillData.rate + skillData.additional
 
-    local criProb = self.criRate - target.antiCriRate
+    local criProb = (self.criRate - target.antiCriRate) / 100.0
     local isCritial = math.random() < criProb
     if isCritial == true then
         hurt = 2 * hurt
@@ -206,9 +206,9 @@ function EntityData:onObtainItem(itemInfo)
     elseif itemInfo.hp ~= nil then
         self.hp = self.hp + itemInfo.hp
     elseif itemInfo.critical ~= nil then
-        self.criRate = self.criRate + itemInfo.critical / 100.0
+        self.criRate = self.criRate + itemInfo.critical
     elseif itemInfo.block ~= nil then
-        self.antiCriRate = self.antiCriRate + itemInfo.block / 100.0
+        self.antiCriRate = self.antiCriRate + itemInfo.block
     elseif itemInfo.coin ~= nil then
         cclog('coin should not be controled by me')
     end
@@ -264,11 +264,11 @@ function EntityData:setHp(hp)
 end
 
 function EntityData:setCriRate(criRate)
-    self.criRate = math.min(1, math.max(0, criRate))
+    self.criRate = math.min(100, math.max(0, criRate))
 end
 
 function EntityData:setAntiCriRate(antiCriRate)
-    self.antiCriRate = math.min(1, math.max(0, antiCriRate))
+    self.antiCriRate = math.min(100, math.max(0, antiCriRate))
 end
 
 function EntityData:getDialog()
@@ -292,8 +292,8 @@ function EntityData:init(dict)
     self.atk = dict.atk
     self.def = dict.def
     self.hp = dict.hp
-    self.criRate = dict.criRate / 100.0
-    self.antiCriRate = dict.antiCriRate / 100.0
+    self.criRate = dict.criRate
+    self.antiCriRate = dict.antiCriRate
     if dict.maxhp == nil then
         self.maxhp = dict.hp
     else

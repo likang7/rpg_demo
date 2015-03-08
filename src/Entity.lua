@@ -246,7 +246,11 @@ function Entity:showHurt(deltaHp, isCritial)
 
     local color = cc.c3b(0, 0, 255)
     if self:getCamp() ~= 0 then
-        color = cc.c3b(255, 0, 0)
+        if not isCritial then
+            color = cc.c3b(255, 0, 0)
+        else
+            color = cc.c3b(255, 255, 0)
+        end
     end
 
     local pos = cc.p(self:getPositionX(), self:getPositionY() + const.TILESIZE * 2)
@@ -616,6 +620,10 @@ function Entity:_initAnimData(data)
         spriteFrameCache:addSpriteFrames(effectPath)
         self.atkEffectAnimationFrames = self:createAnimationFrames(8, 'effect-skill1', 8)
     end
+end
+
+function Entity:getRoleID()
+    return self._model.roleID
 end
 
 return Entity

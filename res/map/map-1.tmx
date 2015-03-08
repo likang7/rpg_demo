@@ -23,7 +23,7 @@
  </layer>
  <layer name="block-3" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJztkzcOwlAQRBebcAHCGQgl4QyEklBDRygJNSAKQoM4AwdAXIELIK4AnIDQMki2gNX/BssfVx7pSV/WasbS7BJ58vRdJ9/rfTbeO82d7LqfqOH//DbRiY7ID+n/zx8iewTGb/+wVpR7CRBdwQ3cA+77hYNEERAFsaDzfLt+acxkQBbkFOTb9StjpgKqoAbi2O0ESIKUsefvu2/KvAE+z/2+qYuZHuiDAcjDowCKoCTI5eLz3M+umvBogTboGPlLwZ2vNPm8E03hMQNzsDD8NoL8rSafdyreqSxftCsqxDuV5dvdlV/FO5Xlq+7eFO9Ulu9G909Z7Z/qHRB1apWvegdEnVrle/f///vfC/IPiu7/ASTzUQo=
+   eJxjYBgFo4AweMqIYD+Dso8w0cfuRBYGhiQWVLFWZgaGJ0D72Zlpb38j0O4mIG5GcsNSKtn7hZWB4SsQfwPi76z0N0+EjYFBFIjFgFicDbe6TyzY2eSaBwMmQDWmQGwGxOZ41Bci+aUYj7+INQ8GQoBqQoE4DIjDgVgTmLa1gFgbiHWg6RyU9ici2TmZFZEH0NWjm0cIlADVlAJxGRCXA7En0AwvIPYGYh+kPLcRyf7NSGx09ejmkQoygWZkAXE2EOdA7Z+IJZ9PZsKtnhLQCTSjC4i7gbgHat5GLPZvZsKtnlKAHqe47MeWVqgB0OMUl/240gqlAD1OcdlP7biHAfQ4xWU/PeIeBPClP2qnAWxxis9+aqcBbHGKz/7R/E/7/H8Ri/2XqZT/ARG+VoA=
   </data>
  </layer>
  <objectgroup name="object">
@@ -35,13 +35,13 @@
   <object id="2" name="bornPoint" type="2" x="384" y="192" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="3" name="2000" type="3" x="351" y="328" width="160" height="160">
+  <object id="3" name="2000" type="3" x="352" y="384" width="160" height="160">
    <ellipse/>
   </object>
  </objectgroup>
  <layer name="sky" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjAL84BMLKqY3KGRlYCiC4mJW+ts/EcnOyQNg/0YkOzcPgP2jYBSMglEwCoYXAADPyAhR
+   eJztw6ENADAIADAEe3inc8EEByAQM23SCIBZZf/lng4A7Dzi/QLb
   </data>
  </layer>
 </map>

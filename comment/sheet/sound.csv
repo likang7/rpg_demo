@@ -1,0 +1,10 @@
+音效ID,攻击音效,受击音效,死亡音效
+soundID,attack,hurt,die
+1000,hero_attack.mp3,hero_hurt.mp3,hero_die.mp3
+1001,monster_attack.mp3,monster_hurt.mp3,monster_die.mp3
+1002,longMan_attack.mp3,longMan_hurt.mp3,longMan_die.mp3
+1003,ghost_attack.mp3,monster_hurt.mp3,ghost_die.mp3
+1004,foxMonster_attack.mp3,foxMonster_hurt.mp3,foxMonster_die.mp3
+1005,tiger_attack.mp3,tiger_hurt.mp3,tiger_die.mp3
+1006,bullMonster_attack.mp3,monster_hurt.mp3,bullMonster_die.mp3
+1007,tiger_attack.mp3,monster_hurt.mp3,monster_die.mp3

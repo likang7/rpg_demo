@@ -19,6 +19,8 @@ function Item:onObtain()
 	-- body
 	self:setVisible(false)
 	self.isObtained = true
+
+	cc.SimpleAudioEngine:getInstance():playEffect(const.ITEM_OBTAIN_EFFECT_PATH, false)
 end
 
 function Item:getItemInfo()
@@ -42,13 +44,10 @@ function Item:init(dict)
 
 	self:setSpriteFrame(frame)
 
-	-- 这里其实应该直接出合适大小的图才对 = =
-	local size = frame:getOriginalSizeInPixels()
-	local scale = const.TILESIZE / math.max(size.width, size.height)
-	self:setScale(scale)
-
 	-- 坐标
 	-- 锚点设置为左下角，和tilemap一致
 	self:setAnchorPoint(cc.p(0, 0))
 	self:setPosition(dict.x, dict.y)
+
+	cc.SimpleAudioEngine:getInstance():preloadEffect(const.ITEM_OBTAIN_EFFECT_PATH)
 end

@@ -1,5 +1,6 @@
 local const = require "const"
 local Globals = require "model.Globals"
+local stageData = require "data.stageData"
 require "Entity"
 require "model.EntityData"
 require "model.AIComp"
@@ -206,28 +207,22 @@ function GameLayer:init(dict)
     
     Globals.gameState = const.GAME_STATE.Playing
 
-    local tilemapPath = string.format("map/map-%d.tmx", dict.stageId)
-
     self.player = Globals.player
     self.stageId = dict.stageId
 
+    local _stageData = stageData[dict.stageId]
+    local tilemapPath = const.MAP_ROOT .. _stageData.mapPath
+
     self:initTileMap(tilemapPath)
 
-    self.showDetectRange = false
+    local audioEngine = cc.SimpleAudioEngine:getInstance()
+    audioEngine:playMusic(const.MUSIC_ROOT .. _stageData.musicPath, true)
 
-    -- add bg
-    -- local sceneTexturePath = "scene.jpg"
-    -- local bg = cc.Sprite:create(sceneTexturePath)
-    -- bg:setAnchorPoint(0, 0)
-    -- -- -- 高度补偿
-    -- bg:setPosition(origin.x, origin.y + self.gameMap.map_h - bg:getTextureRect().height)
-    -- self:addChild(bg, -1)
+    self.showDetectRange = false
 
     self:initTouchEvent()
 
     self:initKeyboardEvent()
-
-    -- self:initUI()
 end
 
 function GameLayer:step(dt)

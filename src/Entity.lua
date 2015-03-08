@@ -90,6 +90,25 @@ function Entity:playAnimation(frames, callback, isFullDir, dt, target, tag)
     end
 end
 
+function Entity:playSoundEffect(soundType)
+    local audioEngine = cc.SimpleAudioEngine:getInstance()
+    local path = nil
+    if soundType == ANIMATE_TYPE.attack then
+        path = self.atkEffectPath
+    elseif soundType == ANIMATE_TYPE.hurt then
+        path = self.hurtEffectPath
+    elseif soundType == ANIMATE_TYPE.die then
+        path = self.dieEffectPath
+        audioEngine:stopAllEffects()
+    end
+
+    if path == nil then
+        return 
+    end
+    
+    audioEngine:playEffect(path, false)
+end
+
 function Entity:setStandDirection(dir)
     local spriteFrameCache = cc.SpriteFrameCache:getInstance()
     dir = self:getAnimDir(dir, ANIMATE_TYPE.idle)
@@ -277,6 +296,7 @@ function Entity:showHurt(deltaHp, isCritial)
         self:setStatus(Status.dying)
         self:stopActionByTag(ANIMATE_TYPE.run)
         self:playAnimation(self.dyingAnimationFrames, cb, false, RunAnimDelay)
+        self:playSoundEffect(ANIMATE_TYPE.die)
     elseif deltaHp > 0 then
         local cb = function ()
             if self.status == Status.hurt then
@@ -286,6 +306,7 @@ function Entity:showHurt(deltaHp, isCritial)
         end
         self:setStatus(Status.hurt)
         self:playAnimation(self.hitAnimationFrames, cb, false, RunAnimDelay * 0.5, self, ANIMATE_TYPE.hurt)
+        self:playSoundEffect(ANIMATE_TYPE.hurt)
     end
 end
 
@@ -401,6 +422,9 @@ function Entity:playAtkAnimate()
         self:addChild(effect,-1)
         effect:setPosition(rect.width * 0.8 + 0.5 * r * v[1], rect.height * 0.5 + 0.5 * r * v[2])
     end
+
+    -- 技能音效
+    self:playSoundEffect(ANIMATE_TYPE.attack)
 end
 
 function Entity:findTarget(enemys)
@@ -585,6 +609,33 @@ function Entity:init(data)
     self.showDetectRange = false
 
     self.targetEntity = nil
+
+    self:_initSoundEffect()
+end
+
+function Entity:_initSoundEffect()
+    if self._model.soundID == nil then
+        return
+    end
+
+    local soundData = require "data.soundData"
+    local data = soundData[self._model.soundID]
+
+    local audioEngine = cc.SimpleAudioEngine:getInstance()
+    if data.attack ~= nil then
+        audioEngine:preloadEffect(data.attack)
+        self.atkEffectPath = const.EFFECT_ROOT .. data.attack
+    end
+
+    if data.hurt ~= nil then
+        audioEngine:preloadEffect(data.hurt)
+        self.hurtEffectPath = const.EFFECT_ROOT .. data.hurt
+    end
+
+    if data.die ~= nil then
+        audioEngine:preloadEffect(data.die)
+        self.dieEffectPath = const.EFFECT_ROOT .. data.die
+    end
 end
 
 function Entity:_initAnimData(data)

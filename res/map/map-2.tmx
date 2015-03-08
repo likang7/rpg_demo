@@ -162,7 +162,7 @@
     <property name="rangeID" value="7"/>
    </properties>
   </object>
-  <object id="76" name="2001" type="3" x="576" y="576" width="32" height="32"/>
+  <object id="76" name="2001" type="3" x="529" y="552" width="96" height="64"/>
   <object id="77" name="3002" type="5" x="128" y="576" width="64" height="64">
    <properties>
     <property name="rangeID" value=""/>

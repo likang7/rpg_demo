@@ -241,6 +241,7 @@ function EntityData:getPersistent()
         expDrop = self.expDrop,
         meetConversationID = self.meetConversationID,
         dieConversationID = self.ConversationID,
+        soundID = self.soundID,
     }
 end
 
@@ -335,4 +336,6 @@ function EntityData:init(dict)
 
     self.meetConversationID = dict.meetConversationID
     self.dieConversationID = dict.dieConversationID
+
+    self.soundID = dict.soundID
 end

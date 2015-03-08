@@ -1,5 +1,7 @@
 require "model.Player"
 require "GameScene"
+local const = require "const"
+local stageData = require "data.stageData"
 local Globals = require "model.Globals"
 
 WelcomeScene = class("WelcomeScene",
@@ -30,6 +32,8 @@ function WelcomeScene:init()
 
     local newBtn = self.ui:getChildByName("newJourneyBtn")
     newBtn:addClickEventListener(function() self:onNewJourneyTap() end)
+
+    cc.SimpleAudioEngine:getInstance():playMusic(const.MUSIC_ROOT .. stageData[0].musicPath, true)
 end
 
 function WelcomeScene:onCtnJourneyTap()

@@ -17,5 +17,8 @@ lua csv2lua.lua %CSV_ROOT%goods.csv %LUA_ROOT%goodsData.lua goodsID
 
 lua csv2lua.lua %CSV_ROOT%conversation.csv %LUA_ROOT%conversationData.lua conversationID
 
+lua csv2lua.lua %CSV_ROOT%sound.csv %LUA_ROOT%soundData.lua soundID
+
+lua csv2lua.lua %CSV_ROOT%stage.csv %LUA_ROOT%stageData.lua stageID
 ::python ansi2utf8.py %LUA_ROOT%
 pause

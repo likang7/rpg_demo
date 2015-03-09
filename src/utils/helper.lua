@@ -125,7 +125,10 @@ local function createHintMsgAction(target)
 end
 
 local function getDisplayText(s)
-    local new_str = string.gsub(s, '#r', '\n')
+    local new_str = nil
+    if s ~= nil then
+        new_str = string.gsub(s, '#r', '\n')
+    end
     return new_str
 end
 

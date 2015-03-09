@@ -33,6 +33,17 @@ function WelcomeScene:init()
     local newBtn = self.ui:getChildByName("newJourneyBtn")
     newBtn:addClickEventListener(function() self:onNewJourneyTap() end)
 
+    local aboutBtn = self.ui:getChildByName("aboutBtn")
+    aboutBtn:addClickEventListener(function() self:onAboutTap() end)
+
+    local helpPanel = self.ui:getChildByName("helpPanel")
+    helpPanel:setVisible(false)
+    
+    local confirmBtn = helpPanel:getChildByName("confirmBtn")
+    confirmBtn:addClickEventListener(function ()
+        helpPanel:setVisible(false)
+    end)
+
     cc.SimpleAudioEngine:getInstance():playMusic(const.MUSIC_ROOT .. stageData[0].musicPath, true)
 end
 
@@ -52,4 +63,9 @@ end
 function WelcomeScene:enterGameScene(dict)
     local gameScene = GameScene:create(dict)
     cc.Director:getInstance():replaceScene(gameScene)
+end
+
+function WelcomeScene:onAboutTap()
+    local panel = self.ui:getChildByName("helpPanel")
+    panel:setVisible(true)
 end

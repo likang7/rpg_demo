@@ -10,8 +10,9 @@
         <Image Name="welcomeBg.jpg" />
         <Project Name="shopUI.csd" Type="Layer" />
         <Image Name="shopUI.png" />
-        <Project Name="FailUI.csd" Type="Layer" />
+        <Project Name="failUI.csd" Type="Layer" />
         <Project Name="conversationUI.csd" Type="Layer" />
+        <Image Name="fail.jpg" />
       </RootFolder>
     </Group>
   </SolutionFolder>

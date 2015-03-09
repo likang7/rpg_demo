@@ -59,6 +59,9 @@ function GameScene:init(dict)
         if "exit" == event then
             gameLayer:clearAll()
             cc.Director:getInstance():getScheduler():unscheduleScriptEntry(schedulerTickID)
+            
+            Globals.gameScene = nil
+            Globals.gameMap = nil
             -- local spriteFrameCache = cc.SpriteFrameCache:getInstance()
             -- spriteFrameCache:removeUnusedSpriteFrames()
         end
@@ -77,3 +80,16 @@ function GameScene:popShopLayer(shopID)
     local shopLayer = ShopLayer:create({['shopID']=shopID})
     self:addChild(shopLayer, const.DISPLAY_PRIORITY.Shop)
 end
+
+function GameScene:transferToFailScene()
+    require "FailScene"
+    local scene = FailScene:create()
+    cc.Director:getInstance():replaceScene(scene)
+end
+
+function GameScene:transferToWelcomeScene()
+    require "WelcomeScene"
+    local scene = WelcomeScene:create()
+    cc.Director:getInstance():replaceScene(scene)
+end
+

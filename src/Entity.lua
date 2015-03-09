@@ -384,7 +384,6 @@ end
 
 function Entity:obtainItem(item)
     local info = item:getItemInfo()
-    self._model:onObtainItem(info)
     item:onObtain()
     -- 显示
     local msg = helper.getRewardInfoByItemInfo(info)

@@ -39,7 +39,7 @@ const.GAME_STATE = {Playing=0, Shopping=1, Talking=2}
 const.SHOP_PRICE = 30
 const.SHOP_ITEM = {Atk=5, Def=5, Hp=100}
 
-const.ITEM_TYPE = {Undefined=0, Atk=1, Def=2, Hp=3, Critial=4, Block=5, Coin=6}
+const.ITEM_TYPE = {Undefined=0, Atk=1, Def=2, Hp=3, Critial=4, Block=5, Coin=6, Special=7}
 
 const.TILEMAP_TYPE = {Transfer=1, Hero=2, NPC=3, Item=4, Monster=5}
 
@@ -60,5 +60,7 @@ const.EFFECT_ROOT = 'effect/'
 const.MAP_ROOT = 'map/'
 
 const.ITEM_OBTAIN_EFFECT_PATH = const.EFFECT_ROOT .. 'obtain_item.wav'
+
+const.NEIDAN_ID = 1020
 
 return const

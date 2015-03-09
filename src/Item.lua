@@ -35,6 +35,7 @@ function Item:init(dict)
 	self.data = data
 
 	self.isObtained = false
+	self.name = data.name
 
 	-- 初始化图标
 	self.icon = data.icon

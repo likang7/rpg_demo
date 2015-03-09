@@ -209,10 +209,7 @@ function EntityData:onObtainItem(itemInfo)
         self.criRate = self.criRate + itemInfo.critical
     elseif itemInfo.block ~= nil then
         self.antiCriRate = self.antiCriRate + itemInfo.block
-    elseif itemInfo.coin ~= nil then
-        cclog('coin should not be controled by me')
     end
-    return s
 end
 
 function EntityData:getPersistent()
@@ -274,7 +271,11 @@ end
 
 function EntityData:getDialog()
     if self.dialog ~= nil then
-        return self.dialog[1]
+        if Globals.player:isTaskFinished() and self.dialog[2] ~= nil then
+            return self.dialog[2]
+        else
+            return self.dialog[1]
+        end
     else
         return nil
     end

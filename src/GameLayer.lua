@@ -230,6 +230,11 @@ function GameLayer:step(dt)
         return
     end
 
+    if self.playerEntity.status == const.Status.die then
+        Globals.gameScene:transferToFailScene()
+        return
+    end
+
     -- 更新玩家
     if self.playerEntity ~= nil and self.playerEntity:getLifeState() ~= const.LifeState.Die then
         self.playerEntity:step(dt)
@@ -461,11 +466,7 @@ function GameLayer:OnAttackPressed()
             local ix, iy = item:getPosition()
             local tRect = cc.rect(ix, iy, const.TILESIZE, const.TILESIZE)
             if cc.rectIntersectsRect(pRect, tRect) then
-                local itemInfo = item:getItemInfo()
-                if itemInfo.coin ~= nil then
-                    self.player:obtainCoin(itemInfo.coin)
-                end
-                self.playerEntity:obtainItem(item)
+                self.player:obtainItem(self.playerEntity, item)
                 self.items[k] = nil
                 self:removeChild(item, true)
                 self.deadItemIds[k] = true

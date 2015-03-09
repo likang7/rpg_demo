@@ -36,7 +36,7 @@ function Player:getPersistent()
 		level = self.level,
 		exp = self.exp,
 		coin = self.coin,
-		package = {},
+		package = self.package,
 	}
 end
 
@@ -128,8 +128,8 @@ function Player:onUpgradeLevel()
 	heroData:setAtk(heroData.atk + 5)
 	heroData:setDef(heroData.def + 5)
 	heroData:setHp(heroData.hp + 100)
-	heroData:setCriRate(heroData.criRate + 0.005)
-	heroData:setAntiCriRate(heroData.antiCriRate + 0.003)
+	heroData:setCriRate(heroData.criRate + 0.5)
+	heroData:setAntiCriRate(heroData.antiCriRate + 0.3)
 end
 
 function Player:costCoin(num)
@@ -225,4 +225,22 @@ function Player:onKillMonster(targetData)
 	if targetData.expDrop ~= nil then
 		self:obtainExp(targetData.expDrop)
 	end
+end
+
+function Player:isTaskFinished()
+	return self.package[const.NEIDAN_ID] == true
+end
+
+function Player:obtainItem(playerEntity, item)
+	local itemInfo = item:getItemInfo()
+
+	local func = itemInfo['function']
+	if func == const.ITEM_TYPE.Special then
+		self.package[itemInfo.itemID] = true
+	elseif func == const.ITEM_TYPE.Coin then
+		self:obtainCoin(itemInfo.coin)
+	end
+
+	self.heroData:onObtainItem(itemInfo)
+	playerEntity:obtainItem(item)
 end

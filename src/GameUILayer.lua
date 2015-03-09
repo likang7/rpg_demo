@@ -47,9 +47,7 @@ function GameUILayer:initUI(dict)
     local returnBtn = panel:getChildByName("returnBtn")
     returnBtn:setTitleText("回主界面")
     local onReturnClick = function()
-        require "WelcomeScene"
-        local scene = WelcomeScene:create()
-        cc.Director:getInstance():replaceScene(scene)
+        Globals.gameScene:transferToWelcomeScene()
     end
     returnBtn:addClickEventListener(onReturnClick)
 

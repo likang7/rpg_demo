@@ -78,7 +78,9 @@ end
 
 local function getRewardInfoByItemInfo(itemInfo)
     s = ""
-    if itemInfo.attack ~= nil then
+    if itemInfo['function'] == const.ITEM_TYPE.Special then
+        s = itemInfo.name
+    elseif itemInfo.attack ~= nil then
         s = "攻击力+" .. itemInfo.attack
     elseif itemInfo.defense ~= nil then
         s = "防御力+" .. itemInfo.defense

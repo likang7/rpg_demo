@@ -6,7 +6,7 @@
     <FilePathData Path="conversationUI.csd" />
     <FilePathData Path="failUI.csd" />
   </OpenedDocuments>
-  <ActiveDocument Path="failUI.csd" />
+  <ActiveDocument Path="gameUI.csd" />
   <Properties>
     <Item Key="PackageParamsKey">
       <Value ctype="PackageParams">

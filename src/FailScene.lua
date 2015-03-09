@@ -19,7 +19,7 @@ function FailScene:init()
 	self:addChild(ui)
 
 	local function onKeyPressed(keyCode, event)
-		if keyCode == cc.KeyCode.KEY_KP_ENTER then
+		if keyCode == cc.KeyCode.KEY_ESCAPE then
 			require "WelcomeScene"
 	        local scene = WelcomeScene:create()
 	        cc.Director:getInstance():replaceScene(scene)

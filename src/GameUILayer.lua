@@ -1,6 +1,7 @@
 local const = require "const"
 local Globals = require "model.Globals"
 local helper = require "utils.helper"
+local StageData = require "data.stageData"
 
 GameUILayer = class("GameUILayer",
 	function ()
@@ -55,10 +56,27 @@ function GameUILayer:initUI(dict)
     spriteFrameCache:addSpriteFrames(const.HEAD_ICON_PLIST)
 
     self:updateHeroInfo() 
+
+    self.curStageId = nil
+    
+    self:updateStageInfo()
 end
 
 function GameUILayer:step(dt)
 	self:updateHeroInfo()
+
+    self:updateStageInfo()
+end
+
+function GameUILayer:updateStageInfo()
+    local curStageId = Globals.player:getCurStageId() 
+    if self.curStageId ~= curStageId then
+        self.curStageId = curStageId
+        local panel = self.ui:getChildByName("InfoPanel")
+        local stageTitleLabel = panel:getChildByName("stageTitleLabel")
+        local stageData = StageData[curStageId]
+        stageTitleLabel:setString(stageData.stageName)
+    end
 end
 
 function GameUILayer:updateHeroInfo()
@@ -102,19 +120,16 @@ function GameUILayer:updateEntityInfo(panel, info)
     local heroHead = panel:getChildByName("heroHead")
     heroHead:loadTexture(info.headIcon, ccui.TextureResType.plistType)
 
-    local attackLabel = panel:getChildByName("attackLabel")
-    attackLabel:setString(math.floor(info.atk + 0.5))
+    local s = {}
+    table.insert(s, '生命:' .. math.floor(info.hp + 0.5))
+    table.insert(s, '攻击:' .. math.floor(info.atk + 0.5))
+    table.insert(s, '防御:' .. math.floor(info.def + 0.5))
+    table.insert(s, string.format('暴击:%.1f%%', info.criRate))
+    table.insert(s, string.format('防暴:%.1f%%', info.antiCriRate))
+    
+    s = table.concat(s, '\n')
 
-    local defenseLabel = panel:getChildByName("defenseLabel")
-    defenseLabel:setString(math.floor(info.def + 0.5))
-
-    local hpLabel = panel:getChildByName("hpLabel")
-    hpLabel:setString(math.floor(info.hp + 0.5))
-
-    local criticalLabel = panel:getChildByName("criticalLabel")
-    criticalLabel:setString(string.format('%.1f%%', info.criRate))
-
-    local antiCriticalLabel = panel:getChildByName("antiCriticalLabel")
-    antiCriticalLabel:setString(string.format('%.1f%%', info.antiCriRate))
+    local heroPropLabel = panel:getChildByName("heroPropLabel")
+    heroPropLabel:setString(s)
 end
 

@@ -510,7 +510,7 @@ end
 function Entity:showDialog()
     if self.dialog == nil then
          -- 显示
-        local msg = self._model:getDialog()
+        local msg = helper.getDisplayText(self._model:getDialog())
         if msg == nil then
             return
         end

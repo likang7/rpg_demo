@@ -68,96 +68,6 @@
                     <PrePosition X="0.4922" Y="0.5899" />
                     <PreSize X="0.0000" Y="0.0000" />
                   </NodeObjectData>
-                  <NodeObjectData Name="Text_3" ActionTag="-1991177769" FrameEvent="" Tag="11" LeftMargin="48.4993" RightMargin="157.5007" TopMargin="188.0159" BottomMargin="91.9841" FontSize="20" LabelText="攻击:" ctype="TextObjectData">
-                    <Position X="48.4993" Y="91.9841" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="50.0000" Y="20.0000" />
-                    <PrePosition X="0.1895" Y="0.3066" />
-                    <PreSize X="0.1953" Y="0.0667" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="Text_3_Copy" ActionTag="-1417782404" FrameEvent="" Tag="12" FontSize="20" LabelText="防御:" ctype="TextObjectData">
-                    <Position X="48.4993" Y="71.9870" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="50.0000" Y="20.0000" />
-                    <PrePosition X="0.1895" Y="0.2400" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="Text_3_Copy_0" ActionTag="90454359" FrameEvent="" Tag="13" FontSize="20" LabelText="生命:" ctype="TextObjectData">
-                    <Position X="48.4993" Y="51.9892" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="50.0000" Y="20.0000" />
-                    <PrePosition X="0.1895" Y="0.1733" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="Text_3_Copy_1" ActionTag="-680969248" FrameEvent="" Tag="14" FontSize="20" LabelText="暴击:" ctype="TextObjectData">
-                    <Position X="48.4993" Y="31.9903" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="50.0000" Y="20.0000" />
-                    <PrePosition X="0.1895" Y="0.1066" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="Text_3_Copy_2" ActionTag="-723312987" FrameEvent="" Tag="15" FontSize="20" LabelText="防爆:" ctype="TextObjectData">
-                    <Position X="48.4993" Y="11.9914" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="50.0000" Y="20.0000" />
-                    <PrePosition X="0.1895" Y="0.0400" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="attackLabel" ActionTag="1725616045" FrameEvent="" Tag="16" FontSize="20" LabelText="10000000" ctype="TextObjectData">
-                    <Position X="98.4993" Y="91.9841" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="80.0000" Y="20.0000" />
-                    <PrePosition X="0.3848" Y="0.3066" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="defenseLabel" ActionTag="-1614988532" FrameEvent="" Tag="17" FontSize="20" LabelText="10000000" ctype="TextObjectData">
-                    <Position X="98.4993" Y="71.9870" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="80.0000" Y="20.0000" />
-                    <PrePosition X="0.3848" Y="0.2400" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="hpLabel" ActionTag="379747984" FrameEvent="" Tag="18" FontSize="20" LabelText="10000000" ctype="TextObjectData">
-                    <Position X="98.4993" Y="51.9892" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="80.0000" Y="20.0000" />
-                    <PrePosition X="0.3848" Y="0.1733" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="criticalLabel" ActionTag="814520017" FrameEvent="" Tag="19" FontSize="20" LabelText="10000000" ctype="TextObjectData">
-                    <Position X="98.4993" Y="31.9903" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="80.0000" Y="20.0000" />
-                    <PrePosition X="0.3848" Y="0.1066" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="antiCriticalLabel" ActionTag="546852217" FrameEvent="" Tag="20" FontSize="20" LabelText="10000000" ctype="TextObjectData">
-                    <Position X="98.4993" Y="11.9914" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="80.0000" Y="20.0000" />
-                    <PrePosition X="0.3848" Y="0.0400" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
                   <NodeObjectData Name="Text_3_Copy_3" ActionTag="-729999134" FrameEvent="" Tag="21" FontSize="20" LabelText="经验:" ctype="TextObjectData">
                     <Position X="48.4993" Y="142.9772" />
                     <Scale ScaleX="1.0000" ScaleY="1.0000" />
@@ -194,6 +104,15 @@
                     <PrePosition X="0.3848" Y="0.4099" />
                     <PreSize X="0.0000" Y="0.0000" />
                   </NodeObjectData>
+                  <NodeObjectData Name="heroPropLabel" ActionTag="1290573375" FrameEvent="" Tag="46" LeftMargin="48.5004" RightMargin="37.4996" TopMargin="181.5035" BottomMargin="-1.5035" IsCustomSize="True" FontSize="20" LabelText="Text Label" ctype="TextObjectData">
+                    <Position X="48.5004" Y="-1.5035" />
+                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
+                    <AnchorPoint />
+                    <CColor A="255" R="0" G="0" B="0" />
+                    <Size X="170.0000" Y="120.0000" />
+                    <PrePosition X="0.1895" Y="-0.0050" />
+                    <PreSize X="0.6641" Y="0.4800" />
+                  </NodeObjectData>
                 </Children>
                 <SingleColor A="255" R="150" G="200" B="255" />
                 <FirstColor A="255" R="150" G="200" B="255" />
@@ -227,96 +146,6 @@
                     <PrePosition X="0.4922" Y="0.5999" />
                     <PreSize X="0.0000" Y="0.0000" />
                   </NodeObjectData>
-                  <NodeObjectData Name="Text_3" ActionTag="-1273481768" FrameEvent="" Tag="32" FontSize="20" LabelText="攻击:" ctype="TextObjectData">
-                    <Position X="45.9933" Y="113.9821" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="50.0000" Y="20.0000" />
-                    <PrePosition X="0.1797" Y="0.4559" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="Text_3_Copy" ActionTag="-893022292" FrameEvent="" Tag="33" FontSize="20" LabelText="防御:" ctype="TextObjectData">
-                    <Position X="45.9933" Y="93.9853" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="50.0000" Y="20.0000" />
-                    <PrePosition X="0.1797" Y="0.3759" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="Text_3_Copy_0" ActionTag="-290903432" FrameEvent="" Tag="34" FontSize="20" LabelText="生命:" ctype="TextObjectData">
-                    <Position X="45.9933" Y="73.9857" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="50.0000" Y="20.0000" />
-                    <PrePosition X="0.1797" Y="0.2959" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="Text_3_Copy_1" ActionTag="182380551" FrameEvent="" Tag="35" FontSize="20" LabelText="暴击:" ctype="TextObjectData">
-                    <Position X="45.9933" Y="53.9875" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="50.0000" Y="20.0000" />
-                    <PrePosition X="0.1797" Y="0.2159" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="Text_3_Copy_2" ActionTag="-284023707" FrameEvent="" Tag="36" LeftMargin="45.9932" RightMargin="160.0068" TopMargin="196.0100" BottomMargin="33.9900" FontSize="20" LabelText="防爆:" ctype="TextObjectData">
-                    <Position X="45.9932" Y="33.9900" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="50.0000" Y="20.0000" />
-                    <PrePosition X="0.1797" Y="0.1360" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="attackLabel" ActionTag="2040066167" FrameEvent="" Tag="37" FontSize="20" LabelText="10000000" ctype="TextObjectData">
-                    <Position X="95.9933" Y="113.9821" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="80.0000" Y="20.0000" />
-                    <PrePosition X="0.3750" Y="0.4559" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="defenseLabel" ActionTag="-2013965637" FrameEvent="" Tag="38" FontSize="20" LabelText="10000000" ctype="TextObjectData">
-                    <Position X="95.9933" Y="93.9853" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="80.0000" Y="20.0000" />
-                    <PrePosition X="0.3750" Y="0.3759" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="hpLabel" ActionTag="876728424" FrameEvent="" Tag="39" FontSize="20" LabelText="10000000" ctype="TextObjectData">
-                    <Position X="95.9933" Y="73.9857" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="80.0000" Y="20.0000" />
-                    <PrePosition X="0.3750" Y="0.2959" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="criticalLabel" ActionTag="-1913134853" FrameEvent="" Tag="40" FontSize="20" LabelText="10000000" ctype="TextObjectData">
-                    <Position X="95.9933" Y="53.9875" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="80.0000" Y="20.0000" />
-                    <PrePosition X="0.3750" Y="0.2159" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
-                  <NodeObjectData Name="antiCriticalLabel" ActionTag="557927119" FrameEvent="" Tag="41" FontSize="20" LabelText="10000000" ctype="TextObjectData">
-                    <Position X="95.9933" Y="33.9879" />
-                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
-                    <AnchorPoint />
-                    <CColor A="255" R="0" G="0" B="0" />
-                    <Size X="80.0000" Y="20.0000" />
-                    <PrePosition X="0.3750" Y="0.1360" />
-                    <PreSize X="0.0000" Y="0.0000" />
-                  </NodeObjectData>
                   <NodeObjectData Name="heroHead" ActionTag="-2036288965" FrameEvent="" Tag="29" LeftMargin="45.9994" RightMargin="138.0006" TopMargin="29.0188" BottomMargin="148.9812" Scale9Width="120" Scale9Height="120" ctype="ImageViewObjectData">
                     <Position X="45.9994" Y="148.9812" />
                     <Scale ScaleX="1.0000" ScaleY="1.0000" />
@@ -326,6 +155,15 @@
                     <PrePosition X="0.1797" Y="0.5959" />
                     <PreSize X="0.2813" Y="0.2880" />
                     <FileData Type="Normal" Path="heroIcon.jpg" />
+                  </NodeObjectData>
+                  <NodeObjectData Name="heroPropLabel" ActionTag="-1695139982" FrameEvent="" Tag="47" LeftMargin="48.5000" RightMargin="37.5000" TopMargin="118.3452" BottomMargin="11.6548" IsCustomSize="True" FontSize="20" LabelText="Text Label" ctype="TextObjectData">
+                    <Position X="48.5000" Y="11.6548" />
+                    <Scale ScaleX="1.0000" ScaleY="1.0000" />
+                    <AnchorPoint />
+                    <CColor A="255" R="0" G="0" B="0" />
+                    <Size X="170.0000" Y="120.0000" />
+                    <PrePosition X="0.1895" Y="0.0466" />
+                    <PreSize X="0.6641" Y="0.4800" />
                   </NodeObjectData>
                 </Children>
                 <SingleColor A="255" R="150" G="200" B="255" />

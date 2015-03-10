@@ -41,12 +41,12 @@ local function main()
     glview:setDesignResolutionSize(1024, 768, cc.ResolutionPolicy.SHOW_ALL)
 
     --turn on display FPS
-    director:setDisplayStats(true)
+    director:setDisplayStats(false)
 
     --set FPS. the default value is 1.0/60 if you don't call this
     director:setAnimationInterval(1.0 / 60)
 
-    require "WelcomeScene"
+    require "view.WelcomeScene"
     local scene = WelcomeScene:create()
 
     if cc.Director:getInstance():getRunningScene() then

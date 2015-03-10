@@ -1,13 +1,13 @@
 local const = require "const"
 local Globals = require "model.Globals"
 local stageData = require "data.stageData"
-require "Entity"
+require "sprite.Entity"
+require "sprite.Transfer"
+require "sprite.Item"
 require "model.EntityData"
 require "model.AIComp"
 require "model.DialogComp"
-require "Transfer"
-require "Item"
-require "GameMap"
+require "model.GameMap"
 
 local Direction = const.Direction
 local math = math

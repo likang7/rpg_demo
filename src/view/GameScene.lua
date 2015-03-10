@@ -1,6 +1,6 @@
-require "GameLayer"
+require "view.GameLayer"
 require "model.Player"
-require "GameUILayer"
+require "view.GameUILayer"
 local Globals = require "model.Globals"
 
 GameScene = class("GameScene",
@@ -70,25 +70,25 @@ function GameScene:init(dict)
 end
 
 function GameScene:popConversation(conversationID)
-    require "ConversationLayer"
+    require "view.ConversationLayer"
     local layer = ConversationLayer:create({['conversationID']=conversationID})
     self:addChild(layer, const.DISPLAY_PRIORITY.Conversation)
 end
 
 function GameScene:popShopLayer(shopID)
-    require "ShopLayer"
+    require "view.ShopLayer"
     local shopLayer = ShopLayer:create({['shopID']=shopID})
     self:addChild(shopLayer, const.DISPLAY_PRIORITY.Shop)
 end
 
 function GameScene:transferToFailScene()
-    require "FailScene"
+    require "view.FailScene"
     local scene = FailScene:create()
     cc.Director:getInstance():replaceScene(scene)
 end
 
 function GameScene:transferToWelcomeScene()
-    require "WelcomeScene"
+    require "view.WelcomeScene"
     local scene = WelcomeScene:create()
     cc.Director:getInstance():replaceScene(scene)
 end

@@ -238,6 +238,7 @@ function EntityData:getPersistent()
         headIcon = self.headIcon,
         dialog = self.dialog,
         ['type'] = self.type,
+        funcType = self.funcType,
         coinDrop = self.coinDrop,
         expDrop = self.expDrop,
         meetConversationID = self.meetConversationID,
@@ -309,6 +310,8 @@ function EntityData:init(dict)
     if dict.controlType == nil then
         self.controlType = const.ControlType.Click
     end
+
+    self.funcType = dict['function']
 
     -- 角色移动相关的变量
     self.runFlag = false

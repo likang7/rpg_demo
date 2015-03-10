@@ -20,7 +20,7 @@ function FailScene:init()
 
 	local function onKeyPressed(keyCode, event)
 		if keyCode == cc.KeyCode.KEY_ESCAPE then
-			require "WelcomeScene"
+			require "view.WelcomeScene"
 	        local scene = WelcomeScene:create()
 	        cc.Director:getInstance():replaceScene(scene)
 		end

@@ -1,5 +1,5 @@
 require "model.Player"
-require "GameScene"
+require "view.GameScene"
 local const = require "const"
 local stageData = require "data.stageData"
 local Globals = require "model.Globals"

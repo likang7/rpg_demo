@@ -1,4 +1,4 @@
-# rpg_demo
+# Regain Nedan
 A simple RPG Game based on cocos2d-x 3.4 Lua.
 ##1	游戏简介
 ###1.1	游戏背景

@@ -62,8 +62,9 @@ function GameScene:init(dict)
             
             Globals.gameScene = nil
             Globals.gameMap = nil
-            -- local spriteFrameCache = cc.SpriteFrameCache:getInstance()
-            -- spriteFrameCache:removeUnusedSpriteFrames()
+            
+            local spriteFrameCache = cc.SpriteFrameCache:getInstance()
+            spriteFrameCache:removeUnusedSpriteFrames()
         end
     end
     self:registerScriptHandler(onNodeEvent)

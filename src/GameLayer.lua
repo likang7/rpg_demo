@@ -38,6 +38,7 @@ function GameLayer:create(dict)
     return layer
 end
 
+-- 根据tileMap中的objectGroup配置来初始化玩家，怪物，NPC，道具以及传送阵等
 function GameLayer:initEntity(objectGroup)
     self.monsterEntity = {}
     self.transfers = {}
@@ -46,6 +47,7 @@ function GameLayer:initEntity(objectGroup)
     self.rangeFlags = {}
     self.npcs = {}
 
+    -- 加载存档信息
     local stageState = self.player:getStageState(self.stageId)
     local px, py = nil, nil
     if stageState == nil then
@@ -68,9 +70,9 @@ function GameLayer:initEntity(objectGroup)
     else
         entityData:setBornPoint(cc.p(px, py), true)
     end
-    local playerEntity = Entity:create(entityData)
-    self.playerEntity = playerEntity
-    self:addChild(playerEntity, const.DISPLAY_PRIORITY.Hero)
+
+    self.playerEntity = Entity:create(entityData)
+    self:addChild(self.playerEntity, const.DISPLAY_PRIORITY.Hero)
 
     local objects = objectGroup:getObjects()
     for _, object in pairs(objects) do
@@ -185,7 +187,7 @@ function GameLayer:initTileMap(tilemapPath)
 
     self:addChild(tilemap)
 
-    -- 天空层
+    -- 天空层放在最上面
     local skys = self.gameMap:getSkyLayers(tilemap)
     for _, sky in ipairs(skys) do
         sky:retain()
@@ -210,14 +212,16 @@ function GameLayer:init(dict)
     self.player = Globals.player
     self.stageId = dict.stageId
 
+    -- 加载地图
     local _stageData = stageData[dict.stageId]
     local tilemapPath = const.MAP_ROOT .. _stageData.mapPath
-
     self:initTileMap(tilemapPath)
 
+    -- 播放背景音乐
     local audioEngine = cc.SimpleAudioEngine:getInstance()
     audioEngine:playMusic(const.MUSIC_ROOT .. _stageData.musicPath, true)
 
+    -- 显示怪物警戒范围的全局开关
     self.showDetectRange = false
 
     self:initTouchEvent()
@@ -230,6 +234,7 @@ function GameLayer:step(dt)
         return
     end
 
+    -- 玩家挂了，切换到死亡界面
     if self.playerEntity.status == const.Status.die then
         Globals.gameScene:transferToFailScene()
         return
@@ -276,20 +281,20 @@ function GameLayer:updateRecord()
 end
 
 function GameLayer:onNextStage()
-    --1. 保存当前关卡记录
-    self:updateRecord()
-    --2. 切换到下一关
-    local nextStageId = self.stageId + 1
-    local dict = {stageId=nextStageId, player=self.player}
-    self:init(dict)
-    self:updateRecord()
+    self:_enterStage(self.stageId + 1)
 end
 
 function GameLayer:onPrevStage()
+    self:_enterStage(self.stageId - 1)
+end
+
+function GameLayer:_enterStage(stageId)
+     --1. 更新当前关卡记录
     self:updateRecord()
-    local prevStageId = self.stageId - 1
-    local dict = {stageId=prevStageId, player=self.player}
+    --2. 切换到下一关
+    local dict = {stageId=stageId, player=self.player}
     self:init(dict)
+    -- 3. 更新记录状态
     self:updateRecord()
 end
 

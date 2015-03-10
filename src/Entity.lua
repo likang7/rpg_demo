@@ -292,7 +292,6 @@ function Entity:showHurt(deltaHp, isCritial)
             self:setVisible(false)
             self:setStatus(Status.die)
         end
-        cclog('gua le')
         self:setStatus(Status.dying)
         self:stopActionByTag(ANIMATE_TYPE.run)
         self:playAnimation(self.dyingAnimationFrames, cb, false, RunAnimDelay)
@@ -306,7 +305,7 @@ function Entity:showHurt(deltaHp, isCritial)
         end
         self:setStatus(Status.hurt)
         self:playAnimation(self.hitAnimationFrames, cb, false, RunAnimDelay * 0.5, self, ANIMATE_TYPE.hurt)
-        self:playSoundEffect(ANIMATE_TYPE.hurt)
+        performWithDelay(self, function() self:playSoundEffect(ANIMATE_TYPE.hurt) end, 0.05)
     end
 end
 
@@ -585,7 +584,7 @@ function Entity:init(data)
     self.dir = data.dir
     self.status = Status.idle
 
-    -- 这里应该缩放资源的...但积重难返了
+    -- TODO: 这里应该缩放资源的...但积重难返了
     self:setScale(0.8)
 
     local pos = self._model.pos
@@ -622,18 +621,18 @@ function Entity:_initSoundEffect()
 
     local audioEngine = cc.SimpleAudioEngine:getInstance()
     if data.attack ~= nil then
-        audioEngine:preloadEffect(data.attack)
-        self.atkEffectPath = const.EFFECT_ROOT .. data.attack
+        self.atkEffectPath = const.EFFECT_ROOT .. data.attack .. const.EFFECT_POSIX
+        audioEngine:preloadEffect(self.atkEffectPath)
     end
 
     if data.hurt ~= nil then
-        audioEngine:preloadEffect(data.hurt)
-        self.hurtEffectPath = const.EFFECT_ROOT .. data.hurt
+        self.hurtEffectPath = const.EFFECT_ROOT .. data.hurt .. const.EFFECT_POSIX
+        audioEngine:preloadEffect(self.hurtEffectPath)
     end
 
     if data.die ~= nil then
-        audioEngine:preloadEffect(data.die)
-        self.dieEffectPath = const.EFFECT_ROOT .. data.die
+        self.dieEffectPath = const.EFFECT_ROOT .. data.die .. const.EFFECT_POSIX
+        audioEngine:preloadEffect(self.dieEffectPath)
     end
 end
 

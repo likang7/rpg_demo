@@ -4,7 +4,12 @@ local Globals = require "model.Globals"
 local roleData = require "data.roleData"
 local Direction = const.Direction
 local DirectionToVec = const.DirectionToVec
+
 local math = math
+local pairs = pairs
+local next = next
+local table = table
+
 EntityData = class("EntityData")
 
 EntityData.__index = EntityData
@@ -228,7 +233,6 @@ function EntityData:getPersistent()
         atkRange = self.atkRange,
         detectRange = self.detectRange,
         pos = self.pos,
-        texturePath = self.texturePath,
         effectPath = self.effectPath,
         atkDelay = self.atkDelay,
         headIcon = self.headIcon,
@@ -282,35 +286,25 @@ function EntityData:getDialog()
 end
 
 function EntityData:init(dict)
-    self.roleID = dict.roleID
-    self.name = dict.name
-    self.speed = dict.speed
-    self.dir = dict.dir
-    self.camp = dict.camp
-    self.type = dict.type
+    for k, v in pairs(dict) do
+        self[k] = v
+    end
+
     if dict.camp == nil then
         self.camp = 1
     end
-    self.atk = dict.atk
-    self.def = dict.def
-    self.hp = dict.hp
-    self.criRate = dict.criRate
-    self.antiCriRate = dict.antiCriRate
+
     if dict.maxhp == nil then
         self.maxhp = dict.hp
     else
         self.maxhp = dict.maxhp
     end
+
     self.atkRange = 40--dict.atkRange
-    self.detectRange = dict.detectRange
     self.texturePath = self.roleID .. '.plist'
-    self.effectPath = dict.effectPath
     self.lifeState = const.LifeState.Alive
     self.atkDelay = 0.6--dict.atkDelay
     self.atkLock = false
-    self.level = dict.level
-
-    self.rangeId = dict.rangeId
 
     if dict.controlType == nil then
         self.controlType = const.ControlType.Click
@@ -318,8 +312,6 @@ function EntityData:init(dict)
 
     -- 角色移动相关的变量
     self.runFlag = false
-    self.controlType = dict.controlType
-    self.pos = dict.pos
     self.bornPoint = dict.pos
     self.path = {}
     self.pathIdx = 1
@@ -329,14 +321,4 @@ function EntityData:init(dict)
     self.deltaPos = cc.p(0, 0)
 
     self.dialog = dict.dialog--"放弃吧！你走不出我的手掌心的！"
-
-    self.funcType = dict['function']
-    self.headIcon = dict['headIcon']
-    self.coinDrop = dict.coinDrop
-    self.expDrop = dict.expDrop
-
-    self.meetConversationID = dict.meetConversationID
-    self.dieConversationID = dict.dieConversationID
-
-    self.soundID = dict.soundID
 end

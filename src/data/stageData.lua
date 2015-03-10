@@ -1,7 +1,7 @@
 return {
-	[1] = {["musicPath"] = [[1.mp3]], ["mapPath"] = [[map-1.tmx]], ["stageName"] = [[村庄]], ["stageID"] = 1},
-	[2] = {["musicPath"] = [[2.mp3]], ["mapPath"] = [[map-2.tmx]], ["stageName"] = [[野外]], ["stageID"] = 2},
-	[3] = {["musicPath"] = [[3.mp3]], ["mapPath"] = [[map-3.tmx]], ["stageName"] = [[冰原]], ["stageID"] = 3},
-	[4] = {["musicPath"] = [[4.mp3]], ["mapPath"] = [[map-4.tmx]], ["stageName"] = [[婚房]], ["stageID"] = 4},
+	[1] = {["mapPath"] = [[map-1.tmx]], ["stageID"] = 1, ["stageName"] = [[村庄]], ["musicPath"] = [[1.mp3]]},
+	[2] = {["mapPath"] = [[map-2.tmx]], ["stageID"] = 2, ["stageName"] = [[野外]], ["musicPath"] = [[2.mp3]]},
+	[3] = {["mapPath"] = [[map-3.tmx]], ["stageID"] = 3, ["stageName"] = [[冰原]], ["musicPath"] = [[3.mp3]]},
+	[4] = {["mapPath"] = [[map-4.tmx]], ["stageID"] = 4, ["stageName"] = [[婚房]], ["musicPath"] = [[4.mp3]]},
 	[0] = {["stageID"] = 0, ["stageName"] = [[欢迎]], ["musicPath"] = [[0.mp3]]},
 }

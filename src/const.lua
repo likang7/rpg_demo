@@ -56,7 +56,10 @@ const.GOODS_FUNC = {Level=0, Atk=1, Def=2, Hp=3}
 const.HEAD_ICON_PLIST = 'headIcon.plist'
 
 const.MUSIC_ROOT = 'music/'
+
 const.EFFECT_ROOT = 'effect/'
+const.EFFECT_POSIX = '.wav'
+
 const.MAP_ROOT = 'map/'
 
 const.ITEM_OBTAIN_EFFECT_PATH = const.EFFECT_ROOT .. 'obtain_item.wav'

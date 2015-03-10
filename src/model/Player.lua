@@ -1,4 +1,3 @@
-require ("sprite.Entity")
 require ("model.GameRecorder")
 local const = require "const"
 

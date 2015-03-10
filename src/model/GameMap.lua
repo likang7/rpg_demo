@@ -43,14 +43,6 @@ function GameMap:init(tilemap)
         end
     end
 
-    -- local skyLayer = tilemap:getLayer("sky")
-    -- tilemap:removeChild(skyLayer)
-    -- self:addChild(skyLayer, 10)
-    -- skyLayer:setPosition(origin.x, origin.y)
-    -- skyLayer:setVisible(false)
-
-    -- self.skyLayer = skyLayer
-
     self.map_w = self.mapSize.width * self.tileSize.width
     self.map_h = self.mapSize.height * self.tileSize.height
 end

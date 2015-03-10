@@ -67,8 +67,6 @@ function GameMap:getSkyLayers(tilemap)
 end
 
 function GameMap:hashViewCoord(vx,  vy)
-    -- local tx, ty = self:convertToTiledSpace(vx, vy)
-    -- return tx * self.mapSize.height + ty
     return vx * self.map_h + vy
 end
 
@@ -82,14 +80,14 @@ function GameMap:isValidViewPoint(vx, vy)
     return self:isAvailable(tx, ty)
 end
 
+-- view -> model
 function GameMap:convertToTiledSpace(x, y)
-    -- print('origin', x, y)
     local tx = math.floor(x / self.tileSize.width)
     local ty = self.mapSize.height - 1 - math.floor(y / self.tileSize.height)
-    -- print('convert to', tx, ty)
     return tx, ty
 end
 
+-- model -> view
 function GameMap:reverseTiledSpace(x, y)
     x = (x + 0.5) * self.tileSize.width
     y = self.map_h - (y+0.5) * self.tileSize.height
@@ -130,6 +128,7 @@ function GameMap:pathToArround(from, to, maxd)
     return path
 end
 
+-- 返回在扇形范围内的目标
 function GameMap:searchTargetsInFan(x, y, dir, r, theta, enemys)
     theta = theta / 2
     local rSQ = r * r

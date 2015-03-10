@@ -1,3 +1,5 @@
+-- Entity的AI组件
+
 local const = require('const')
 local Status = const.Status
 local pairs = pairs
@@ -42,8 +44,10 @@ function AIComp:step()
 	if self.i % 6 ~= 0 then
 		return
 	end
+
 	local entity = self.entity
 	if self.status == AIStatus.idle then
+		-- 空闲->找目标，找到目标后跑向目标并攻击
 		self.target = entity:findTarget(self.enemyEntity)
 		if self.target ~= nil then
 			local path = self.gameMap:pathTo(cc.p(entity:getPosition()), cc.p(self.target:getPosition()))
@@ -51,10 +55,12 @@ function AIComp:step()
 			self.status = AIStatus.attacking
 		end
 	elseif self.target ~= nil and self.target.status == const.Status.die then
+		-- 目标挂掉之后回出生点
 		self.target = nil
 		self:returnToBornPoint()
 		self.status = AIStatus.backing
 	elseif self.status == AIStatus.attacking then
+		-- 攻击目标
 		local dis = self:getDistance(entity, self.target)
 		local disToBornPoint = cc.pGetDistance(cc.p(entity:getPosition()), self.bornPoint)
 		if dis < self.atkRange then

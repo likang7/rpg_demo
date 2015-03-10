@@ -1,3 +1,5 @@
+-- Entity的对话组件，用于弹对话或招呼
+
 local const = require('const')
 local Globals = require("model.Globals")
 

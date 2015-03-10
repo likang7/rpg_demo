@@ -128,59 +128,7 @@ function Entity:stopRuning()
     self:setStandDirection(self.dir)
 end
 
-function Entity:_run(path, idx, cb_end, dir)
-    self:setStatus(Status.run)
-    if path[idx] == nil then
-        if cb_end ~= nil then
-            cb_end()
-        else
-            self:stopRuning()
-        end
-        return
-    end
-
-    local playerPos = cc.p(self:getPosition())
-
-    if dir == nil then
-        dir = helper.getDirection(playerPos, path[idx])
-    end
-
-    -- 同一方向的弄在同一个action里走
-    local end_idx = idx + 1
-    while path[end_idx] ~= nil do
-        local next_dir = helper.getDirection(path[end_idx - 1], path[end_idx])
-        if next_dir ~= dir then
-            break
-        end
-        end_idx = end_idx + 1
-    end
-    idx = end_idx - 1
-
-    -- 移动精灵，并递归走剩下的路径
-    local distance = cc.pGetDistance(playerPos, path[idx])
-    -- cclog('t = %f', distance/self.speed)
-    local moveTo = cc.MoveTo:create(distance/self.speed, path[idx])
-    local cb = cc.CallFunc:create(
-        function() 
-            self:_run(path, idx + 1, cb_end)
-        end
-    )
-    local seq = cc.Sequence:create(moveTo, cb)
-    seq:setTag(self.runActionTag)
-    self:runAction(seq)
-
-    -- 播放奔跑动画
-    if dir ~= self.dir or self:getActionByTag(ANIMATE_TYPE.run) == nil then
-        self:stopActionByTag(ANIMATE_TYPE.run)
-        local tDir = self:getAnimDir(dir, ANIMATE_TYPE.run)
-        local repeatForever = cc.RepeatForever:create(
-            cc.Animate:create(cc.Animation:createWithSpriteFrames(self.runAnimationFrames[tDir], RunAnimDelay)))
-        repeatForever:setTag(ANIMATE_TYPE.run)
-        self:runAction(repeatForever)
-    end
-    self.dir = dir
-end
-
+-- 鼠标点击或寻路控制的行走
 function Entity:runPath(path, cb_end, dir)
     if self.status ~= Status.idle and self.status ~= Status.run then
         return
@@ -188,6 +136,7 @@ function Entity:runPath(path, cb_end, dir)
     self._model:setPath(path)
 end
 
+-- 键盘控制的行走
 function Entity:runOneStep(dir)
     if self.status ~= Status.idle and self.status ~= Status.run then
         return
@@ -198,9 +147,6 @@ function Entity:runOneStep(dir)
     else
         self._model:setKeyboardMoveDir(false, dir)
     end
-end
-
-function Entity:releaseCache()
 end
 
 function Entity:tryAttack()
@@ -217,6 +163,7 @@ function Entity:setStatus(status)
             self:stopActionByTag(ANIMATE_TYPE.run)
             self:setStandDirection(self.dir)
         end
+        -- 定时播放空闲动作
         if self:getActionByTag(ANIMATE_TYPE.idle) == nil and self.idleScheduleID == nil then
             local cb = function ()
                 if self.status == Status.idle and self:getActionByTag(ANIMATE_TYPE.idle) == nil then
@@ -246,11 +193,11 @@ function Entity:setStatus(status)
     self.status = status
 end
 
+-- 飘血，播死亡或受击动画
 function Entity:showHurt(deltaHp, isCritial)
     if isCritial == nil then
         isCritial = false
     end
-    -- self:stopRuning()
     
     -- 飘血
     local fontSize = 24
@@ -357,6 +304,7 @@ function Entity:step(dt)
 end
 
 function Entity:updateDetectRangeShow()
+    -- 显示或隐藏怪物警戒范围
     if self.showDetectRange == true and self._model.detectRange ~= nil then
         if self.drawNode == nil then
             self.drawNode = cc.DrawNode:create()
@@ -506,6 +454,7 @@ function Entity:getBornPoint()
     return self._model.bornPoint
 end
 
+-- 打招呼
 function Entity:showDialog()
     if self.dialog == nil then
          -- 显示

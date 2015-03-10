@@ -1,3 +1,5 @@
+-- 存储游戏中会用到的常量
+
 const = {}
 
 const.TILESIZE = 32
@@ -8,20 +10,25 @@ local d = const.Direction
 
 const.DiagDirection = {WS=1, NW=3, NE=5, ES=7}
 
+-- 八方向转四方向
 const.FullToDiagDir = {	[d.S]=7, [d.WS]=1, 
 					[d.W]=1, [d.NW]=3, 
 					[d.N]=3, [d.NE]=5,
 					[d.E]=5, [d.ES]=7}
 
+-- 获取方向向量
 const.DirectionToVec = {  [d.S]={0, -1}, [d.WS]={-1, -1}, 
                     [d.W]={-1, 0}, [d.NW]={-1, 1}, 
                     [d.N]={0, 1}, [d.NE]={1, 1}, 
                     [d.E]={1, 0}, [d.ES]={1, -1}}
 
+-- 动画状态(sprite)
 const.Status = {idle=0, run=1, attack=2, hurt=3, dying=4, die=5}
 
+-- 控制类型
 const.ControlType = {Keyboard=0, Click=1}
 
+-- 生命状态(model)
 const.LifeState = {Alive=0, Protected=1, Die=3}
 
 const.DEFAULT_FONT = "fonts/Marker Felt.ttf"
@@ -35,9 +42,6 @@ const.DEFAULT_RECORD = "res/default_record.json"
 const.DISPLAY_PRIORITY = {UI=80, Conversation=70, Shop=64, JumpWord=30, Sky=20, Hero=10, NPC=8, Monster=6, Item=4}
 
 const.GAME_STATE = {Playing=0, Shopping=1, Talking=2}
-
-const.SHOP_PRICE = 30
-const.SHOP_ITEM = {Atk=5, Def=5, Hp=100}
 
 const.ITEM_TYPE = {Undefined=0, Atk=1, Def=2, Hp=3, Critial=4, Block=5, Coin=6, Special=7}
 

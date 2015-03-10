@@ -1,3 +1,5 @@
+-- 处理Entity的逻辑
+
 local helper = require "utils.helper"
 local const = require "const"
 local Globals = require "model.Globals"
@@ -120,7 +122,7 @@ end
 
 function EntityData:step(dt)
     if self.runFlag == true then
-        -- 更新角色位置
+        -- 根据行走类型来更新角色位置
         if self.controlType == const.ControlType.Click then
             self:updatePositionClick(dt)
         elseif self.controlType == const.ControlType.Keyboard then
@@ -133,6 +135,7 @@ function EntityData:setPosition(x, y)
     self.pos.x, self.pos.y = x, y
 end
 
+-- 计算伤害 (攻击-防御)*伤害倍率 + 附加伤害
 function EntityData:calHurt(target, skillData)
     if skillData == nil then
         skillData = {rate=1, additional=0}
@@ -172,6 +175,7 @@ function EntityData:attack(enemys, skillId)
     end
 end
 
+-- 返回enemy中range内最近的可攻击怪物
 function EntityData:findTarget(enemys, range)
     if range == nil then
         range = self.detectRange
